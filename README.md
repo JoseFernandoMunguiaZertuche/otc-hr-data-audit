@@ -53,6 +53,6 @@ jupyter nbconvert --to notebook --execute --inplace notebooks/ETAPA_2_EDA_OTC.ip
 
 El notebook lee los archivos de `data/excel/` y no requiere conexión a internet ni credenciales.
 
-## Aviso de privacidad
+## Aviso sobre los datos
 
-Este repositorio es **privado**. Contiene datos operativos que el socio formador compartió con fines exclusivamente académicos, ya anonimizados en origen, y no debe hacerse público ni compartirse fuera del equipo y del curso. No contiene contraseñas, credenciales de acceso ni datos bancarios.
+Este repositorio es público porque así lo pide la entrega del reto, y su contenido fue saneado con ese fin. Los datos que el socio formador compartió ya vienen anonimizados en origen, con correos y teléfonos genéricos, y esta versión publica además excluye el módulo de Usuarios con sus credenciales de acceso, los identificadores directos como CURP, RFC y NSS, y todos los datos bancarios, por lo que no contiene contraseñas ni información bancaria de ninguna persona.
