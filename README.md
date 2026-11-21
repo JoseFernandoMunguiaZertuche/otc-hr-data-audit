@@ -13,6 +13,8 @@ OTC administra su capital humano en una PWA construida a la medida y hospedada e
 - `docs/ETAPA_1.md` — Justificación y planeación. Conocimiento de la empresa y del área, necesidades de información y de analítica, herramienta actual, beneficios esperados y problemáticas del usuario principal.
 - `docs/ETAPA_2.md` — Exploración de las fuentes de datos. Objeto de estudio, metadata, errores y datos faltantes e inconsistencias, reglas de negocio, preguntas de análisis, métricas, indicadores y atributos adicionales, y la propuesta de solución final.
 - `notebooks/ETAPA_2_EDA_OTC.ipynb` — Notebook ejecutado con el análisis exploratorio completo, archivo por archivo y columna por columna, con las evidencias de cada cálculo.
+- `notebooks/ETAPA_3_ACONDICIONAMIENTO_OTC.ipynb` — Notebook ejecutado del acondicionamiento: aplica los métodos M1 a M14 sobre los 7 archivos, registra cada corrección y valida las reglas de negocio con SQL.
+- `data/acondicionado/` — Salida de esa corrida: las tablas acondicionadas en CSV, la base `otc_rh.db`, el `log_correcciones`, el reporte de calidad y las gráficas del prototipo.
 - `data/excel/` — Las fuentes tal como las exporta el sandbox, un archivo por módulo.
 
 ## Las fuentes
@@ -39,6 +41,14 @@ El sandbox tiene un módulo más, el de Usuarios, que se excluye a propósito po
 - Las fuentes no traen el ingreso ni la tarifa de cada proyecto, por lo que el margen por proyecto todavía no se puede calcular y se propone como atributo a agregar.
 
 El detalle completo, con severidad e impacto por hallazgo, está en `docs/ETAPA_2.md` y calculado paso a paso en el notebook.
+
+## Etapa 3 — acondicionamiento sobre los 7 archivos
+
+El notebook de la Etapa 3 corre de punta a punta sobre los archivos publicados, sin subirlos a mano y sin perder ni inventar registros. Resultado de la corrida con fecha de corte 2026-11-20:
+
+- **265 correcciones** registradas en `log_correcciones`: M11 95, M2 77, M3 54, M6 26, M5 10, M7 2 y M8 1.
+- **18 tablas** cargadas en `otc_rh.db`, y las 5 validaciones de reglas en cero: sin activos con fecha de baja, sin bajas anteriores al ingreso, sin asignaciones vigentes de personal dado de baja, sin sueldos ni costos en cero.
+- **73** personas de plantilla activa, **43 en banca** con un costo mensual de **$1,994,153.78**, **32** activos sin resguardo, **9** equipos pendientes de recuperar por **$40,693**, **1** colaborador sobreasignado y **7** habilidades en riesgo de persona clave.
 
 ## Propuesta de solución final
 

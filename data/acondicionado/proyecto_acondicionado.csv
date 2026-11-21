@@ -1,0 +1,13 @@
+codigo_cliente,cliente,industria,proyecto,inicio,fin,estatus,resp_cli,pm_otc,email_cli,tel_cli,falta_pm_otc,falta_resp_cli,id_proyecto,llave_cliente,llave_proyecto,id_cliente,fecha_inicio,fecha_fin
+C0001,Metalsa,Automotriz,Ams Manufactura,,,En Curso,Andrés Alvarado,,,,1,0,1,metalsa,metalsa|ams manufactura,5,,
+C0001,Metalsa,Automotriz,Soporte Ams Manufacta,,,En Curso,,,,,1,1,2,metalsa,metalsa|soporte ams manufacta,5,,
+C0001,Metalsa,Automotriz,Asignación Indefinida,,,Por Iniciar,,,,,1,1,3,metalsa,metalsa|asignacion indefinida,5,,
+C0002,Grupo Daltile,Manufactura,Marazzi,2026-07-15,2026-09-23,En Curso,,,,,1,1,4,grupo daltile,grupo daltile|marazzi,4,2026-07-15,2026-09-23
+C0002,Grupo Daltile,Manufactura,Asignación Ebs Temporal (3 Meses),,,Por Iniciar,,Juan José Coronado Bravo,,,0,1,5,grupo daltile,grupo daltile|asignacion ebs temporal 3 meses,4,,
+C0002,Grupo Daltile,Manufactura,Asignación Funcional-Técnico (4 Meses),,,Por Iniciar,,Juan José Coronado Bravo,,,0,1,6,grupo daltile,grupo daltile|asignacion funcionaltecnico 4 meses,4,,
+C0003,Allegion,Manufactura ,Migración Ebs,2026-10-13,2028-10-30,En Curso,Hugo Cervantes,,Hugo.Cervantes@allegion.com,6642831875.0,1,0,7,allegion,allegion|migracion ebs,1,2026-10-13,2028-10-30
+C0004,Citi,Consultoría,Soporte Oracle Cloud,2025-06-01,,En Curso,Sayda Castillo,Juan José Coronado Bravo,,,0,0,8,citi,citi|soporte oracle cloud,2,2025-06-01,
+C0005,Parker Servicios De México,Manufactura,Desarrollo De Indicadores,,,Por Iniciar,,,,,1,1,9,parker servicios de mexico,parker servicios de mexico|desarrollo de indicadores,7,,
+C0006,Rent A Center (Rac Mèxico Operaciones),Rentas de equipo ,Shine - Asiganci´Ñon De Recursos De Apoyo,2026-06-30,2026-10-30,En Curso,Oziel Juárez,Juan José Coronado Bravo,,,0,0,10,rent a center rac mexico operaciones,rent a center rac mexico operaciones|shine  asiganci non de recursos de apoyo,8,2026-06-30,2026-10-30
+C0007,Fanosa,Manufactura,Soporte Dba,2021-01-01,,En Curso,Alejandro Valenzuela,José Francisco Mendoza Bazán,,,0,0,11,fanosa,fanosa|soporte dba,3,2021-01-01,
+C0008,Novocast,Manufactura,Hosting Ebs,2023-01-01,,Por Iniciar,Agustin Hdez,Juan José Coronado Bravo,,,0,0,12,novocast,novocast|hosting ebs,6,2023-01-01,

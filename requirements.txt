@@ -1,6 +1,7 @@
 pandas>=2.0
 openpyxl>=3.1
 matplotlib>=3.7
+rapidfuzz>=3.0
 jupyter
 nbclient
 ipykernel

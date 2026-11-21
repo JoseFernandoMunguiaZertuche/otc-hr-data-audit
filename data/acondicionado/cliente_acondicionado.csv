@@ -1,0 +1,9 @@
+codigo_cliente,cliente,industria,ciudad,estado,pais,contacto_nom,contacto_email,contacto_tel,telefono,estatus,n_proyectos,uid,falta_industria,falta_ciudad,falta_estado,falta_contacto_nom,id_cliente,llave_cliente
+C0001,Metalsa,Automotriz,Apodaca,Nuevo León,México,Hernán Macías,,,,Activo,3,1790111580747,0,0,0,0,5,metalsa
+C0002,Grupo Daltile,Manufactura,,,,Luis Mora,luis.mora@daltile.com.mx,,,Activo,3,1790169945253,0,1,1,0,4,grupo daltile
+C0003,Allegion,Manufactura,,,,Jose Luis Barrios,jose.barrios@allegion.com,,,Activo,1,1790170098418,0,1,1,0,1,allegion
+C0004,Citi,Consultoría,,,,Edna Rodriguez,edna.rodriguez@citi.com.mx,,,Activo,1,1790871801171,0,1,1,0,2,citi
+C0005,Parker Servicios De México,Manufactura,Apodaca,Nuevo León,Méxcio,Martín Montañez,martin.montanez@parker.com,,,Activo,1,1790872083081,0,0,0,0,7,parker servicios de mexico
+C0006,Rent A Center (Rac Mèxico Operaciones),Rentas De Equipo,Apodaca,Nuevo León,Mèxico,Oziel Juárez,Oziel.Juarez@rentacenter.com,,,Activo,1,1790872336511,0,0,0,0,8,rent a center rac mexico operaciones
+C0007,Fanosa,Manufactura,,,,Alejandro Valenzuela,avalenzuela@fanosa.com,,,Activo,1,1790872463668,0,1,1,0,3,fanosa
+C0008,Novocast,Manufactura,El Carmen,Nuevo León,México,Agustín Hernández,Agustin.HernandezLara@aam.com,,,Activo,1,1790872689735,0,0,0,0,6,novocast

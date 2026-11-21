@@ -1,0 +1,72 @@
+cod_habilidad,descripcion,tecnologia,tipo,estatus,uid,descripcion_repetida,descripcion_unica
+H0002,Gl,Oracle Ebs,Hard,Activo,1789777237350,1,Gl (Oracle Ebs)
+H0003,Fsg,Oracle Ebs,Hard,Activo,1789777249241,0,Fsg
+H0004,Sla,Oracle Ebs,Hard,Activo,1789777260964,1,Sla (Oracle Ebs)
+H0005,Ce,Oracle Ebs,Hard,Activo,1789777271343,1,Ce (Oracle Ebs)
+H0006,Fa,Oracle Ebs,Hard,Activo,1789777282893,1,Fa (Oracle Ebs)
+H0007,Xtr,Oracle Ebs,Hard,Activo,1789777294554,0,Xtr
+H0008,Ebtax,Oracle Ebs,Hard,Activo,1789777303948,0,Ebtax
+H0009,Po,Oracle Ebs,Hard,Activo,1789777313977,1,Po (Oracle Ebs)
+H0010,Ap,Oracle Ebs,Hard,Activo,1789777326450,1,Ap (Oracle Ebs)
+H0011,Iexp,Oracle Ebs,Hard,Activo,1789777338000,0,Iexp
+H0012,!Proc,Oracle Ebs,Hard,Activo,1789777347564,0,!Proc
+H0013,!Sup,Oracle Ebs,Hard,Activo,1789777375290,0,!Sup
+H0014,Ame,Oracle Ebs,Hard,Activo,1789777384008,1,Ame (Oracle Ebs)
+H0015,Ar,Oracle Ebs,Hard,Activo,1789777393529,1,Ar (Oracle Ebs)
+H0016,Om,Oracle Ebs,Hard,Activo,1789777403709,1,Om (Oracle Ebs)
+H0017,Inv,Oracle Ebs,Hard,Activo,1789777411884,1,Inv (Oracle Ebs)
+H0018,Cm,Oracle Ebs,Hard,Activo,1789777421417,1,Cm (Oracle Ebs)
+H0019,Qp,Oracle Ebs,Hard,Activo,1789777431180,0,Qp
+H0020,Wms,Oracle Ebs,Hard,Activo,1789777440716,1,Wms (Oracle Ebs)
+H0021,Msca,Oracle Ebs,Hard,Activo,1789777449017,0,Msca
+H0022,Mfg,Oracle Ebs,Hard,Activo,1789777458452,1,Mfg (Oracle Ebs)
+H0023,Opm,Oracle Ebs,Hard,Activo,1789777472859,0,Opm
+H0024,Mps Mrp,Oracle Ebs,Hard,Activo,1789777493987,0,Mps Mrp
+H0025,Qa,Oracle Ebs,Hard,Activo,1789777501581,0,Qa
+H0026,Pay,Oracle Ebs,Hard,Activo,1789777511161,0,Pay
+H0027,Hr,Oracle Ebs,Hard,Activo,1789777520012,0,Hr
+H0028,Taleo,Oracle Ebs,Hard,Activo,1789777528942,0,Taleo
+H0029,Prj,Oracle Ebs,Hard,Activo,1789777543309,0,Prj
+H0030,Eam,Oracle Ebs,Hard,Activo,1789777552308,0,Eam
+H0031,Gl,Oracle Fusion Cloud,Hard,Activo,1790018559714,1,Gl (Oracle Fusion Cloud)
+H0032,Sla,Oracle Fusion Cloud,Hard,Activo,1790018637682,1,Sla (Oracle Fusion Cloud)
+H0033,Ce,Oracle Fusion Cloud,Hard,Activo,1790018650249,1,Ce (Oracle Fusion Cloud)
+H0034,Fa,Oracle Fusion Cloud,Hard,Activo,1790018663561,1,Fa (Oracle Fusion Cloud)
+H0035,Tax,Oracle Fusion Cloud,Hard,Activo,1790018674814,0,Tax
+H0036,Po,Oracle Fusion Cloud,Hard,Activo,1790018686338,1,Po (Oracle Fusion Cloud)
+H0037,Ap,Oracle Fusion Cloud,Hard,Activo,1790018694517,1,Ap (Oracle Fusion Cloud)
+H0038,Ame,Oracle Fusion Cloud,Hard,Activo,1790018706239,1,Ame (Oracle Fusion Cloud)
+H0039,Ar,Oracle Fusion Cloud,Hard,Activo,1790018717358,1,Ar (Oracle Fusion Cloud)
+H0040,Om,Oracle Fusion Cloud,Hard,Activo,1790018730642,1,Om (Oracle Fusion Cloud)
+H0041,Inv,Oracle Fusion Cloud,Hard,Activo,1790018742793,1,Inv (Oracle Fusion Cloud)
+H0042,Cm,Oracle Fusion Cloud,Hard,Activo,1790018763374,1,Cm (Oracle Fusion Cloud)
+H0043,Landed Cost,Oracle Fusion Cloud,Hard,Activo,1790019750753,0,Landed Cost
+H0044,Wms,Oracle Fusion Cloud,Hard,Activo,1790019773999,1,Wms (Oracle Fusion Cloud)
+H0045,Mfg,Oracle Fusion Cloud,Hard,Activo,1790019787175,1,Mfg (Oracle Fusion Cloud)
+H0046,Bc,Oracle Fusion Cloud,Hard,Activo,1790019798565,0,Bc
+H0047,Expenses,Oracle Fusion Cloud,Hard,Activo,1790019810509,0,Expenses
+H0048,Dba,Plataformas Tecnológicas,Hard,Activo,1790019859745,0,Dba
+H0049,Obi,Plataformas Tecnológicas,Hard,Activo,1790019870333,0,Obi
+H0050,Oci,Plataformas Tecnológicas,Hard,Activo,1790019881298,0,Oci
+H0051,Odi,Plataformas Tecnológicas,Hard,Activo,1790019895194,0,Odi
+H0052,Plsql,Plataformas Tecnológicas,Hard,Activo,1790019906129,0,Plsql
+H0053,Forms,Plataformas Tecnológicas,Hard,Activo,1790019916569,0,Forms
+H0054,Forms Personalizados,Plataformas Tecnológicas,Hard,Activo,1790019929195,0,Forms Personalizados
+H0055,Reports,Plataformas Tecnológicas,Hard,Activo,1790019946447,0,Reports
+H0056,Publisher,Plataformas Tecnológicas,Hard,Activo,1790019961863,0,Publisher
+H0057,Apex,Plataformas Tecnológicas,Hard,Activo,1790019972223,0,Apex
+H0058,Oaf,Plataformas Tecnológicas,Hard,Activo,1790019982929,0,Oaf
+H0059,Discoverer,Plataformas Tecnológicas,Hard,Activo,1790019994121,0,Discoverer
+H0060,Mobile,Plataformas Tecnológicas,Hard,Activo,1790020030657,0,Mobile
+H0061,Php,Plataformas Tecnológicas,Hard,Activo,1790020040821,0,Php
+H0062,Fuse,Plataformas Tecnológicas,Hard,Activo,1790020052775,0,Fuse
+H0063,.Net,Plataformas Tecnológicas,Hard,Activo,1790020066195,0,.Net
+H0064,Eclipse,Plataformas Tecnológicas,Hard,Activo,1790020078209,0,Eclipse
+H0065,Android,Plataformas Tecnológicas,Hard,Activo,1790020090141,0,Android
+H0066,Ios,Plataformas Tecnológicas,Hard,Activo,1790020102311,0,Ios
+H0067,Java,Plataformas Tecnológicas,Hard,Activo,1790020113487,0,Java
+S0001,Nivel De Ingles,Idiomas,Soft,Activo,1790020219863,0,Nivel De Ingles
+S0002,Certificado Oracle,Certificaciones,Soft,Activo,1790020257327,0,Certificado Oracle
+H0068,Oracle Ebs,Oracle Ebs,Hard,Activo,1790098557013,0,Oracle Ebs
+S0004,Empatia,Otros,Soft,Activo,1790170255234,0,Empatia
+S0005,Manejo De Conflictos,Otros,Soft,Activo,1790170273816,0,Manejo De Conflictos
