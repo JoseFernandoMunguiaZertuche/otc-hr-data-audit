@@ -2,7 +2,7 @@
 
 Repositorio del reto de Business Intelligence con socio formador **OTC Consulting** (OT Consulting, S.A. de C.V.), consultora mexicana de tecnologías de información e inteligencia artificial. El trabajo consiste en conocer la operación de su área de Recursos Humanos, explorar a fondo las fuentes de datos de su herramienta interna y proponer, a partir de evidencia, la analítica que esa herramienta necesita.
 
-**Equipo** — Franco Varela Villegas (A01199186), Emilio Ogaz Galván (A01572029), Angelica Velez Cantu (A01199359), Melissa Anahid Esparza López (A01286887) y José Fernando Munguía Zertuche (A01199357). La exploración de datos de la Etapa 2 y su notebook son el trabajo individual de José Fernando Munguía Zertuche.
+**Equipo** — Franco Varela Villegas (A01199186), Emilio Ogaz Galván (A01572029), Angelica Velez Cantu (A01199359), Melissa Anahid Esparza López (A01286887) y José Fernando Munguía Zertuche (A01199357). La exploración de la Etapa 2, el acondicionamiento de la Etapa 3 y el modelo dimensional de la Etapa 4 son el trabajo individual de José Fernando Munguía Zertuche.
 
 ## La herramienta del socio
 
@@ -15,6 +15,9 @@ OTC administra su capital humano en una PWA construida a la medida y hospedada e
 - `notebooks/ETAPA_2_EDA_OTC.ipynb` — Notebook ejecutado con el análisis exploratorio completo, archivo por archivo y columna por columna, con las evidencias de cada cálculo.
 - `notebooks/ETAPA_3_ACONDICIONAMIENTO_OTC.ipynb` — Notebook ejecutado del acondicionamiento: aplica los métodos M1 a M14 sobre los 7 archivos, registra cada corrección y valida las reglas de negocio con SQL.
 - `data/acondicionado/` — Salida de esa corrida: las tablas acondicionadas en CSV, la base `otc_rh.db`, el `log_correcciones`, el reporte de calidad y las gráficas del prototipo.
+- `docs/ETAPA_4.md` — Modelo dimensional lógico: los cuatro pasos de Kimball, grano, métricas, dimensiones y la definición de cada tabla de hechos y dimensión.
+- `notebooks/ETAPA_4_MODELO_DIMENSIONAL_OTC.ipynb` — Notebook ejecutado que valida el grano y la integridad referencial, construye el hecho con sus llaves y genera los diagramas.
+- `docs/modelo_dimensional_logico.png` y `docs/matriz_bus.png` — Diagramas del modelo y de las dimensiones conformadas, generados por código, no dibujados a mano.
 - `data/excel/` — Las fuentes tal como las exporta el sandbox, un archivo por módulo.
 
 ## Las fuentes
@@ -50,7 +53,9 @@ El notebook de la Etapa 3 corre de punta a punta sobre los archivos publicados, 
 - **18 tablas** cargadas en `otc_rh.db`, y las 5 validaciones de reglas en cero: sin activos con fecha de baja, sin bajas anteriores al ingreso, sin asignaciones vigentes de personal dado de baja, sin sueldos ni costos en cero.
 - **73** personas de plantilla activa, **43 en banca** con un costo mensual de **$1,994,153.78**, **32** activos sin resguardo, **9** equipos pendientes de recuperar por **$40,693**, **1** colaborador sobreasignado y **7** habilidades en riesgo de persona clave.
 
-## Propuesta de solución final
+## Etapa 4 — modelo dimensional lógico
+
+El diseño aplica los cuatro pasos de Kimball sobre las tablas acondicionadas y se documenta en `docs/ETAPA_4.md`. Resultado: **tres hechos** (`hecho_asignacion`, `hecho_habilidad`, `hecho_activo`) con granos de 31, 1,539 y 123 filas, y **nueve dimensiones**, de las cuales Tiempo y Colaborador son conformadas. El grano de la asignación se validó contra los datos (31 filas únicas, sin duplicados lógicos ni llaves huérfanas) y el costo asignado de la corrida es **$2,025,644.02**. Los huecos de la fuente se representan con el miembro desconocido: 29 asignaciones sin rol, 21 sin fecha de inicio real y 10 evaluaciones sin colaborador.
 
 Un análisis de brechas sobre el sandbox actual, sin modificar la aplicación del socio, junto con el prototipo visual de un apartado nuevo de Analítica en el menú de su PWA. Ese apartado reuniría los indicadores de quién está en proyecto y quién libre, quién termina pronto, cuántos se van, costos y márgenes por proyecto, habilidades y vencimientos, con alertas, filtros, metas, tendencias y el detalle por persona detrás de cada número, además de pestañas analíticas dentro de los módulos de Asignaciones y Colaboradores.
 
@@ -59,9 +64,11 @@ Un análisis de brechas sobre el sandbox actual, sin modificar la aplicación de
 ```bash
 pip install -r requirements.txt
 jupyter nbconvert --to notebook --execute --inplace notebooks/ETAPA_2_EDA_OTC.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/ETAPA_3_ACONDICIONAMIENTO_OTC.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/ETAPA_4_MODELO_DIMENSIONAL_OTC.ipynb
 ```
 
-El notebook lee los archivos de `data/excel/` y no requiere conexión a internet ni credenciales.
+Los notebooks leen los archivos de `data/excel/` o de `data/acondicionado/`, y no requieren conexión a internet ni credenciales. El de la Etapa 4 regenera el diagrama y la matriz de bus en `docs/`.
 
 ## Aviso sobre los datos
 
