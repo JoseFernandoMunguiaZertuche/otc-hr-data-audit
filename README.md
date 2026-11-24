@@ -59,7 +59,13 @@ El notebook de la Etapa 3 corre de punta a punta sobre los archivos publicados, 
 
 El diseño aplica los cuatro pasos de Kimball sobre las tablas acondicionadas y se documenta en `docs/ETAPA_4.md`. Resultado: **tres hechos** (`hecho_asignacion`, `hecho_habilidad`, `hecho_activo`) con granos de 31, 1,539 y 123 filas, y **nueve dimensiones**, de las cuales Tiempo y Colaborador son conformadas. El grano de la asignación se validó contra los datos (31 filas únicas, sin duplicados lógicos ni llaves huérfanas) y el costo asignado de la corrida es **$2,025,644.02**. Los huecos de la fuente se representan con el miembro desconocido: 29 asignaciones sin rol, 21 sin fecha de inicio real y 10 evaluaciones sin colaborador.
 
+## Propuesta de solución final
+
 Un análisis de brechas sobre el sandbox actual, sin modificar la aplicación del socio, junto con el prototipo visual de un apartado nuevo de Analítica en el menú de su PWA. Ese apartado reuniría los indicadores de quién está en proyecto y quién libre, quién termina pronto, cuántos se van, costos y márgenes por proyecto, habilidades y vencimientos, con alertas, filtros, metas, tendencias y el detalle por persona detrás de cada número, además de pestañas analíticas dentro de los módulos de Asignaciones y Colaboradores.
+
+## Etapa 5 — evidencia final
+
+La entrega se completa con una presentación ejecutiva de 10 diapositivas y un guion de video de 10 a 11 minutos. La presentación resume el reto, las cuatro etapas, los requerimientos, las métricas justificadas, los hallazgos y su tratamiento, el modelo dimensional y las acciones futuras, e incluye capturas del repositorio. El guion indica qué decir en cada diapositiva, con tiempos y pausas, y cómo grabar mostrando la cara y el cuaderno abierto desde este repositorio. El video se entrega por liga de YouTube en Canvas.
 
 ## Cómo ejecutar el análisis
 
