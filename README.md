@@ -18,6 +18,8 @@ OTC administra su capital humano en una PWA construida a la medida y hospedada e
 - `docs/ETAPA_4.md` — Modelo dimensional lógico: los cuatro pasos de Kimball, grano, métricas, dimensiones y la definición de cada tabla de hechos y dimensión.
 - `notebooks/ETAPA_4_MODELO_DIMENSIONAL_OTC.ipynb` — Notebook ejecutado que valida el grano y la integridad referencial, construye el hecho con sus llaves y genera los diagramas.
 - `docs/modelo_dimensional_logico.png` y `docs/matriz_bus.png` — Diagramas del modelo y de las dimensiones conformadas, generados por código, no dibujados a mano.
+- `docs/ETAPA_5_PRESENTACION_OTC.pptx` — Presentación ejecutiva de 10 diapositivas, en 16:9, lista para importar en Canva.
+- `docs/ETAPA_5_GUION_VIDEO.md` — Guion del video de 10 a 11 minutos, con tiempos, pausas y qué decir en cada diapositiva.
 - `data/excel/` — Las fuentes tal como las exporta el sandbox, un archivo por módulo.
 
 ## Las fuentes
