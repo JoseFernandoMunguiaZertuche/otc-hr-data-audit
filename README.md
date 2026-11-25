@@ -18,8 +18,6 @@ OTC administra su capital humano en una PWA construida a la medida y hospedada e
 - `docs/ETAPA_4.md` — Modelo dimensional lógico: los cuatro pasos de Kimball, grano, métricas, dimensiones y la definición de cada tabla de hechos y dimensión.
 - `notebooks/ETAPA_4_MODELO_DIMENSIONAL_OTC.ipynb` — Notebook ejecutado que valida el grano y la integridad referencial, construye el hecho con sus llaves y genera los diagramas.
 - `docs/modelo_dimensional_logico.png` y `docs/matriz_bus.png` — Diagramas del modelo y de las dimensiones conformadas, generados por código, no dibujados a mano.
-- `docs/ETAPA_5_PRESENTACION_OTC.pptx` — Presentación ejecutiva de 10 diapositivas, en 16:9, lista para importar en Canva.
-- `docs/ETAPA_5_GUION_VIDEO.md` — Guion del video de 10 a 11 minutos, con tiempos, pausas y qué decir en cada diapositiva.
 - `data/excel/` — Las fuentes tal como las exporta el sandbox, un archivo por módulo.
 
 ## Las fuentes
@@ -65,7 +63,7 @@ Un análisis de brechas sobre el sandbox actual, sin modificar la aplicación de
 
 ## Etapa 5 — evidencia final
 
-La entrega se completa con una presentación ejecutiva de 10 diapositivas y un guion de video de 10 a 11 minutos. La presentación resume el reto, las cuatro etapas, los requerimientos, las métricas justificadas, los hallazgos y su tratamiento, el modelo dimensional y las acciones futuras, e incluye capturas del repositorio. El guion indica qué decir en cada diapositiva, con tiempos y pausas, y cómo grabar mostrando la cara y el cuaderno abierto desde este repositorio. El video se entrega por liga de YouTube en Canvas.
+La evidencia final es un video de 8 a 12 minutos en el que recorro este repositorio y explico el reto, las fuentes, el acondicionamiento, los hallazgos, el tratamiento y el modelo dimensional. El video se entrega por liga de YouTube en Canvas.
 
 ## Cómo ejecutar el análisis
 
