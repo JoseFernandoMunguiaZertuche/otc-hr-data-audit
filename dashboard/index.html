@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OT Consulting · Consulta para Dirección</title>
+  <meta name="description" content="Tablero de consulta para Dirección construido sobre el modelo dimensional de Recursos Humanos de OT Consulting.">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <div class="app">
+    <header class="cabecera">
+      <div class="marca">
+        <span class="sello">OTC</span>
+        <div>
+          <p class="sobretitulo">Business Intelligence · Recursos Humanos</p>
+          <h1>Consulta para Dirección</h1>
+          <p class="bajada">Del sandbox en Firebase al modelo dimensional y a la decisión.</p>
+        </div>
+      </div>
+      <div class="cabecera-meta">
+        <span class="pildora" id="corte">Corte</span>
+        <span class="pildora pildora-verde">9 dimensiones · 3 hechos</span>
+      </div>
+    </header>
+
+    <nav class="pestanas" id="pestanas" aria-label="Secciones del tablero"></nav>
+
+    <main id="vista" tabindex="-1"></main>
+
+    <footer class="pie">
+      <p><strong>Prototipo académico.</strong> Datos agregados y anonimizados; no incluye nombres, sueldos individuales, correos ni datos bancarios. La fuente es el sandbox HR Management del socio formador, acondicionado en la Etapa 3 y modelado en la Etapa 4.</p>
+      <p>Reto OTC Consulting · José Fernando Munguía Zertuche · <span id="generado"></span></p>
+    </footer>
+  </div>
+
+  <script src="datos.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,2066 @@
+{
+  "dim_tiempo": {
+    "filas_reales": 9497,
+    "filas_totales": 9498,
+    "miembro_desconocido": 1,
+    "llave": "sk_tiempo",
+    "columnas": {
+      "fecha": {
+        "tipo": "fecha",
+        "distintos": 9497,
+        "nulos": 0,
+        "min": "2003-01-01",
+        "max": "2028-12-31"
+      },
+      "anio": {
+        "tipo": "numero",
+        "distintos": 26,
+        "nulos": 0,
+        "min": 2003.0,
+        "max": 2028.0,
+        "top": [
+          {
+            "valor": "2004",
+            "conteo": 366
+          },
+          {
+            "valor": "2008",
+            "conteo": 366
+          },
+          {
+            "valor": "2012",
+            "conteo": 366
+          },
+          {
+            "valor": "2016",
+            "conteo": 366
+          },
+          {
+            "valor": "2020",
+            "conteo": 366
+          }
+        ]
+      },
+      "trimestre": {
+        "tipo": "numero",
+        "distintos": 4,
+        "nulos": 0,
+        "min": 1.0,
+        "max": 4.0,
+        "valores": [
+          {
+            "valor": "3",
+            "conteo": 2392
+          },
+          {
+            "valor": "4",
+            "conteo": 2392
+          },
+          {
+            "valor": "2",
+            "conteo": 2366
+          },
+          {
+            "valor": "1",
+            "conteo": 2347
+          }
+        ]
+      },
+      "mes": {
+        "tipo": "numero",
+        "distintos": 12,
+        "nulos": 0,
+        "min": 1.0,
+        "max": 12.0,
+        "top": [
+          {
+            "valor": "1",
+            "conteo": 806
+          },
+          {
+            "valor": "3",
+            "conteo": 806
+          },
+          {
+            "valor": "5",
+            "conteo": 806
+          },
+          {
+            "valor": "7",
+            "conteo": 806
+          },
+          {
+            "valor": "8",
+            "conteo": 806
+          }
+        ]
+      },
+      "nombre_mes": {
+        "tipo": "texto",
+        "distintos": 12,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "Enero",
+            "conteo": 806
+          },
+          {
+            "valor": "Marzo",
+            "conteo": 806
+          },
+          {
+            "valor": "Mayo",
+            "conteo": 806
+          },
+          {
+            "valor": "Julio",
+            "conteo": 806
+          },
+          {
+            "valor": "Agosto",
+            "conteo": 806
+          }
+        ]
+      },
+      "semana_iso": {
+        "tipo": "numero",
+        "distintos": 53,
+        "nulos": 0,
+        "min": 1.0,
+        "max": 53.0,
+        "top": [
+          {
+            "valor": "2",
+            "conteo": 182
+          },
+          {
+            "valor": "3",
+            "conteo": 182
+          },
+          {
+            "valor": "4",
+            "conteo": 182
+          },
+          {
+            "valor": "5",
+            "conteo": 182
+          },
+          {
+            "valor": "6",
+            "conteo": 182
+          }
+        ]
+      },
+      "dia_semana": {
+        "tipo": "texto",
+        "distintos": 7,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Miércoles",
+            "conteo": 1357
+          },
+          {
+            "valor": "Jueves",
+            "conteo": 1357
+          },
+          {
+            "valor": "Viernes",
+            "conteo": 1357
+          },
+          {
+            "valor": "Sábado",
+            "conteo": 1357
+          },
+          {
+            "valor": "Domingo",
+            "conteo": 1357
+          },
+          {
+            "valor": "Lunes",
+            "conteo": 1356
+          },
+          {
+            "valor": "Martes",
+            "conteo": 1356
+          }
+        ]
+      },
+      "es_fin_semana": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 6783
+          },
+          {
+            "valor": "1",
+            "conteo": 2714
+          }
+        ]
+      },
+      "anio_mes": {
+        "tipo": "texto",
+        "distintos": 312,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "2003-01",
+            "conteo": 31
+          },
+          {
+            "valor": "2003-03",
+            "conteo": 31
+          },
+          {
+            "valor": "2003-05",
+            "conteo": 31
+          },
+          {
+            "valor": "2003-07",
+            "conteo": 31
+          },
+          {
+            "valor": "2003-08",
+            "conteo": 31
+          }
+        ]
+      }
+    }
+  },
+  "dim_colaborador": {
+    "filas_reales": 107,
+    "filas_totales": 108,
+    "miembro_desconocido": 1,
+    "llave": "sk_colaborador",
+    "columnas": {
+      "id_colaborador": {
+        "tipo": "texto",
+        "distintos": 107,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "OTC003",
+            "conteo": 1
+          },
+          {
+            "valor": "OTC004",
+            "conteo": 1
+          },
+          {
+            "valor": "OTC005",
+            "conteo": 1
+          },
+          {
+            "valor": "OTC006",
+            "conteo": 1
+          },
+          {
+            "valor": "OTC007",
+            "conteo": 1
+          }
+        ]
+      },
+      "nombre_completo": {
+        "tipo": "texto",
+        "distintos": 107,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "Abraham Perez Gil",
+            "conteo": 1
+          },
+          {
+            "valor": "Adriana Perez Navarrete",
+            "conteo": 1
+          },
+          {
+            "valor": "Alberto Perez Breton",
+            "conteo": 1
+          },
+          {
+            "valor": "Alberto Antonio Perez Chee",
+            "conteo": 1
+          },
+          {
+            "valor": "Alejandro Perez Morquecho",
+            "conteo": 1
+          }
+        ]
+      },
+      "genero": {
+        "tipo": "texto",
+        "distintos": 2,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Masculino",
+            "conteo": 77
+          },
+          {
+            "valor": "Femenino",
+            "conteo": 30
+          }
+        ]
+      },
+      "ciudad": {
+        "tipo": "texto",
+        "distintos": 24,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "Monterrey",
+            "conteo": 51
+          },
+          {
+            "valor": "Edo De México",
+            "conteo": 12
+          },
+          {
+            "valor": "Ciudad de México",
+            "conteo": 12
+          },
+          {
+            "valor": "Puebla",
+            "conteo": 7
+          },
+          {
+            "valor": "Tlaxcala",
+            "conteo": 4
+          }
+        ]
+      },
+      "estatus": {
+        "tipo": "texto",
+        "distintos": 2,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Activo",
+            "conteo": 75
+          },
+          {
+            "valor": "Baja",
+            "conteo": 32
+          }
+        ]
+      },
+      "puesto": {
+        "tipo": "texto",
+        "distintos": 23,
+        "nulos": 48,
+        "top": [
+          {
+            "valor": "CONSULTOR FUNCIONAL ORACLE EBS SENIOR",
+            "conteo": 10
+          },
+          {
+            "valor": "CONSULTOR TÉCNICO JAVA SENIOR",
+            "conteo": 5
+          },
+          {
+            "valor": "CONSULTOR FUNCIONAL ORACLE CLOUD Y EBS SENIOR",
+            "conteo": 5
+          },
+          {
+            "valor": "CONSULTOR TÉCNICO ORACLE EBS SENIOR",
+            "conteo": 5
+          },
+          {
+            "valor": "CONSULTOR FUNCIONAL ORACLE CLOUD SENIOR",
+            "conteo": 3
+          }
+        ]
+      },
+      "departamento": {
+        "tipo": "texto",
+        "distintos": 2,
+        "nulos": 95,
+        "valores": [
+          {
+            "valor": "Operaciones y Soporte",
+            "conteo": 11
+          },
+          {
+            "valor": "Ventas",
+            "conteo": 1
+          }
+        ]
+      },
+      "fecha_incorporacion": {
+        "tipo": "fecha",
+        "distintos": 85,
+        "nulos": 1,
+        "min": "2003-04-01",
+        "max": "2026-10-06"
+      },
+      "fecha_baja": {
+        "tipo": "fecha",
+        "distintos": 8,
+        "nulos": 93,
+        "min": "2026-08-28",
+        "max": "2026-11-09"
+      },
+      "fecha_nacimiento": {
+        "tipo": "fecha",
+        "distintos": 104,
+        "nulos": 1,
+        "min": "1946-05-14",
+        "max": "2002-06-02"
+      },
+      "tipo_nomina": {
+        "tipo": "texto",
+        "distintos": 9,
+        "nulos": 6,
+        "valores": [
+          {
+            "valor": "SMR",
+            "conteo": 36
+          },
+          {
+            "valor": "MAGNESON-SINDICATO",
+            "conteo": 20
+          },
+          {
+            "valor": "OTC 100%",
+            "conteo": 18
+          },
+          {
+            "valor": "XERES OT-SINDICATO",
+            "conteo": 10
+          },
+          {
+            "valor": "OTC-SINDICATO (SMR)",
+            "conteo": 10
+          },
+          {
+            "valor": "MODALIDAD 40-SMR",
+            "conteo": 3
+          },
+          {
+            "valor": "ADMINISTRATIVA",
+            "conteo": 2
+          },
+          {
+            "valor": "IRAZU/ASIMILADOS",
+            "conteo": 1
+          },
+          {
+            "valor": "EXTRANJERO",
+            "conteo": 1
+          }
+        ]
+      },
+      "sueldo_neto_total": {
+        "tipo": "numero",
+        "distintos": 66,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 132227.37,
+        "top": [
+          {
+            "valor": "0.0",
+            "conteo": 25
+          },
+          {
+            "valor": "40000.0",
+            "conteo": 7
+          },
+          {
+            "valor": "45000.0",
+            "conteo": 3
+          },
+          {
+            "valor": "50000.0",
+            "conteo": 3
+          },
+          {
+            "valor": "28000.0",
+            "conteo": 3
+          }
+        ]
+      },
+      "sueldo_total_integrado": {
+        "tipo": "numero",
+        "distintos": 74,
+        "nulos": 25,
+        "min": 7450.1,
+        "max": 135460.71,
+        "top": [
+          {
+            "valor": "52304.32",
+            "conteo": 3
+          },
+          {
+            "valor": "29952.08",
+            "conteo": 3
+          },
+          {
+            "valor": "45830.21",
+            "conteo": 2
+          },
+          {
+            "valor": "33985.6",
+            "conteo": 2
+          },
+          {
+            "valor": "38524.32",
+            "conteo": 2
+          }
+        ]
+      },
+      "costo_mensual": {
+        "tipo": "numero",
+        "distintos": 74,
+        "nulos": 25,
+        "min": 7450.1,
+        "max": 135460.71,
+        "top": [
+          {
+            "valor": "52304.32",
+            "conteo": 3
+          },
+          {
+            "valor": "29952.08",
+            "conteo": 3
+          },
+          {
+            "valor": "45830.21",
+            "conteo": 2
+          },
+          {
+            "valor": "33985.6",
+            "conteo": 2
+          },
+          {
+            "valor": "38524.32",
+            "conteo": 2
+          }
+        ]
+      },
+      "costo_hora": {
+        "tipo": "numero",
+        "distintos": 73,
+        "nulos": 25,
+        "min": 46.56,
+        "max": 846.63,
+        "top": [
+          {
+            "valor": "326.9",
+            "conteo": 3
+          },
+          {
+            "valor": "187.2",
+            "conteo": 3
+          },
+          {
+            "valor": "286.44",
+            "conteo": 2
+          },
+          {
+            "valor": "212.41",
+            "conteo": 2
+          },
+          {
+            "valor": "240.78",
+            "conteo": 2
+          }
+        ]
+      },
+      "es_plantilla": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "1",
+            "conteo": 105
+          },
+          {
+            "valor": "0",
+            "conteo": 2
+          }
+        ]
+      },
+      "antiguedad_meses": {
+        "tipo": "numero",
+        "distintos": 87,
+        "nulos": 1,
+        "min": 1.5,
+        "max": 283.6,
+        "top": [
+          {
+            "valor": "1.5",
+            "conteo": 5
+          },
+          {
+            "valor": "25.1",
+            "conteo": 4
+          },
+          {
+            "valor": "14.6",
+            "conteo": 4
+          },
+          {
+            "valor": "26.6",
+            "conteo": 3
+          },
+          {
+            "valor": "48.3",
+            "conteo": 2
+          }
+        ]
+      },
+      "edad": {
+        "tipo": "numero",
+        "distintos": 35,
+        "nulos": 1,
+        "min": 24.0,
+        "max": 80.0,
+        "top": [
+          {
+            "valor": "29.0",
+            "conteo": 9
+          },
+          {
+            "valor": "40.0",
+            "conteo": 8
+          },
+          {
+            "valor": "41.0",
+            "conteo": 7
+          },
+          {
+            "valor": "37.0",
+            "conteo": 7
+          },
+          {
+            "valor": "33.0",
+            "conteo": 5
+          }
+        ]
+      },
+      "baja_primer_anio": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 100
+          },
+          {
+            "valor": "1",
+            "conteo": 7
+          }
+        ]
+      },
+      "tiene_asignacion_vigente": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 77
+          },
+          {
+            "valor": "1",
+            "conteo": 30
+          }
+        ]
+      },
+      "dedicacion_total_pct": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 77,
+        "min": 100.0,
+        "max": 200.0,
+        "valores": [
+          {
+            "valor": "100.0",
+            "conteo": 29
+          },
+          {
+            "valor": "200.0",
+            "conteo": 1
+          }
+        ]
+      },
+      "sobreasignado": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 106
+          },
+          {
+            "valor": "1",
+            "conteo": 1
+          }
+        ]
+      },
+      "dias_en_banca": {
+        "tipo": "numero",
+        "distintos": 67,
+        "nulos": 31,
+        "min": 45.0,
+        "max": 7237.0,
+        "top": [
+          {
+            "valor": "445.0",
+            "conteo": 4
+          },
+          {
+            "valor": "765.0",
+            "conteo": 2
+          },
+          {
+            "valor": "3350.0",
+            "conteo": 2
+          },
+          {
+            "valor": "396.0",
+            "conteo": 2
+          },
+          {
+            "valor": "403.0",
+            "conteo": 2
+          }
+        ]
+      },
+      "pct_expediente": {
+        "tipo": "numero",
+        "distintos": 11,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 84.6,
+        "top": [
+          {
+            "valor": "69.2",
+            "conteo": 26
+          },
+          {
+            "valor": "61.5",
+            "conteo": 23
+          },
+          {
+            "valor": "0.0",
+            "conteo": 17
+          },
+          {
+            "valor": "38.5",
+            "conteo": 9
+          },
+          {
+            "valor": "53.8",
+            "conteo": 8
+          }
+        ]
+      },
+      "expediente_completo": {
+        "tipo": "numero",
+        "distintos": 1,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 0.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 107
+          }
+        ]
+      },
+      "tiene_contrato": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 92
+          },
+          {
+            "valor": "1",
+            "conteo": 15
+          }
+        ]
+      },
+      "inversion_equipo_col": {
+        "tipo": "numero",
+        "distintos": 26,
+        "nulos": 42,
+        "min": 0.0,
+        "max": 26018.0,
+        "top": [
+          {
+            "valor": "0.0",
+            "conteo": 27
+          },
+          {
+            "valor": "7999.0",
+            "conteo": 3
+          },
+          {
+            "valor": "11699.0",
+            "conteo": 3
+          },
+          {
+            "valor": "9469.0",
+            "conteo": 3
+          },
+          {
+            "valor": "11999.01",
+            "conteo": 2
+          }
+        ]
+      },
+      "falta_puesto": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 59
+          },
+          {
+            "valor": "1",
+            "conteo": 48
+          }
+        ]
+      },
+      "falta_departamento": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "1",
+            "conteo": 95
+          },
+          {
+            "valor": "0",
+            "conteo": 12
+          }
+        ]
+      },
+      "falta_tipo_nomina": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 101
+          },
+          {
+            "valor": "1",
+            "conteo": 6
+          }
+        ]
+      },
+      "falta_ciudad": {
+        "tipo": "numero",
+        "distintos": 1,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 0.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 107
+          }
+        ]
+      },
+      "falta_fecha_baja": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 89
+          },
+          {
+            "valor": "1",
+            "conteo": 18
+          }
+        ]
+      },
+      "falta_sueldo": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 82
+          },
+          {
+            "valor": "1",
+            "conteo": 25
+          }
+        ]
+      },
+      "inconsistencia_estatus_fecha": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 106
+          },
+          {
+            "valor": "1",
+            "conteo": 1
+          }
+        ]
+      },
+      "version_scd": {
+        "tipo": "numero",
+        "distintos": 1,
+        "nulos": 0,
+        "min": 1.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "1",
+            "conteo": 107
+          }
+        ]
+      },
+      "vigente_desde": {
+        "tipo": "fecha",
+        "distintos": 85,
+        "nulos": 1,
+        "min": "2003-04-01",
+        "max": "2026-10-06"
+      },
+      "vigente_hasta": {
+        "tipo": "fecha",
+        "distintos": 0,
+        "nulos": 107,
+        "min": null,
+        "max": null
+      },
+      "es_actual": {
+        "tipo": "numero",
+        "distintos": 1,
+        "nulos": 0,
+        "min": 1.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "1",
+            "conteo": 107
+          }
+        ]
+      }
+    }
+  },
+  "dim_puesto": {
+    "filas_reales": 23,
+    "filas_totales": 24,
+    "miembro_desconocido": 1,
+    "llave": "sk_puesto",
+    "columnas": {
+      "id_puesto": {
+        "tipo": "numero",
+        "distintos": 23,
+        "nulos": 0,
+        "min": 1.0,
+        "max": 23.0,
+        "top": [
+          {
+            "valor": "1",
+            "conteo": 1
+          },
+          {
+            "valor": "2",
+            "conteo": 1
+          },
+          {
+            "valor": "3",
+            "conteo": 1
+          },
+          {
+            "valor": "4",
+            "conteo": 1
+          },
+          {
+            "valor": "5",
+            "conteo": 1
+          }
+        ]
+      },
+      "puesto": {
+        "tipo": "texto",
+        "distintos": 23,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "ADMINISTRACIÓN FINANZAS GERENTE",
+            "conteo": 1
+          },
+          {
+            "valor": "ADMINISTRACIÓN FINANZAS SENIOR",
+            "conteo": 1
+          },
+          {
+            "valor": "ASESOR COMERCIAL SENIOR",
+            "conteo": 1
+          },
+          {
+            "valor": "CONSULTOR DBA ORACLE SENIOR",
+            "conteo": 1
+          },
+          {
+            "valor": "CONSULTOR FUNCIONAL ORACLE CLOUD SENIOR",
+            "conteo": 1
+          }
+        ]
+      }
+    }
+  },
+  "dim_departamento": {
+    "filas_reales": 6,
+    "filas_totales": 7,
+    "miembro_desconocido": 1,
+    "llave": "sk_departamento",
+    "columnas": {
+      "codigo": {
+        "tipo": "texto",
+        "distintos": 6,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "D0001",
+            "conteo": 1
+          },
+          {
+            "valor": "D0002",
+            "conteo": 1
+          },
+          {
+            "valor": "D0003",
+            "conteo": 1
+          },
+          {
+            "valor": "D0004",
+            "conteo": 1
+          },
+          {
+            "valor": "D0005",
+            "conteo": 1
+          },
+          {
+            "valor": "D0006",
+            "conteo": 1
+          }
+        ]
+      },
+      "nombre": {
+        "tipo": "texto",
+        "distintos": 6,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Ventas",
+            "conteo": 1
+          },
+          {
+            "valor": "Administración Y Finanzas",
+            "conteo": 1
+          },
+          {
+            "valor": "Recursos Humanos",
+            "conteo": 1
+          },
+          {
+            "valor": "Operaciones Y Soporte",
+            "conteo": 1
+          },
+          {
+            "valor": "Dirección General",
+            "conteo": 1
+          },
+          {
+            "valor": "Procesos Y Mejora Continua",
+            "conteo": 1
+          }
+        ]
+      },
+      "objetivo": {
+        "tipo": "texto",
+        "distintos": 6,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Conseguir nuevos clientes, dar seguimiento a las oportunidades,  facturar las etapas de los proyectos y las asignaciones mensuales de los consultores ",
+            "conteo": 1
+          },
+          {
+            "valor": "Tener el control de los ingresos y egresos de OTC, llevar la contabilidad, hacer las transferencias y  el Pago de los impuestos",
+            "conteo": 1
+          },
+          {
+            "valor": "Reclutamiento y selección del personal, administración de requerimientos de los empleados ",
+            "conteo": 1
+          },
+          {
+            "valor": "Control y seguimiento a los proyectos, administración de Soporte técnico y funcional a los clientes y administración de equipo de cómputo / licencias / accesos  a los empleados ",
+            "conteo": 1
+          },
+          {
+            "valor": "Administración general de OTC",
+            "conteo": 1
+          },
+          {
+            "valor": "Administrar la documentación y automatización de los procesos internos de OTC. Implementar procesos de mejora continua.",
+            "conteo": 1
+          }
+        ]
+      },
+      "responsable": {
+        "tipo": "texto",
+        "distintos": 0,
+        "nulos": 6
+      },
+      "centro_costos": {
+        "tipo": "texto",
+        "distintos": 0,
+        "nulos": 6
+      },
+      "estatus": {
+        "tipo": "texto",
+        "distintos": 1,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Activo",
+            "conteo": 6
+          }
+        ]
+      }
+    }
+  },
+  "dim_cliente": {
+    "filas_reales": 8,
+    "filas_totales": 9,
+    "miembro_desconocido": 1,
+    "llave": "sk_cliente",
+    "columnas": {
+      "id_cliente": {
+        "tipo": "numero",
+        "distintos": 8,
+        "nulos": 0,
+        "min": 1.0,
+        "max": 8.0,
+        "valores": [
+          {
+            "valor": "1",
+            "conteo": 1
+          },
+          {
+            "valor": "2",
+            "conteo": 1
+          },
+          {
+            "valor": "3",
+            "conteo": 1
+          },
+          {
+            "valor": "4",
+            "conteo": 1
+          },
+          {
+            "valor": "5",
+            "conteo": 1
+          },
+          {
+            "valor": "6",
+            "conteo": 1
+          },
+          {
+            "valor": "7",
+            "conteo": 1
+          },
+          {
+            "valor": "8",
+            "conteo": 1
+          }
+        ]
+      },
+      "codigo_cliente": {
+        "tipo": "texto",
+        "distintos": 8,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "C0003",
+            "conteo": 1
+          },
+          {
+            "valor": "C0004",
+            "conteo": 1
+          },
+          {
+            "valor": "C0007",
+            "conteo": 1
+          },
+          {
+            "valor": "C0002",
+            "conteo": 1
+          },
+          {
+            "valor": "C0001",
+            "conteo": 1
+          },
+          {
+            "valor": "C0008",
+            "conteo": 1
+          },
+          {
+            "valor": "C0005",
+            "conteo": 1
+          },
+          {
+            "valor": "C0006",
+            "conteo": 1
+          }
+        ]
+      },
+      "cliente": {
+        "tipo": "texto",
+        "distintos": 8,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Allegion",
+            "conteo": 1
+          },
+          {
+            "valor": "Citi",
+            "conteo": 1
+          },
+          {
+            "valor": "Fanosa",
+            "conteo": 1
+          },
+          {
+            "valor": "Grupo Daltile",
+            "conteo": 1
+          },
+          {
+            "valor": "Metalsa",
+            "conteo": 1
+          },
+          {
+            "valor": "Novocast",
+            "conteo": 1
+          },
+          {
+            "valor": "Parker Servicios De México",
+            "conteo": 1
+          },
+          {
+            "valor": "Rent A Center (Rac Mèxico Operaciones)",
+            "conteo": 1
+          }
+        ]
+      },
+      "industria": {
+        "tipo": "texto",
+        "distintos": 4,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Manufactura",
+            "conteo": 5
+          },
+          {
+            "valor": "Consultoría",
+            "conteo": 1
+          },
+          {
+            "valor": "Automotriz",
+            "conteo": 1
+          },
+          {
+            "valor": "Rentas De Equipo",
+            "conteo": 1
+          }
+        ]
+      },
+      "ciudad": {
+        "tipo": "texto",
+        "distintos": 2,
+        "nulos": 4,
+        "valores": [
+          {
+            "valor": "Apodaca",
+            "conteo": 3
+          },
+          {
+            "valor": "El Carmen",
+            "conteo": 1
+          }
+        ]
+      },
+      "estado": {
+        "tipo": "texto",
+        "distintos": 1,
+        "nulos": 4,
+        "valores": [
+          {
+            "valor": "Nuevo León",
+            "conteo": 4
+          }
+        ]
+      },
+      "pais": {
+        "tipo": "texto",
+        "distintos": 1,
+        "nulos": 4,
+        "valores": [
+          {
+            "valor": "México",
+            "conteo": 4
+          }
+        ]
+      },
+      "contacto_nom": {
+        "tipo": "texto",
+        "distintos": 8,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Jose Luis Barrios",
+            "conteo": 1
+          },
+          {
+            "valor": "Edna Rodriguez",
+            "conteo": 1
+          },
+          {
+            "valor": "Alejandro Valenzuela",
+            "conteo": 1
+          },
+          {
+            "valor": "Luis Mora",
+            "conteo": 1
+          },
+          {
+            "valor": "Hernán Macías",
+            "conteo": 1
+          },
+          {
+            "valor": "Agustín Hernández",
+            "conteo": 1
+          },
+          {
+            "valor": "Martín Montañez",
+            "conteo": 1
+          },
+          {
+            "valor": "Oziel Juárez",
+            "conteo": 1
+          }
+        ]
+      },
+      "estatus": {
+        "tipo": "texto",
+        "distintos": 1,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Activo",
+            "conteo": 8
+          }
+        ]
+      },
+      "n_proyectos": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 1.0,
+        "max": 3.0,
+        "valores": [
+          {
+            "valor": "1",
+            "conteo": 6
+          },
+          {
+            "valor": "3",
+            "conteo": 2
+          }
+        ]
+      }
+    }
+  },
+  "dim_proyecto": {
+    "filas_reales": 12,
+    "filas_totales": 13,
+    "miembro_desconocido": 1,
+    "llave": "sk_proyecto",
+    "columnas": {
+      "id_proyecto": {
+        "tipo": "numero",
+        "distintos": 12,
+        "nulos": 0,
+        "min": 1.0,
+        "max": 12.0,
+        "top": [
+          {
+            "valor": "1",
+            "conteo": 1
+          },
+          {
+            "valor": "2",
+            "conteo": 1
+          },
+          {
+            "valor": "3",
+            "conteo": 1
+          },
+          {
+            "valor": "4",
+            "conteo": 1
+          },
+          {
+            "valor": "5",
+            "conteo": 1
+          }
+        ]
+      },
+      "llave_proyecto": {
+        "tipo": "texto",
+        "distintos": 12,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "metalsa|ams manufactura",
+            "conteo": 1
+          },
+          {
+            "valor": "metalsa|soporte ams manufacta",
+            "conteo": 1
+          },
+          {
+            "valor": "metalsa|asignacion indefinida",
+            "conteo": 1
+          },
+          {
+            "valor": "grupo daltile|marazzi",
+            "conteo": 1
+          },
+          {
+            "valor": "grupo daltile|asignacion ebs temporal 3 meses",
+            "conteo": 1
+          }
+        ]
+      },
+      "proyecto": {
+        "tipo": "texto",
+        "distintos": 12,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "Ams Manufactura",
+            "conteo": 1
+          },
+          {
+            "valor": "Soporte Ams Manufacta",
+            "conteo": 1
+          },
+          {
+            "valor": "Asignación Indefinida",
+            "conteo": 1
+          },
+          {
+            "valor": "Marazzi",
+            "conteo": 1
+          },
+          {
+            "valor": "Asignación Ebs Temporal (3 Meses)",
+            "conteo": 1
+          }
+        ]
+      },
+      "cliente": {
+        "tipo": "texto",
+        "distintos": 8,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Metalsa",
+            "conteo": 3
+          },
+          {
+            "valor": "Grupo Daltile",
+            "conteo": 3
+          },
+          {
+            "valor": "Allegion",
+            "conteo": 1
+          },
+          {
+            "valor": "Citi",
+            "conteo": 1
+          },
+          {
+            "valor": "Parker Servicios De México",
+            "conteo": 1
+          },
+          {
+            "valor": "Rent A Center (Rac Mèxico Operaciones)",
+            "conteo": 1
+          },
+          {
+            "valor": "Fanosa",
+            "conteo": 1
+          },
+          {
+            "valor": "Novocast",
+            "conteo": 1
+          }
+        ]
+      },
+      "fecha_inicio": {
+        "tipo": "fecha",
+        "distintos": 6,
+        "nulos": 6,
+        "min": "2021-01-01",
+        "max": "2026-10-13"
+      },
+      "fecha_fin": {
+        "tipo": "fecha",
+        "distintos": 3,
+        "nulos": 9,
+        "min": "2026-09-23",
+        "max": "2028-10-30"
+      },
+      "estatus": {
+        "tipo": "texto",
+        "distintos": 2,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "En Curso",
+            "conteo": 7
+          },
+          {
+            "valor": "Por Iniciar",
+            "conteo": 5
+          }
+        ]
+      },
+      "resp_cli": {
+        "tipo": "texto",
+        "distintos": 6,
+        "nulos": 6,
+        "valores": [
+          {
+            "valor": "Andrés Alvarado",
+            "conteo": 1
+          },
+          {
+            "valor": "Hugo Cervantes",
+            "conteo": 1
+          },
+          {
+            "valor": "Sayda Castillo",
+            "conteo": 1
+          },
+          {
+            "valor": "Oziel Juárez",
+            "conteo": 1
+          },
+          {
+            "valor": "Alejandro Valenzuela",
+            "conteo": 1
+          },
+          {
+            "valor": "Agustin Hdez",
+            "conteo": 1
+          }
+        ]
+      },
+      "pm_otc": {
+        "tipo": "texto",
+        "distintos": 2,
+        "nulos": 6,
+        "valores": [
+          {
+            "valor": "Juan José Coronado Bravo",
+            "conteo": 5
+          },
+          {
+            "valor": "José Francisco Mendoza Bazán",
+            "conteo": 1
+          }
+        ]
+      },
+      "version_scd": {
+        "tipo": "numero",
+        "distintos": 1,
+        "nulos": 0,
+        "min": 1.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "1",
+            "conteo": 12
+          }
+        ]
+      },
+      "es_actual": {
+        "tipo": "numero",
+        "distintos": 1,
+        "nulos": 0,
+        "min": 1.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "1",
+            "conteo": 12
+          }
+        ]
+      }
+    }
+  },
+  "dim_rol": {
+    "filas_reales": 1,
+    "filas_totales": 2,
+    "miembro_desconocido": 1,
+    "llave": "sk_rol",
+    "columnas": {
+      "rol_asignado": {
+        "tipo": "texto",
+        "distintos": 1,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "CONSULTOR FUNCIONAL ORACLE EBS SENIOR",
+            "conteo": 1
+          }
+        ]
+      }
+    }
+  },
+  "dim_habilidad": {
+    "filas_reales": 71,
+    "filas_totales": 72,
+    "miembro_desconocido": 1,
+    "llave": "sk_habilidad",
+    "columnas": {
+      "cod_habilidad": {
+        "tipo": "texto",
+        "distintos": 71,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "H0002",
+            "conteo": 1
+          },
+          {
+            "valor": "H0003",
+            "conteo": 1
+          },
+          {
+            "valor": "H0004",
+            "conteo": 1
+          },
+          {
+            "valor": "H0005",
+            "conteo": 1
+          },
+          {
+            "valor": "H0006",
+            "conteo": 1
+          }
+        ]
+      },
+      "descripcion": {
+        "tipo": "texto",
+        "distintos": 58,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "Gl",
+            "conteo": 2
+          },
+          {
+            "valor": "Sla",
+            "conteo": 2
+          },
+          {
+            "valor": "Ce",
+            "conteo": 2
+          },
+          {
+            "valor": "Fa",
+            "conteo": 2
+          },
+          {
+            "valor": "Po",
+            "conteo": 2
+          }
+        ]
+      },
+      "descripcion_unica": {
+        "tipo": "texto",
+        "distintos": 71,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "Gl (Oracle Ebs)",
+            "conteo": 1
+          },
+          {
+            "valor": "Fsg",
+            "conteo": 1
+          },
+          {
+            "valor": "Sla (Oracle Ebs)",
+            "conteo": 1
+          },
+          {
+            "valor": "Ce (Oracle Ebs)",
+            "conteo": 1
+          },
+          {
+            "valor": "Fa (Oracle Ebs)",
+            "conteo": 1
+          }
+        ]
+      },
+      "tecnologia": {
+        "tipo": "texto",
+        "distintos": 6,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Oracle Ebs",
+            "conteo": 30
+          },
+          {
+            "valor": "Plataformas Tecnológicas",
+            "conteo": 20
+          },
+          {
+            "valor": "Oracle Fusion Cloud",
+            "conteo": 17
+          },
+          {
+            "valor": "Otros",
+            "conteo": 2
+          },
+          {
+            "valor": "Idiomas",
+            "conteo": 1
+          },
+          {
+            "valor": "Certificaciones",
+            "conteo": 1
+          }
+        ]
+      },
+      "tipo": {
+        "tipo": "texto",
+        "distintos": 2,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Hard",
+            "conteo": 67
+          },
+          {
+            "valor": "Soft",
+            "conteo": 4
+          }
+        ]
+      },
+      "estatus": {
+        "tipo": "texto",
+        "distintos": 1,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Activo",
+            "conteo": 71
+          }
+        ]
+      },
+      "descripcion_repetida": {
+        "tipo": "numero",
+        "distintos": 2,
+        "nulos": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "valores": [
+          {
+            "valor": "0",
+            "conteo": 45
+          },
+          {
+            "valor": "1",
+            "conteo": 26
+          }
+        ]
+      }
+    }
+  },
+  "dim_activo": {
+    "filas_reales": 123,
+    "filas_totales": 124,
+    "miembro_desconocido": 1,
+    "llave": "sk_activo",
+    "columnas": {
+      "codigo": {
+        "tipo": "texto",
+        "distintos": 123,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "A0001",
+            "conteo": 1
+          },
+          {
+            "valor": "A0002",
+            "conteo": 1
+          },
+          {
+            "valor": "A0003",
+            "conteo": 1
+          },
+          {
+            "valor": "A0004",
+            "conteo": 1
+          },
+          {
+            "valor": "A0005",
+            "conteo": 1
+          }
+        ]
+      },
+      "desc": {
+        "tipo": "texto",
+        "distintos": 2,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Computadora",
+            "conteo": 122
+          },
+          {
+            "valor": "Monitor",
+            "conteo": 1
+          }
+        ]
+      },
+      "tipo": {
+        "tipo": "texto",
+        "distintos": 2,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Laptop",
+            "conteo": 122
+          },
+          {
+            "valor": "Monitor",
+            "conteo": 1
+          }
+        ]
+      },
+      "marca": {
+        "tipo": "texto",
+        "distintos": 5,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Dell",
+            "conteo": 62
+          },
+          {
+            "valor": "HP",
+            "conteo": 26
+          },
+          {
+            "valor": "Lenovo",
+            "conteo": 24
+          },
+          {
+            "valor": "Acer",
+            "conteo": 9
+          },
+          {
+            "valor": "ASUS",
+            "conteo": 2
+          }
+        ]
+      },
+      "modelo": {
+        "tipo": "texto",
+        "distintos": 78,
+        "nulos": 1,
+        "top": [
+          {
+            "valor": "Inspiron Business 3520",
+            "conteo": 20
+          },
+          {
+            "valor": "V14 G2 ITL",
+            "conteo": 5
+          },
+          {
+            "valor": "ELITEBOOK 840 G3",
+            "conteo": 4
+          },
+          {
+            "valor": "HP 240 G8 5U0S4LT",
+            "conteo": 3
+          },
+          {
+            "valor": "VOSTRO 3400",
+            "conteo": 3
+          }
+        ]
+      },
+      "serie": {
+        "tipo": "texto",
+        "distintos": 123,
+        "nulos": 0,
+        "top": [
+          {
+            "valor": "PF3WHKFD",
+            "conteo": 1
+          },
+          {
+            "valor": "5CG1502PSD",
+            "conteo": 1
+          },
+          {
+            "valor": "9P1GLQ2",
+            "conteo": 1
+          },
+          {
+            "valor": "SCG30629G9",
+            "conteo": 1
+          },
+          {
+            "valor": "J5QH554",
+            "conteo": 1
+          }
+        ]
+      },
+      "proveedor": {
+        "tipo": "texto",
+        "distintos": 6,
+        "nulos": 70,
+        "valores": [
+          {
+            "valor": "PCEL",
+            "conteo": 43
+          },
+          {
+            "valor": "DELIVERY EXPERTS",
+            "conteo": 5
+          },
+          {
+            "valor": "ORESA NORTE",
+            "conteo": 2
+          },
+          {
+            "valor": "Amazon",
+            "conteo": 1
+          },
+          {
+            "valor": "CARLOSISAISAINZMARTINEZ",
+            "conteo": 1
+          },
+          {
+            "valor": "COMPUSHOP",
+            "conteo": 1
+          }
+        ]
+      },
+      "fcompra": {
+        "tipo": "fecha",
+        "distintos": 35,
+        "nulos": 70,
+        "min": "2017-04-26",
+        "max": "2025-09-04"
+      },
+      "estatus": {
+        "tipo": "texto",
+        "distintos": 1,
+        "nulos": 0,
+        "valores": [
+          {
+            "valor": "Activo",
+            "conteo": 123
+          }
+        ]
+      },
+      "notas": {
+        "tipo": "texto",
+        "distintos": 5,
+        "nulos": 115,
+        "valores": [
+          {
+            "valor": "NO FUNCIONA",
+            "conteo": 4
+          },
+          {
+            "valor": "\"Memoria: 8 GB DDR4 Procesador: Intel Core i5-7200U 2.5GHz Turbo Boost up 3.1GHz. Disco duro: 1000 GB HDD Version de Windows Office: Window Profesional.\"",
+            "conteo": 1
+          },
+          {
+            "valor": "Se le instalo una Memoria Kingston SODIMM Fury Impact DDR4 ",
+            "conteo": 1
+          },
+          {
+            "valor": "CODIGO DE BARRAS 2650152350",
+            "conteo": 1
+          },
+          {
+            "valor": "Ya no sirve ",
+            "conteo": 1
+          }
+        ]
+      }
+    }
+  }
+}

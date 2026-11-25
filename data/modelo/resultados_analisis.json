@@ -1,0 +1,1131 @@
+{
+  "q1_resumen": {
+    "sql": "WITH activos AS (\n    SELECT *\n    FROM dim_colaborador\n    WHERE estatus = 'Activo'\n),\nasignados AS (\n    SELECT DISTINCT f.sk_colaborador\n    FROM hecho_asignacion f\n    JOIN dim_colaborador c ON c.sk_colaborador = f.sk_colaborador\n    WHERE c.estatus = 'Activo'\n)\nSELECT\n    (SELECT COUNT(*) FROM activos)                                      AS headcount_activo,\n    (SELECT COUNT(*) FROM activos WHERE es_plantilla = 1)               AS plantilla_activa,\n    (SELECT COUNT(*) FROM asignados)                                    AS asignados,\n    (SELECT COUNT(*) FROM activos WHERE es_plantilla = 1\n        AND sk_colaborador NOT IN (SELECT sk_colaborador FROM asignados)) AS banca_plantilla,\n    (SELECT COUNT(*) FROM activos WHERE es_plantilla = 0)               AS familiares,\n    (SELECT COUNT(*) FROM activos\n        WHERE sk_colaborador NOT IN (SELECT sk_colaborador FROM asignados)) AS sin_asignacion_total,\n    ROUND(100.0 * (SELECT COUNT(*) FROM asignados) / (SELECT COUNT(*) FROM activos), 1)            AS utilizacion_headcount_pct,\n    ROUND(100.0 * (SELECT COUNT(*) FROM asignados)\n        / (SELECT COUNT(*) FROM activos WHERE es_plantilla = 1), 1)     AS utilizacion_plantilla_pct;",
+    "filas": [
+      {
+        "headcount_activo": 75,
+        "plantilla_activa": 73,
+        "asignados": 30,
+        "banca_plantilla": 43,
+        "familiares": 2,
+        "sin_asignacion_total": 45,
+        "utilizacion_headcount_pct": 40.0,
+        "utilizacion_plantilla_pct": 41.1
+      }
+    ]
+  },
+  "q1_banca_por_puesto": {
+    "sql": "SELECT\n    COALESCE(puesto, 'Sin puesto capturado') AS puesto,\n    COUNT(*)                                  AS personas,\n    ROUND(SUM(costo_mensual), 2)              AS costo_mensual,\n    ROUND(AVG(dias_en_banca), 0)              AS dias_promedio_en_banca,\n    MAX(dias_en_banca)                        AS dias_maximo_en_banca\nFROM dim_colaborador\nWHERE estatus = 'Activo'\n  AND es_plantilla = 1\n  AND tiene_asignacion_vigente = 0\nGROUP BY 1\nORDER BY personas DESC, costo_mensual DESC;",
+    "filas": [
+      {
+        "puesto": "Sin puesto capturado",
+        "personas": 15,
+        "costo_mensual": 690870.17,
+        "dias_promedio_en_banca": 2593.0,
+        "dias_maximo_en_banca": 5040.0
+      },
+      {
+        "puesto": "CONSULTOR TÉCNICO ORACLE EBS SENIOR",
+        "personas": 4,
+        "costo_mensual": 191765.36,
+        "dias_promedio_en_banca": 3977.0,
+        "dias_maximo_en_banca": 4791.0
+      },
+      {
+        "puesto": "CONSULTOR FUNCIONAL ORACLE EBS SENIOR",
+        "personas": 3,
+        "costo_mensual": 198040.57,
+        "dias_promedio_en_banca": 1992.0,
+        "dias_maximo_en_banca": 2992.0
+      },
+      {
+        "puesto": "CONSULTOR FUNCIONAL ORACLE CLOUD Y EBS SENIOR",
+        "personas": 3,
+        "costo_mensual": 189101.41,
+        "dias_promedio_en_banca": 1479.0,
+        "dias_maximo_en_banca": 3035.0
+      },
+      {
+        "puesto": "CONSULTOR TÉCNICO ORACLE CLOUD SENIOR",
+        "personas": 2,
+        "costo_mensual": 124716.01,
+        "dias_promedio_en_banca": 898.0,
+        "dias_maximo_en_banca": 1138.0
+      },
+      {
+        "puesto": "CONSULTOR TÉCNICO RPA SENIOR",
+        "personas": 2,
+        "costo_mensual": 92092.97,
+        "dias_promedio_en_banca": 1691.0,
+        "dias_maximo_en_banca": 2986.0
+      },
+      {
+        "puesto": "ADMINISTRACIÓN FINANZAS SENIOR",
+        "personas": 2,
+        "costo_mensual": 30043.71,
+        "dias_promedio_en_banca": 3958.0,
+        "dias_maximo_en_banca": 7237.0
+      },
+      {
+        "puesto": "ADMINISTRACIÓN FINANZAS GERENTE",
+        "personas": 2,
+        "costo_mensual": null,
+        "dias_promedio_en_banca": 1715.0,
+        "dias_maximo_en_banca": 3350.0
+      },
+      {
+        "puesto": "CONSULTOR DBA ORACLE SENIOR",
+        "personas": 1,
+        "costo_mensual": 61533.03,
+        "dias_promedio_en_banca": 4885.0,
+        "dias_maximo_en_banca": 4885.0
+      },
+      {
+        "puesto": "CONSULTOR ORACLE CLOUD Y EBS SENIOR",
+        "personas": 1,
+        "costo_mensual": 53000.0,
+        "dias_promedio_en_banca": 1851.0,
+        "dias_maximo_en_banca": 1851.0
+      },
+      {
+        "puesto": "CONSULTOR NETSUITE ORACLE SENIOR",
+        "personas": 1,
+        "costo_mensual": 51116.0,
+        "dias_promedio_en_banca": 128.0,
+        "dias_maximo_en_banca": 128.0
+      },
+      {
+        "puesto": "GERENTE DE PROYECTOS Y OPERACIONES",
+        "personas": 1,
+        "costo_mensual": 49820.0,
+        "dias_promedio_en_banca": 3549.0,
+        "dias_maximo_en_banca": 3549.0
+      },
+      {
+        "puesto": "CONSULTOR TÉCNICO ORACLE CLOUD GERENTE",
+        "personas": 1,
+        "costo_mensual": 45830.21,
+        "dias_promedio_en_banca": 4786.0,
+        "dias_maximo_en_banca": 4786.0
+      },
+      {
+        "puesto": "CONSULTOR TÉCNICO ORACLE EBS Y CLOUD SENIOR",
+        "personas": 1,
+        "costo_mensual": 43032.96,
+        "dias_promedio_en_banca": 1334.0,
+        "dias_maximo_en_banca": 1334.0
+      },
+      {
+        "puesto": "GERENTE RECURSOS HUMANOS",
+        "personas": 1,
+        "costo_mensual": 32694.32,
+        "dias_promedio_en_banca": 522.0,
+        "dias_maximo_en_banca": 522.0
+      },
+      {
+        "puesto": "CONSULTOR TÉCNICO JAVA SENIOR",
+        "personas": 1,
+        "costo_mensual": 28622.64,
+        "dias_promedio_en_banca": 445.0,
+        "dias_maximo_en_banca": 445.0
+      },
+      {
+        "puesto": "ASESOR COMERCIAL SENIOR",
+        "personas": 1,
+        "costo_mensual": 22498.87,
+        "dias_promedio_en_banca": 770.0,
+        "dias_maximo_en_banca": 770.0
+      },
+      {
+        "puesto": "CONSULTOR TÉCNICO .NET ANALISTA",
+        "personas": 1,
+        "costo_mensual": 7450.1,
+        "dias_promedio_en_banca": 45.0,
+        "dias_maximo_en_banca": 45.0
+      }
+    ]
+  },
+  "q1_banca_detalle": {
+    "sql": "SELECT\n    id_colaborador,\n    COALESCE(puesto, 'Sin puesto capturado') AS puesto,\n    COALESCE(departamento, 'Sin departamento') AS departamento,\n    dias_en_banca,\n    costo_mensual\nFROM dim_colaborador\nWHERE estatus = 'Activo'\n  AND es_plantilla = 1\n  AND tiene_asignacion_vigente = 0\nORDER BY dias_en_banca DESC\nLIMIT 15;",
+    "filas": [
+      {
+        "id_colaborador": "OTC074",
+        "puesto": "ADMINISTRACIÓN FINANZAS SENIOR",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 7237.0,
+        "costo_mensual": 30043.71
+      },
+      {
+        "id_colaborador": "OTC063",
+        "puesto": "Sin puesto capturado",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 5040.0,
+        "costo_mensual": 48240.21
+      },
+      {
+        "id_colaborador": "OTC073",
+        "puesto": "Sin puesto capturado",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 4953.0,
+        "costo_mensual": null
+      },
+      {
+        "id_colaborador": "OTC034",
+        "puesto": "CONSULTOR DBA ORACLE SENIOR",
+        "departamento": "Operaciones y Soporte",
+        "dias_en_banca": 4885.0,
+        "costo_mensual": 61533.03
+      },
+      {
+        "id_colaborador": "OTC099",
+        "puesto": "CONSULTOR TÉCNICO ORACLE EBS SENIOR",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 4791.0,
+        "costo_mensual": 55485.37
+      },
+      {
+        "id_colaborador": "OTC032",
+        "puesto": "CONSULTOR TÉCNICO ORACLE CLOUD GERENTE",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 4786.0,
+        "costo_mensual": 45830.21
+      },
+      {
+        "id_colaborador": "OTC085",
+        "puesto": "Sin puesto capturado",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 4414.0,
+        "costo_mensual": 36290.21
+      },
+      {
+        "id_colaborador": "OTC017",
+        "puesto": "CONSULTOR TÉCNICO ORACLE EBS SENIOR",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 3973.0,
+        "costo_mensual": 47691.4
+      },
+      {
+        "id_colaborador": "OTC096",
+        "puesto": "Sin puesto capturado",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 3846.0,
+        "costo_mensual": 57706.41
+      },
+      {
+        "id_colaborador": "OTC003",
+        "puesto": "Sin puesto capturado",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 3813.0,
+        "costo_mensual": 59730.7
+      },
+      {
+        "id_colaborador": "OTC101",
+        "puesto": "CONSULTOR TÉCNICO ORACLE EBS SENIOR",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 3756.0,
+        "costo_mensual": 62262.38
+      },
+      {
+        "id_colaborador": "OTC023",
+        "puesto": "GERENTE DE PROYECTOS Y OPERACIONES",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 3549.0,
+        "costo_mensual": 49820.0
+      },
+      {
+        "id_colaborador": "OTC090",
+        "puesto": "CONSULTOR TÉCNICO ORACLE EBS SENIOR",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 3386.0,
+        "costo_mensual": 26326.21
+      },
+      {
+        "id_colaborador": "OTC015",
+        "puesto": "Sin puesto capturado",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 3350.0,
+        "costo_mensual": 45742.87
+      },
+      {
+        "id_colaborador": "OTC080",
+        "puesto": "ADMINISTRACIÓN FINANZAS GERENTE",
+        "departamento": "Sin departamento",
+        "dias_en_banca": 3350.0,
+        "costo_mensual": null
+      }
+    ]
+  },
+  "q1_concentracion_cliente": {
+    "sql": "SELECT\n    cliente,\n    COUNT(DISTINCT id_colaborador)                   AS personas_asignadas,\n    ROUND(SUM(costo_mensual_asignado), 2)            AS costo_mensual_asignado,\n    ROUND(100.0 * COUNT(DISTINCT id_colaborador)\n        / (SELECT COUNT(DISTINCT sk_colaborador) FROM hecho_asignacion), 1) AS pct_de_asignados\nFROM vw_asignacion\nGROUP BY cliente\nORDER BY personas_asignadas DESC;",
+    "filas": [
+      {
+        "cliente": "Metalsa",
+        "personas_asignadas": 23,
+        "costo_mensual_asignado": 1637865.78,
+        "pct_de_asignados": 76.7
+      },
+      {
+        "cliente": "Allegion",
+        "personas_asignadas": 5,
+        "costo_mensual_asignado": 164929.26,
+        "pct_de_asignados": 16.7
+      },
+      {
+        "cliente": "Grupo Daltile",
+        "personas_asignadas": 3,
+        "costo_mensual_asignado": 222848.98,
+        "pct_de_asignados": 10.0
+      }
+    ]
+  },
+  "q2_vencimientos": {
+    "sql": "SELECT\n    id_asignacion,\n    id_colaborador,\n    cliente,\n    proyecto,\n    fecha_inicio,\n    fecha_fin,\n    dias_para_fin,\n    CASE\n        WHEN dias_para_fin <= 30 THEN '≤ 30 días'\n        WHEN dias_para_fin <= 60 THEN '31–60 días'\n        WHEN dias_para_fin <= 90 THEN '61–90 días'\n        ELSE 'Más de 90 días'\n    END AS ventana\nFROM vw_asignacion\nWHERE fecha_fin IS NOT NULL\nORDER BY dias_para_fin;",
+    "filas": [
+      {
+        "id_asignacion": 5,
+        "id_colaborador": "OTC014",
+        "cliente": "Grupo Daltile",
+        "proyecto": "Marazzi",
+        "fecha_inicio": "2026-01-01",
+        "fecha_fin": "2027-01-01",
+        "dias_para_fin": 42,
+        "ventana": "31–60 días"
+      },
+      {
+        "id_asignacion": 10,
+        "id_colaborador": "OTC050",
+        "cliente": "Grupo Daltile",
+        "proyecto": "Marazzi",
+        "fecha_inicio": "2026-01-01",
+        "fecha_fin": "2027-01-01",
+        "dias_para_fin": 42,
+        "ventana": "31–60 días"
+      },
+      {
+        "id_asignacion": 23,
+        "id_colaborador": "OTC095",
+        "cliente": "Grupo Daltile",
+        "proyecto": "Marazzi",
+        "fecha_inicio": "2026-01-01",
+        "fecha_fin": "2027-01-01",
+        "dias_para_fin": 42,
+        "ventana": "31–60 días"
+      },
+      {
+        "id_asignacion": 28,
+        "id_colaborador": "OTC104",
+        "cliente": "Allegion",
+        "proyecto": "Migración Ebs",
+        "fecha_inicio": "2026-10-13",
+        "fecha_fin": "2027-07-01",
+        "dias_para_fin": 223,
+        "ventana": "Más de 90 días"
+      },
+      {
+        "id_asignacion": 29,
+        "id_colaborador": "OTC105",
+        "cliente": "Allegion",
+        "proyecto": "Migración Ebs",
+        "fecha_inicio": "2026-10-13",
+        "fecha_fin": "2027-07-01",
+        "dias_para_fin": 223,
+        "ventana": "Más de 90 días"
+      },
+      {
+        "id_asignacion": 30,
+        "id_colaborador": "OTC106",
+        "cliente": "Allegion",
+        "proyecto": "Migración Ebs",
+        "fecha_inicio": "2026-10-13",
+        "fecha_fin": "2027-07-01",
+        "dias_para_fin": 223,
+        "ventana": "Más de 90 días"
+      },
+      {
+        "id_asignacion": 31,
+        "id_colaborador": "OTC107",
+        "cliente": "Allegion",
+        "proyecto": "Migración Ebs",
+        "fecha_inicio": "2026-10-13",
+        "fecha_fin": "2028-07-01",
+        "dias_para_fin": 589,
+        "ventana": "Más de 90 días"
+      }
+    ]
+  },
+  "q2_resumen": {
+    "sql": "SELECT\n    COUNT(*)                                                        AS asignaciones_totales,\n    SUM(sk_tiempo_fin = 0)                                          AS sin_fecha_fin,\n    SUM(sk_tiempo_fin <> 0)                                         AS con_fecha_fin,\n    SUM(dias_para_fin BETWEEN 0 AND 30)                             AS vencen_30_dias,\n    SUM(dias_para_fin BETWEEN 31 AND 60)                            AS vencen_60_dias,\n    SUM(dias_para_fin BETWEEN 61 AND 90)                            AS vencen_90_dias,\n    SUM(dias_para_fin > 90)                                         AS despues_de_90_dias\nFROM hecho_asignacion;",
+    "filas": [
+      {
+        "asignaciones_totales": 31,
+        "sin_fecha_fin": 24,
+        "con_fecha_fin": 7,
+        "vencen_30_dias": 0,
+        "vencen_60_dias": 3,
+        "vencen_90_dias": 0,
+        "despues_de_90_dias": 4
+      }
+    ]
+  },
+  "q3_costos": {
+    "sql": "SELECT\n    (SELECT ROUND(SUM(costo_mensual), 2) FROM dim_colaborador WHERE estatus = 'Activo') AS nomina_activa,\n    (SELECT ROUND(SUM(costo_mensual), 2) FROM dim_colaborador\n        WHERE estatus = 'Activo' AND tiene_asignacion_vigente = 1)                       AS costo_asignado_unico,\n    (SELECT ROUND(SUM(costo_mensual_asignado), 2) FROM hecho_asignacion)                 AS costo_asignado_filas,\n    (SELECT ROUND(SUM(costo_mensual), 2) FROM dim_colaborador\n        WHERE estatus = 'Activo' AND es_plantilla = 1 AND tiene_asignacion_vigente = 0)  AS costo_banca_plantilla,\n    (SELECT ROUND(SUM(costo_mensual), 2) FROM dim_colaborador\n        WHERE estatus = 'Activo' AND es_plantilla = 0)                                   AS costo_familiares,\n    (SELECT ROUND(SUM(costo_mensual), 2) FROM dim_colaborador\n        WHERE estatus = 'Activo' AND tiene_asignacion_vigente = 0)                       AS costo_sin_asignacion,\n    (SELECT COUNT(*) FROM dim_colaborador\n        WHERE estatus = 'Activo' AND es_plantilla = 1 AND tiene_asignacion_vigente = 0)  AS banca_plantilla,\n    (SELECT COUNT(*) FROM dim_colaborador\n        WHERE estatus = 'Activo' AND tiene_asignacion_vigente = 0)                       AS sin_asignacion_total,\n    (SELECT COUNT(*) FROM dim_colaborador\n        WHERE estatus = 'Activo' AND tiene_asignacion_vigente = 0 AND costo_mensual IS NULL) AS sin_asignacion_sin_costo,\n    ROUND(100.0 * (SELECT SUM(costo_mensual) FROM dim_colaborador\n        WHERE estatus = 'Activo' AND tiene_asignacion_vigente = 1)\n        / (SELECT SUM(costo_mensual) FROM dim_colaborador WHERE estatus = 'Activo'), 1)  AS pct_nomina_asignada,\n    ROUND(100.0 * (SELECT SUM(costo_mensual) FROM dim_colaborador\n        WHERE estatus = 'Activo' AND es_plantilla = 1 AND tiene_asignacion_vigente = 0)\n        / (SELECT SUM(costo_mensual) FROM dim_colaborador WHERE estatus = 'Activo'), 1)  AS pct_nomina_banca,\n    (SELECT COUNT(*) FROM dim_colaborador WHERE estatus = 'Activo' AND sobreasignado = 1) AS sobreasignados;",
+    "filas": [
+      {
+        "nomina_activa": 3918864.4,
+        "costo_asignado_unico": 1924710.62,
+        "costo_asignado_filas": 2025644.02,
+        "costo_banca_plantilla": 1912228.33,
+        "costo_familiares": 81925.45,
+        "costo_sin_asignacion": 1994153.78,
+        "banca_plantilla": 43,
+        "sin_asignacion_total": 45,
+        "sin_asignacion_sin_costo": 5,
+        "pct_nomina_asignada": 49.1,
+        "pct_nomina_banca": 48.8,
+        "sobreasignados": 1
+      }
+    ]
+  },
+  "q3_por_cliente": {
+    "sql": "SELECT\n    cliente,\n    COUNT(*)                                      AS asignaciones,\n    COUNT(DISTINCT id_colaborador)                AS personas,\n    ROUND(SUM(costo_mensual_asignado), 2)         AS costo_mensual_asignado,\n    ROUND(100.0 * SUM(costo_mensual_asignado)\n        / (SELECT SUM(costo_mensual_asignado) FROM hecho_asignacion), 1) AS pct_del_costo_asignado\nFROM vw_asignacion\nGROUP BY cliente\nORDER BY costo_mensual_asignado DESC;",
+    "filas": [
+      {
+        "cliente": "Metalsa",
+        "asignaciones": 23,
+        "personas": 23,
+        "costo_mensual_asignado": 1637865.78,
+        "pct_del_costo_asignado": 80.9
+      },
+      {
+        "cliente": "Grupo Daltile",
+        "asignaciones": 3,
+        "personas": 3,
+        "costo_mensual_asignado": 222848.98,
+        "pct_del_costo_asignado": 11.0
+      },
+      {
+        "cliente": "Allegion",
+        "asignaciones": 5,
+        "personas": 5,
+        "costo_mensual_asignado": 164929.26,
+        "pct_del_costo_asignado": 8.1
+      }
+    ]
+  },
+  "q4_costo_hora_puesto": {
+    "sql": "SELECT\n    COALESCE(puesto_catalogo, 'No especificado') AS puesto,\n    COUNT(*)                                     AS asignaciones,\n    COUNT(DISTINCT id_colaborador)               AS personas,\n    ROUND(AVG(costo_hora_asignado), 2)           AS costo_hora_promedio,\n    ROUND(MIN(costo_hora_asignado), 2)           AS costo_hora_minimo,\n    ROUND(MAX(costo_hora_asignado), 2)           AS costo_hora_maximo,\n    ROUND(SUM(costo_mensual_asignado), 2)        AS costo_mensual_asignado\nFROM vw_asignacion\nGROUP BY 1\nORDER BY asignaciones DESC, costo_hora_promedio DESC;",
+    "filas": [
+      {
+        "puesto": "No especificado",
+        "asignaciones": 14,
+        "personas": 14,
+        "costo_hora_promedio": 446.89,
+        "costo_hora_minimo": 212.41,
+        "costo_hora_maximo": 810.56,
+        "costo_mensual_asignado": 1001034.75
+      },
+      {
+        "puesto": "CONSULTOR FUNCIONAL ORACLE EBS SENIOR",
+        "asignaciones": 4,
+        "personas": 4,
+        "costo_hora_promedio": 162.31,
+        "costo_hora_minimo": 87.65,
+        "costo_hora_maximo": 187.2,
+        "costo_mensual_asignado": 103880.64
+      },
+      {
+        "puesto": "CONSULTOR FUNCIONAL ORACLE CLOUD SENIOR",
+        "asignaciones": 3,
+        "personas": 3,
+        "costo_hora_promedio": 412.08,
+        "costo_hora_minimo": 322.33,
+        "costo_hora_maximo": 542.67,
+        "costo_mensual_asignado": 197797.47
+      },
+      {
+        "puesto": "GERENTE DE PROYECTOS Y OPERACIONES",
+        "asignaciones": 2,
+        "personas": 1,
+        "costo_hora_promedio": 630.83,
+        "costo_hora_minimo": 630.83,
+        "costo_hora_maximo": 630.83,
+        "costo_mensual_asignado": 201866.8
+      },
+      {
+        "puesto": "CONSULTOR TÉCNICO JAVA SENIOR",
+        "asignaciones": 2,
+        "personas": 2,
+        "costo_hora_promedio": 418.85,
+        "costo_hora_minimo": 418.51,
+        "costo_hora_maximo": 419.18,
+        "costo_mensual_asignado": 134030.48
+      },
+      {
+        "puesto": "CONSULTOR DBA ORACLE SENIOR",
+        "asignaciones": 1,
+        "personas": 1,
+        "costo_hora_promedio": 662.81,
+        "costo_hora_minimo": 662.81,
+        "costo_hora_maximo": 662.81,
+        "costo_mensual_asignado": 106049.9
+      },
+      {
+        "puesto": "CONSULTOR TÉCNICO WEB SENIOR",
+        "asignaciones": 1,
+        "personas": 1,
+        "costo_hora_promedio": 461.01,
+        "costo_hora_minimo": 461.01,
+        "costo_hora_maximo": 461.01,
+        "costo_mensual_asignado": 73761.12
+      },
+      {
+        "puesto": "CONSULTOR FUNCIONAL ORACLE CLOUD Y EBS SENIOR",
+        "asignaciones": 1,
+        "personas": 1,
+        "costo_hora_promedio": 448.06,
+        "costo_hora_minimo": 448.06,
+        "costo_hora_maximo": 448.06,
+        "costo_mensual_asignado": 71689.12
+      },
+      {
+        "puesto": "CONSULTOR TÉCNICO ORACLE EBS SENIOR",
+        "asignaciones": 1,
+        "personas": 1,
+        "costo_hora_promedio": 381.55,
+        "costo_hora_minimo": 381.55,
+        "costo_hora_maximo": 381.55,
+        "costo_mensual_asignado": 61048.62
+      },
+      {
+        "puesto": "CONSULTOR KRONOS SENIOR",
+        "asignaciones": 1,
+        "personas": 1,
+        "costo_hora_promedio": 238.01,
+        "costo_hora_minimo": 238.01,
+        "costo_hora_maximo": 238.01,
+        "costo_mensual_asignado": 38080.8
+      },
+      {
+        "puesto": "CONSULTOR FUNCIONAL ORACLE CLOUD Y EBS ANALISTA",
+        "asignaciones": 1,
+        "personas": 1,
+        "costo_hora_promedio": 227.53,
+        "costo_hora_minimo": 227.53,
+        "costo_hora_maximo": 227.53,
+        "costo_mensual_asignado": 36404.32
+      }
+    ]
+  },
+  "q4_cobertura": {
+    "sql": "SELECT\n    COUNT(*)                            AS asignaciones,\n    SUM(sk_puesto = 0)                  AS sin_puesto,\n    SUM(sk_rol = 0)                     AS sin_rol,\n    SUM(costo_hora_asignado IS NULL)    AS sin_costo_hora,\n    ROUND(AVG(costo_hora_asignado), 2)  AS costo_hora_promedio_global,\n    ROUND(MIN(costo_hora_asignado), 2)  AS minimo,\n    ROUND(MAX(costo_hora_asignado), 2)  AS maximo\nFROM hecho_asignacion;",
+    "filas": [
+      {
+        "asignaciones": 31,
+        "sin_puesto": 14,
+        "sin_rol": 29,
+        "sin_costo_hora": 0,
+        "costo_hora_promedio_global": 408.4,
+        "minimo": 87.65,
+        "maximo": 810.56
+      }
+    ]
+  },
+  "q5_bloqueo": {
+    "sql": "SELECT\n    COUNT(*)                            AS asignaciones,\n    SUM(ingreso_facturable IS NOT NULL) AS con_ingreso_facturable,\n    SUM(margen IS NOT NULL)             AS con_margen,\n    ROUND(SUM(costo_mensual_asignado), 2) AS costo_mensual_asignado\nFROM hecho_asignacion;",
+    "filas": [
+      {
+        "asignaciones": 31,
+        "con_ingreso_facturable": 0,
+        "con_margen": 0,
+        "costo_mensual_asignado": 2025644.02
+      }
+    ]
+  },
+  "q5_costo_por_proyecto": {
+    "sql": "SELECT\n    cliente,\n    proyecto,\n    COUNT(*)                              AS asignaciones,\n    COUNT(DISTINCT id_colaborador)        AS personas,\n    ROUND(SUM(costo_mensual_asignado), 2) AS costo_mensual_asignado,\n    MIN(fecha_inicio)                     AS primer_inicio,\n    MAX(fecha_fin)                        AS ultimo_fin\nFROM vw_asignacion\nGROUP BY cliente, proyecto\nORDER BY costo_mensual_asignado DESC;",
+    "filas": [
+      {
+        "cliente": "Metalsa",
+        "proyecto": "Asignación Indefinida",
+        "asignaciones": 18,
+        "personas": 18,
+        "costo_mensual_asignado": 1319330.43,
+        "primer_inicio": null,
+        "ultimo_fin": null
+      },
+      {
+        "cliente": "Metalsa",
+        "proyecto": "Soporte Ams Manufacta",
+        "asignaciones": 5,
+        "personas": 5,
+        "costo_mensual_asignado": 318535.35,
+        "primer_inicio": "2025-11-03",
+        "ultimo_fin": null
+      },
+      {
+        "cliente": "Grupo Daltile",
+        "proyecto": "Marazzi",
+        "asignaciones": 3,
+        "personas": 3,
+        "costo_mensual_asignado": 222848.98,
+        "primer_inicio": "2026-01-01",
+        "ultimo_fin": "2027-01-01"
+      },
+      {
+        "cliente": "Allegion",
+        "proyecto": "Migración Ebs",
+        "asignaciones": 5,
+        "personas": 5,
+        "costo_mensual_asignado": 164929.26,
+        "primer_inicio": "2026-10-13",
+        "ultimo_fin": "2028-07-01"
+      }
+    ]
+  },
+  "q6_tecnologia": {
+    "sql": "SELECT\n    h.tecnologia,\n    COUNT(DISTINCT h.cod_habilidad)                       AS habilidades,\n    COUNT(f.sk_habilidad_hecho)                           AS evaluaciones,\n    COALESCE(SUM(f.nivel_num >= 3), 0)                    AS expertos,\n    ROUND(100.0 * COALESCE(SUM(f.nivel_num >= 3), 0)\n        / NULLIF(COUNT(f.sk_habilidad_hecho), 0), 1)      AS pct_expertos\nFROM dim_habilidad h\nLEFT JOIN hecho_habilidad f\n       ON f.sk_habilidad = h.sk_habilidad\n      AND f.sk_colaborador <> 0\nWHERE h.sk_habilidad <> 0\nGROUP BY h.tecnologia\nORDER BY evaluaciones DESC;",
+    "filas": [
+      {
+        "tecnologia": "Oracle Ebs",
+        "habilidades": 30,
+        "evaluaciones": 645,
+        "expertos": 182,
+        "pct_expertos": 28.2
+      },
+      {
+        "tecnologia": "Plataformas Tecnológicas",
+        "habilidades": 20,
+        "evaluaciones": 469,
+        "expertos": 156,
+        "pct_expertos": 33.3
+      },
+      {
+        "tecnologia": "Oracle Fusion Cloud",
+        "habilidades": 17,
+        "evaluaciones": 349,
+        "expertos": 117,
+        "pct_expertos": 33.5
+      },
+      {
+        "tecnologia": "Idiomas",
+        "habilidades": 1,
+        "evaluaciones": 54,
+        "expertos": 7,
+        "pct_expertos": 13.0
+      },
+      {
+        "tecnologia": "Certificaciones",
+        "habilidades": 1,
+        "evaluaciones": 12,
+        "expertos": 12,
+        "pct_expertos": 100.0
+      },
+      {
+        "tecnologia": "Otros",
+        "habilidades": 2,
+        "evaluaciones": 0,
+        "expertos": 0,
+        "pct_expertos": null
+      }
+    ]
+  },
+  "q6_niveles": {
+    "sql": "SELECT\n    nivel_txt,\n    COUNT(*)                                                          AS evaluaciones,\n    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM hecho_habilidad\n        WHERE sk_colaborador <> 0), 1)                                AS pct\nFROM hecho_habilidad\nWHERE sk_colaborador <> 0\nGROUP BY nivel_txt\nORDER BY nivel_num;",
+    "filas": [
+      {
+        "nivel_txt": "Básico",
+        "evaluaciones": 686,
+        "pct": 44.9
+      },
+      {
+        "nivel_txt": "Intermedio",
+        "evaluaciones": 369,
+        "pct": 24.1
+      },
+      {
+        "nivel_txt": "Avanzado",
+        "evaluaciones": 230,
+        "pct": 15.0
+      },
+      {
+        "nivel_txt": "Experto",
+        "evaluaciones": 244,
+        "pct": 16.0
+      }
+    ]
+  },
+  "q6_riesgo": {
+    "sql": "SELECT\n    h.cod_habilidad,\n    h.descripcion_unica,\n    h.tecnologia,\n    COUNT(f.sk_habilidad_hecho)             AS evaluados,\n    COALESCE(SUM(f.nivel_num >= 3), 0)      AS expertos\nFROM dim_habilidad h\nLEFT JOIN hecho_habilidad f\n       ON f.sk_habilidad = h.sk_habilidad\n      AND f.sk_colaborador <> 0\nWHERE h.sk_habilidad <> 0\nGROUP BY h.cod_habilidad, h.descripcion_unica, h.tecnologia\nHAVING COALESCE(SUM(f.nivel_num >= 3), 0) <= 1\nORDER BY expertos, evaluados DESC;",
+    "filas": [
+      {
+        "cod_habilidad": "H0023",
+        "descripcion_unica": "Opm",
+        "tecnologia": "Oracle Ebs",
+        "evaluados": 12,
+        "expertos": 0
+      },
+      {
+        "cod_habilidad": "H0062",
+        "descripcion_unica": "Fuse",
+        "tecnologia": "Plataformas Tecnológicas",
+        "evaluados": 10,
+        "expertos": 0
+      },
+      {
+        "cod_habilidad": "H0028",
+        "descripcion_unica": "Taleo",
+        "tecnologia": "Oracle Ebs",
+        "evaluados": 9,
+        "expertos": 0
+      },
+      {
+        "cod_habilidad": "S0004",
+        "descripcion_unica": "Empatia",
+        "tecnologia": "Otros",
+        "evaluados": 0,
+        "expertos": 0
+      },
+      {
+        "cod_habilidad": "S0005",
+        "descripcion_unica": "Manejo De Conflictos",
+        "tecnologia": "Otros",
+        "evaluados": 0,
+        "expertos": 0
+      },
+      {
+        "cod_habilidad": "H0008",
+        "descripcion_unica": "Ebtax",
+        "tecnologia": "Oracle Ebs",
+        "evaluados": 20,
+        "expertos": 1
+      },
+      {
+        "cod_habilidad": "H0007",
+        "descripcion_unica": "Xtr",
+        "tecnologia": "Oracle Ebs",
+        "evaluados": 15,
+        "expertos": 1
+      },
+      {
+        "cod_habilidad": "H0043",
+        "descripcion_unica": "Landed Cost",
+        "tecnologia": "Oracle Fusion Cloud",
+        "evaluados": 15,
+        "expertos": 1
+      },
+      {
+        "cod_habilidad": "H0045",
+        "descripcion_unica": "Mfg (Oracle Fusion Cloud)",
+        "tecnologia": "Oracle Fusion Cloud",
+        "evaluados": 14,
+        "expertos": 1
+      }
+    ]
+  },
+  "q6_cobertura": {
+    "sql": "SELECT\n    (SELECT COUNT(*) FROM dim_colaborador WHERE estatus = 'Activo')            AS activos,\n    (SELECT COUNT(DISTINCT sk_colaborador) FROM hecho_habilidad\n        WHERE sk_colaborador <> 0)                                             AS con_matriz,\n    (SELECT COUNT(*) FROM dim_colaborador c WHERE c.estatus = 'Activo'\n        AND NOT EXISTS (SELECT 1 FROM hecho_habilidad f\n                        WHERE f.sk_colaborador = c.sk_colaborador))            AS activos_sin_matriz,\n    (SELECT COUNT(*) FROM hecho_habilidad)                                     AS evaluaciones_totales,\n    (SELECT COUNT(*) FROM hecho_habilidad WHERE sk_colaborador = 0)           AS evaluaciones_sin_persona,\n    (SELECT COUNT(*) FROM dim_habilidad WHERE sk_habilidad <> 0)               AS habilidades_catalogo;",
+    "filas": [
+      {
+        "activos": 75,
+        "con_matriz": 54,
+        "activos_sin_matriz": 28,
+        "evaluaciones_totales": 1539,
+        "evaluaciones_sin_persona": 10,
+        "habilidades_catalogo": 71
+      }
+    ]
+  },
+  "q7_resumen": {
+    "sql": "SELECT\n    COUNT(*)                                                    AS personas,\n    SUM(estatus = 'Activo')                                     AS activos,\n    SUM(estatus = 'Baja')                                       AS bajas,\n    ROUND(100.0 * SUM(estatus = 'Baja') / COUNT(*), 1)          AS pct_bajas,\n    SUM(estatus = 'Baja' AND fecha_baja IS NULL)                AS bajas_sin_fecha,\n    SUM(estatus = 'Baja' AND baja_primer_anio = 1)              AS bajas_primer_anio,\n    ROUND(AVG(CASE WHEN estatus = 'Baja' THEN antiguedad_meses END), 1) AS antiguedad_promedio_bajas_meses\nFROM dim_colaborador\nWHERE sk_colaborador <> 0;",
+    "filas": [
+      {
+        "personas": 107,
+        "activos": 75,
+        "bajas": 32,
+        "pct_bajas": 29.9,
+        "bajas_sin_fecha": 18,
+        "bajas_primer_anio": 7,
+        "antiguedad_promedio_bajas_meses": 25.2
+      }
+    ]
+  },
+  "q7_cohortes": {
+    "sql": "SELECT\n    substr(fecha_incorporacion, 1, 4)                       AS anio_ingreso,\n    COUNT(*)                                                AS ingresos,\n    SUM(estatus = 'Baja')                                   AS bajas,\n    ROUND(100.0 * SUM(estatus = 'Baja') / COUNT(*), 1)      AS pct_baja,\n    SUM(estatus = 'Baja' AND baja_primer_anio = 1)          AS bajas_primer_anio,\n    ROUND(AVG(CASE WHEN estatus = 'Baja' THEN antiguedad_meses END), 1) AS permanencia_promedio_meses\nFROM dim_colaborador\nWHERE fecha_incorporacion IS NOT NULL\nGROUP BY 1\nORDER BY 1 DESC;",
+    "filas": [
+      {
+        "anio_ingreso": "2026",
+        "ingresos": 15,
+        "bajas": 6,
+        "pct_baja": 40.0,
+        "bajas_primer_anio": 6,
+        "permanencia_promedio_meses": 4.0
+      },
+      {
+        "anio_ingreso": "2025",
+        "ingresos": 20,
+        "bajas": 12,
+        "pct_baja": 60.0,
+        "bajas_primer_anio": 1,
+        "permanencia_promedio_meses": 15.2
+      },
+      {
+        "anio_ingreso": "2024",
+        "ingresos": 20,
+        "bajas": 7,
+        "pct_baja": 35.0,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": 28.2
+      },
+      {
+        "anio_ingreso": "2023",
+        "ingresos": 10,
+        "bajas": 3,
+        "pct_baja": 30.0,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": 38.5
+      },
+      {
+        "anio_ingreso": "2022",
+        "ingresos": 7,
+        "bajas": 2,
+        "pct_baja": 28.6,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": 50.7
+      },
+      {
+        "anio_ingreso": "2021",
+        "ingresos": 5,
+        "bajas": 1,
+        "pct_baja": 20.0,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": 67.5
+      },
+      {
+        "anio_ingreso": "2020",
+        "ingresos": 2,
+        "bajas": 0,
+        "pct_baja": 0.0,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": null
+      },
+      {
+        "anio_ingreso": "2018",
+        "ingresos": 4,
+        "bajas": 0,
+        "pct_baja": 0.0,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": null
+      },
+      {
+        "anio_ingreso": "2017",
+        "ingresos": 6,
+        "bajas": 1,
+        "pct_baja": 16.7,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": 118.4
+      },
+      {
+        "anio_ingreso": "2016",
+        "ingresos": 6,
+        "bajas": 0,
+        "pct_baja": 0.0,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": null
+      },
+      {
+        "anio_ingreso": "2015",
+        "ingresos": 2,
+        "bajas": 0,
+        "pct_baja": 0.0,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": null
+      },
+      {
+        "anio_ingreso": "2014",
+        "ingresos": 1,
+        "bajas": 0,
+        "pct_baja": 0.0,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": null
+      },
+      {
+        "anio_ingreso": "2013",
+        "ingresos": 6,
+        "bajas": 0,
+        "pct_baja": 0.0,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": null
+      },
+      {
+        "anio_ingreso": "2007",
+        "ingresos": 1,
+        "bajas": 0,
+        "pct_baja": 0.0,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": null
+      },
+      {
+        "anio_ingreso": "2003",
+        "ingresos": 1,
+        "bajas": 0,
+        "pct_baja": 0.0,
+        "bajas_primer_anio": 0,
+        "permanencia_promedio_meses": null
+      }
+    ]
+  },
+  "q7_por_nomina": {
+    "sql": "SELECT\n    COALESCE(tipo_nomina, 'Sin esquema') AS tipo_nomina,\n    COUNT(*)                             AS personas,\n    SUM(estatus = 'Baja')                AS bajas,\n    ROUND(100.0 * SUM(estatus = 'Baja') / COUNT(*), 1) AS pct_baja\nFROM dim_colaborador\nWHERE sk_colaborador <> 0\nGROUP BY 1\nORDER BY bajas DESC, personas DESC;",
+    "filas": [
+      {
+        "tipo_nomina": "MAGNESON-SINDICATO",
+        "personas": 20,
+        "bajas": 10,
+        "pct_baja": 50.0
+      },
+      {
+        "tipo_nomina": "SMR",
+        "personas": 36,
+        "bajas": 7,
+        "pct_baja": 19.4
+      },
+      {
+        "tipo_nomina": "Sin esquema",
+        "personas": 6,
+        "bajas": 6,
+        "pct_baja": 100.0
+      },
+      {
+        "tipo_nomina": "OTC 100%",
+        "personas": 18,
+        "bajas": 4,
+        "pct_baja": 22.2
+      },
+      {
+        "tipo_nomina": "XERES OT-SINDICATO",
+        "personas": 10,
+        "bajas": 4,
+        "pct_baja": 40.0
+      },
+      {
+        "tipo_nomina": "EXTRANJERO",
+        "personas": 1,
+        "bajas": 1,
+        "pct_baja": 100.0
+      },
+      {
+        "tipo_nomina": "OTC-SINDICATO (SMR)",
+        "personas": 10,
+        "bajas": 0,
+        "pct_baja": 0.0
+      },
+      {
+        "tipo_nomina": "MODALIDAD 40-SMR",
+        "personas": 3,
+        "bajas": 0,
+        "pct_baja": 0.0
+      },
+      {
+        "tipo_nomina": "ADMINISTRATIVA",
+        "personas": 2,
+        "bajas": 0,
+        "pct_baja": 0.0
+      },
+      {
+        "tipo_nomina": "IRAZU/ASIMILADOS",
+        "personas": 1,
+        "bajas": 0,
+        "pct_baja": 0.0
+      }
+    ]
+  },
+  "q8_resumen": {
+    "sql": "SELECT\n    COUNT(*)                              AS activos,\n    SUM(costo IS NULL)                    AS sin_costo,\n    SUM(sk_colaborador = 0)               AS sin_resguardo,\n    SUM(pendiente_recuperar = 1)          AS pendientes_recuperar,\n    ROUND(SUM(costo), 2)                  AS valor_inventario_conocido,\n    ROUND(SUM(costo_pendiente), 2)        AS valor_pendiente_recuperar,\n    SUM(costo IS NOT NULL AND pendiente_recuperar = 1) AS pendientes_con_costo\nFROM hecho_activo;",
+    "filas": [
+      {
+        "activos": 123,
+        "sin_costo": 70,
+        "sin_resguardo": 32,
+        "pendientes_recuperar": 9,
+        "valor_inventario_conocido": 567915.55,
+        "valor_pendiente_recuperar": 40693.0,
+        "pendientes_con_costo": 4
+      }
+    ]
+  },
+  "q8_marcas": {
+    "sql": "SELECT\n    a.marca,\n    COUNT(*)                              AS equipos,\n    SUM(f.costo IS NULL)                  AS sin_costo,\n    ROUND(SUM(f.costo), 2)                AS valor_conocido\nFROM hecho_activo f\nJOIN dim_activo a ON a.sk_activo = f.sk_activo\nGROUP BY a.marca\nORDER BY equipos DESC;",
+    "filas": [
+      {
+        "marca": "Dell",
+        "equipos": 62,
+        "sin_costo": 39,
+        "valor_conocido": 256441.78
+      },
+      {
+        "marca": "HP",
+        "equipos": 26,
+        "sin_costo": 15,
+        "valor_conocido": 102109.0
+      },
+      {
+        "marca": "Lenovo",
+        "equipos": 24,
+        "sin_costo": 7,
+        "valor_conocido": 180101.01
+      },
+      {
+        "marca": "Acer",
+        "equipos": 9,
+        "sin_costo": 8,
+        "valor_conocido": 13464.76
+      },
+      {
+        "marca": "ASUS",
+        "equipos": 2,
+        "sin_costo": 1,
+        "valor_conocido": 15799.0
+      }
+    ]
+  },
+  "q8_pendientes": {
+    "sql": "SELECT\n    a.codigo,\n    a.tipo,\n    a.marca,\n    f.costo,\n    c.id_colaborador,\n    c.estatus AS estatus_colaborador,\n    c.fecha_baja\nFROM hecho_activo f\nJOIN dim_activo a      ON a.sk_activo = f.sk_activo\nJOIN dim_colaborador c ON c.sk_colaborador = f.sk_colaborador\nWHERE f.pendiente_recuperar = 1\nORDER BY f.costo DESC;",
+    "filas": [
+      {
+        "codigo": "A0010",
+        "tipo": "Laptop",
+        "marca": "Lenovo",
+        "costo": 12189.0,
+        "id_colaborador": "OTC018",
+        "estatus_colaborador": "Baja",
+        "fecha_baja": null
+      },
+      {
+        "codigo": "A0026",
+        "tipo": "Laptop",
+        "marca": "Dell",
+        "costo": 12006.0,
+        "id_colaborador": "OTC048",
+        "estatus_colaborador": "Baja",
+        "fecha_baja": "2026-11-09"
+      },
+      {
+        "codigo": "A0100",
+        "tipo": "Laptop",
+        "marca": "Dell",
+        "costo": 8499.0,
+        "id_colaborador": "OTC008",
+        "estatus_colaborador": "Baja",
+        "fecha_baja": null
+      },
+      {
+        "codigo": "A0090",
+        "tipo": "Laptop",
+        "marca": "HP",
+        "costo": 7999.0,
+        "id_colaborador": "OTC072",
+        "estatus_colaborador": "Baja",
+        "fecha_baja": "2026-10-30"
+      },
+      {
+        "codigo": "A0030",
+        "tipo": "Laptop",
+        "marca": "Dell",
+        "costo": null,
+        "id_colaborador": "OTC054",
+        "estatus_colaborador": "Baja",
+        "fecha_baja": "2026-10-30"
+      },
+      {
+        "codigo": "A0034",
+        "tipo": "Laptop",
+        "marca": "Dell",
+        "costo": null,
+        "id_colaborador": "OTC053",
+        "estatus_colaborador": "Baja",
+        "fecha_baja": null
+      },
+      {
+        "codigo": "A0047",
+        "tipo": "Laptop",
+        "marca": "Dell",
+        "costo": null,
+        "id_colaborador": "OTC070",
+        "estatus_colaborador": "Baja",
+        "fecha_baja": null
+      },
+      {
+        "codigo": "A0059",
+        "tipo": "Laptop",
+        "marca": "Dell",
+        "costo": null,
+        "id_colaborador": "OTC093",
+        "estatus_colaborador": "Baja",
+        "fecha_baja": null
+      },
+      {
+        "codigo": "A0071",
+        "tipo": "Monitor",
+        "marca": "Acer",
+        "costo": null,
+        "id_colaborador": "OTC020",
+        "estatus_colaborador": "Baja",
+        "fecha_baja": null
+      }
+    ]
+  },
+  "q9_expediente": {
+    "sql": "SELECT\n    COUNT(*)                                AS activos,\n    ROUND(AVG(pct_expediente), 1)           AS pct_expediente_promedio,\n    SUM(expediente_completo = 1)            AS expedientes_completos,\n    SUM(falta_puesto = 1)                   AS sin_puesto,\n    SUM(falta_departamento = 1)             AS sin_departamento,\n    SUM(falta_sueldo = 1)                   AS sin_sueldo,\n    SUM(tiene_contrato = 1)                 AS con_contrato,\n    SUM(pct_expediente = 0)                 AS expediente_en_cero\nFROM dim_colaborador\nWHERE estatus = 'Activo';",
+    "filas": [
+      {
+        "activos": 75,
+        "pct_expediente_promedio": 52.7,
+        "expedientes_completos": 0,
+        "sin_puesto": 29,
+        "sin_departamento": 64,
+        "sin_sueldo": 5,
+        "con_contrato": 14,
+        "expediente_en_cero": 0
+      }
+    ]
+  },
+  "q9_rangos": {
+    "sql": "SELECT\n    CASE\n        WHEN pct_expediente = 0 THEN '0 %'\n        WHEN pct_expediente < 50 THEN '1–49 %'\n        WHEN pct_expediente < 100 THEN '50–99 %'\n        ELSE '100 %'\n    END AS rango_expediente,\n    COUNT(*) AS personas\nFROM dim_colaborador\nWHERE estatus = 'Activo'\nGROUP BY 1\nORDER BY 1;",
+    "filas": [
+      {
+        "rango_expediente": "1–49 %",
+        "personas": 25
+      },
+      {
+        "rango_expediente": "50–99 %",
+        "personas": 50
+      }
+    ]
+  },
+  "_integridad": {
+    "filas_dimensiones": {
+      "dim_tiempo": 9498,
+      "dim_colaborador": 108,
+      "dim_puesto": 24,
+      "dim_departamento": 7,
+      "dim_cliente": 9,
+      "dim_proyecto": 13,
+      "dim_rol": 2,
+      "dim_habilidad": 72,
+      "dim_activo": 124
+    },
+    "filas_hechos": {
+      "hecho_asignacion": 31,
+      "hecho_habilidad": 1539,
+      "hecho_activo": 123
+    },
+    "asignaciones_huerfanas": 0,
+    "habilidades_huerfanas": 0,
+    "activos_huerfanos": 0,
+    "costo_asignado_filas": 2025644.02,
+    "costo_asignado_unico": 1924710.62,
+    "nomina_activa": 3918864.4,
+    "costo_inventario": 567915.55,
+    "evaluaciones": 1539
+  }
+}

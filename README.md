@@ -18,6 +18,15 @@ OTC administra su capital humano en una PWA construida a la medida y hospedada e
 - `docs/ETAPA_4.md` — Modelo dimensional lógico: los cuatro pasos de Kimball, grano, métricas, dimensiones y la definición de cada tabla de hechos y dimensión.
 - `notebooks/ETAPA_4_MODELO_DIMENSIONAL_OTC.ipynb` — Notebook ejecutado que valida el grano y la integridad referencial, construye el hecho con sus llaves y genera los diagramas.
 - `docs/modelo_dimensional_logico.png` y `docs/matriz_bus.png` — Diagramas del modelo y de las dimensiones conformadas, generados por código, no dibujados a mano.
+- `docs/ETAPA_5.md` — Documento de la Etapa 5: perfil de las nueve dimensiones, respuestas a las nueve preguntas de análisis, solución para Dirección y guía de replicabilidad. La versión para entrega está en `docs/ETAPA_5.pdf` y la versión web en `docs/ETAPA_5.html`.
+- `sql/01_esquema_dimensional.sql` — Esquema físico del modelo: 9 dimensiones, 3 hechos, índices y vistas de consumo.
+- `sql/02_perfil_dimensiones.sql` — Consultas de valores distintos, nulos y rangos por cada atributo de cada dimensión.
+- `sql/03_preguntas_analisis.sql` — 24 consultas que responden las nueve preguntas del reto.
+- `src/etapa5_dw.py` — ETL que construye `data/modelo/otc_dw.db` desde las tablas acondicionadas.
+- `src/etapa5_consultas.py` — Ejecuta las consultas y valida la integridad referencial.
+- `src/etapa5_exportar.py` — Exporta el modelo al tablero estático.
+- `dashboard/` — Sitio de consulta para Dirección: diez secciones, sin build ni dependencias, publicable en Firebase Hosting.
+- `data/modelo/` — Base dimensional de la corrida (`otc_dw.db`), perfil de dimensiones, resumen ejecutivo y resultados de las consultas.
 - `data/excel/` — Las fuentes tal como las exporta el sandbox, un archivo por módulo.
 
 ## Las fuentes
@@ -61,9 +70,26 @@ El diseño aplica los cuatro pasos de Kimball sobre las tablas acondicionadas y 
 
 Un análisis de brechas sobre el sandbox actual, sin modificar la aplicación del socio, junto con el prototipo visual de un apartado nuevo de Analítica en el menú de su PWA. Ese apartado reuniría los indicadores de quién está en proyecto y quién libre, quién termina pronto, cuántos se van, costos y márgenes por proyecto, habilidades y vencimientos, con alertas, filtros, metas, tendencias y el detalle por persona detrás de cada número, además de pestañas analíticas dentro de los módulos de Asignaciones y Colaboradores.
 
-## Etapa 5 — evidencia final
+## Etapa 5 — consultas, dimensiones y solución para Dirección
 
-La evidencia final es un video de 8 a 12 minutos en el que recorro este repositorio y explico el reto, las fuentes, el acondicionamiento, los hallazgos, el tratamiento y el modelo dimensional. El video se entrega por liga de YouTube en Canvas.
+Sobre el modelo de la Etapa 4 se construyó la capa de consulta y la solución final. El ETL `src/etapa5_dw.py` materializa las **9 dimensiones y los 3 hechos** en `data/modelo/otc_dw.db`, con miembro desconocido, llaves sustitutas y **cero llaves huérfanas**. Las consultas de `sql/03_preguntas_analisis.sql` responden las nueve preguntas del reto y el documento `docs/ETAPA_5.md` perfila cada dimensión, explica los resultados y describe la instalación en la arquitectura del cliente.
+
+Resultados del corte 2026-11-20:
+
+- **30 de 75 activos** tienen asignación: **40.0% de utilización** sobre el headcount y **41.1%** sobre la plantilla de 73 personas. La **banca de plantilla** es de **43 personas** y **$1,912,228.33**; con los dos familiares sin asignación son **45 personas** y **$1,994,153.78**.
+- La nómina activa es **$3,918,864.40**: **49.1% asignada**, **48.8% en banca** y **2.1% en familiares**. El hecho de asignación suma **$2,025,644.02** porque una persona tiene dos asignaciones al 100%; el costo único es **$1,924,710.62**.
+- **29 de 31 asignaciones no tienen rol**, **21 no tienen fecha de inicio** y **14 no tienen puesto**. Las 14 sin puesto cuestan **$1,001,034.75**, el 49.4% del costo asignado.
+- El **margen sigue bloqueado, no en cero**: hay costo en las 31 asignaciones, pero **0 tienen ingreso facturable y 0 tienen margen** porque faltan tarifas y horas.
+- La matriz cubre **54 de 75 activos**; hay **71 habilidades**, **1,539 evaluaciones** y **9 habilidades en riesgo** (≤ 1 experto o sin evaluación).
+- **32 de 107 registros son bajas (29.9%)**, pero **18 no tienen fecha**. La cohorte 2025 tiene **12 bajas de 20 ingresos**.
+- **70 de 123 activos no tienen costo**, **32 no tienen resguardo** y **9 equipos de personas dadas de baja** siguen sin recuperarse por **$40,693** de valor conocido.
+- **Ningún expediente está completo**; el promedio activo es **52.7%**, con **64 activos sin departamento** y **29 sin puesto**.
+
+La solución visual es `dashboard/index.html`, un sitio estático de **diez secciones** —resumen, utilización, costos, vencimientos, habilidades, rotación, activos, expediente, dimensiones y modelo— que se abre sin instalación, funciona sin conexión y se regenera con tres comandos. No publica nombres, sueldos individuales, correos ni datos bancarios.
+
+## Video de la Etapa 5
+
+La evidencia en video es un recorrido de 8 a 12 minutos por este repositorio: el reto, las fuentes, el acondicionamiento, los hallazgos, el modelo dimensional, las consultas y el tablero. El video se entrega por liga de YouTube en Canvas.
 
 ## Cómo ejecutar el análisis
 
@@ -72,9 +98,15 @@ pip install -r requirements.txt
 jupyter nbconvert --to notebook --execute --inplace notebooks/ETAPA_2_EDA_OTC.ipynb
 jupyter nbconvert --to notebook --execute --inplace notebooks/ETAPA_3_ACONDICIONAMIENTO_OTC.ipynb
 jupyter nbconvert --to notebook --execute --inplace notebooks/ETAPA_4_MODELO_DIMENSIONAL_OTC.ipynb
+
+# Etapa 5: modelo, consultas y tablero
+python src/etapa5_dw.py
+python src/etapa5_consultas.py
+python src/etapa5_exportar.py
+python -m http.server 8000   # abrir http://localhost:8000/dashboard/
 ```
 
-Los notebooks leen los archivos de `data/excel/` o de `data/acondicionado/`, y no requieren conexión a internet ni credenciales. El de la Etapa 4 regenera el diagrama y la matriz de bus en `docs/`.
+Los notebooks leen los archivos de `data/excel/` o de `data/acondicionado/`, y no requieren conexión a internet ni credenciales. El de la Etapa 4 regenera el diagrama y la matriz de bus en `docs/`. El ETL de la Etapa 5 lee `data/acondicionado/`, escribe `data/modelo/otc_dw.db` y no necesita credenciales.
 
 ## Aviso sobre los datos
 

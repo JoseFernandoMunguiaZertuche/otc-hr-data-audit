@@ -1,0 +1,2559 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Etapa 5 — Consultas, dimensiones y solución para Dirección</title>
+<style>
+@page { size: A4; margin: 18mm 16mm 16mm 16mm; }
+* { box-sizing: border-box; }
+body { font-family: "DejaVu Sans", Arial, sans-serif; color: #1f2937; font-size: 9.4pt; line-height: 1.55; margin: 0; }
+h1 { color: #12294a; font-size: 24pt; line-height: 1.1; letter-spacing: -0.03em; margin: 0 0 4mm; }
+h2 { color: #12294a; font-size: 15pt; margin: 9mm 0 2.5mm; border-bottom: 1.2px solid #dbe3ea; padding-bottom: 1.5mm; page-break-after: avoid; }
+h3 { color: #1d3b63; font-size: 11.5pt; margin: 6mm 0 2mm; page-break-after: avoid; }
+h4 { color: #0f766e; font-size: 10pt; margin: 4mm 0 1.5mm; page-break-after: avoid; }
+p { margin: 0 0 2.4mm; text-align: justify; }
+ul, ol { margin: 0 0 2.6mm 0; padding-left: 5mm; }
+li { margin-bottom: 1.1mm; }
+strong { color: #12294a; }
+a { color: #2e5f8a; text-decoration: none; }
+code { font-family: "DejaVu Sans Mono", monospace; font-size: 8.2pt; background: #eef2f6; padding: 0.3mm 1mm; border-radius: 1.2mm; }
+pre { background: #0f1f33; color: #dbe7f3; padding: 3mm; border-radius: 2mm; overflow-x: auto; font-size: 8pt; line-height: 1.45; page-break-inside: avoid; }
+pre code { background: transparent; color: inherit; padding: 0; }
+table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 8.2pt; page-break-inside: auto; }
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; }
+th { background: #12294a; color: white; text-align: left; padding: 1.6mm 1.8mm; font-size: 7.6pt; letter-spacing: .03em; text-transform: uppercase; }
+td { border-bottom: 0.5px solid #e2e8ee; padding: 1.5mm 1.8mm; vertical-align: top; }
+tbody tr:nth-child(even) td { background: #f7f9fb; }
+blockquote { border-left: 3px solid #0f766e; margin: 3mm 0; padding: 2mm 4mm; background: #f1f8f2; color: #1d4d2a; }
+hr { border: none; border-top: 1px solid #dbe3ea; margin: 6mm 0; }
+h1 + p { color: #64748b; font-size: 9.2pt; }
+.portada { text-align: center; padding: 40mm 0 25mm; page-break-after: always; }
+.portada .marca { display: inline-block; background: #12294a; color: white; font-weight: bold; letter-spacing: .12em; padding: 3mm 6mm; border-radius: 3mm; font-size: 11pt; }
+.portada h1 { font-size: 30pt; margin: 12mm 0 4mm; }
+.portada .sub { color: #0f766e; font-size: 12pt; font-weight: bold; letter-spacing: .08em; text-transform: uppercase; }
+.portada .autor { color: #334155; margin-top: 8mm; font-size: 11pt; }
+.portada .pie { color: #64748b; margin-top: 22mm; font-size: 9pt; }
+</style></head><body>
+<section class="portada">
+  <div class="marca">OTC CONSULTING</div>
+  <div class="sub">Reto de Business Intelligence</div>
+  <h1>Consultas, dimensiones<br>y solución para Dirección</h1>
+  <div class="autor">José Fernando Munguía Zertuche · A01199357</div>
+  <div class="pie">Etapa 5 · Corte 2026-11-20 · 25 de noviembre de 2026</div>
+</section>
+<h2>Resumen ejecutivo</h2>
+<p>Esta etapa cierra el proyecto con tres entregables que se complementan: las <strong>consultas</strong> que responden las preguntas de análisis sobre cada dimensión, el <strong>perfil de valores distintos</strong> de las nueve dimensiones del modelo lógico y una <strong>solución replicable para Dirección</strong> —un tablero estático que se puede publicar en Firebase Hosting o en cualquier servidor— construida sobre las tablas acondicionadas de la Etapa 3.</p>
+<p>El modelo se implementó en SQLite con <strong>nueve dimensiones y tres hechos</strong>. La corrida deja <strong>31 asignaciones</strong>, <strong>1,539 evaluaciones de habilidad</strong> y <strong>123 activos</strong>, con <strong>cero llaves huérfanas</strong> en los tres hechos. Las consultas se ejecutan contra ese modelo, no contra los archivos originales, de modo que cualquier persona puede reproducir las cifras con un comando.</p>
+<p>Los resultados principales del corte <strong>2026-11-20</strong> son:</p>
+<ul>
+<li><strong>30 de 75 activos</strong> tienen una asignación registrada: <strong>40.0% de utilización</strong> sobre el headcount y <strong>41.1%</strong> sobre la plantilla (73 personas, sin los dos familiares de seguro).</li>
+<li>La <strong>banca de plantilla</strong> es de <strong>43 personas</strong> y <strong>$1,912,228.33</strong> al mes. Si se suman los dos familiares sin asignación, son <strong>45 personas</strong> y <strong>$1,994,153.78</strong>. La nómina activa es <strong>$3,918,864.40</strong>: <strong>49.1% asignado</strong>, <strong>48.8% en banca</strong> y <strong>2.1% en familiares</strong>.</li>
+<li>El hecho de asignación suma <strong>$2,025,644.02</strong> porque una persona tiene dos asignaciones al 100%; el costo único —sin duplicarla— es <strong>$1,924,710.62</strong>. Esa diferencia de <strong>$100,933.40</strong> es el costo de la única persona sobreasignada.</li>
+<li><strong>29 de 31 asignaciones no tienen rol</strong>, <strong>21 no tienen fecha de inicio real</strong> y <strong>14 no tienen puesto</strong>. El costo de esas 14 asignaciones sin puesto es <strong>$1,001,034.75</strong>, casi la mitad del costo asignado.</li>
+<li>El <strong>margen por proyecto está bloqueado, no en cero</strong>: hay costo en las 31 asignaciones, pero <strong>0 tienen ingreso facturable y 0 tienen margen</strong> porque faltan tarifas y horas.</li>
+<li>La matriz cubre <strong>54 de 75 activos</strong>; hay <strong>71 habilidades</strong>, <strong>1,539 evaluaciones</strong> (10 sin colaborador) y <strong>9 habilidades en riesgo</strong> por tener un solo experto o ninguno.</li>
+<li><strong>32 de 107 registros son bajas (29.9%)</strong>, pero <strong>18 no tienen fecha de baja</strong>. La cohorte 2025 es la más crítica: <strong>12 bajas de 20 ingresos</strong>.</li>
+<li><strong>70 de 123 activos no tienen costo</strong>, <strong>32 no tienen resguardo</strong> y <strong>9 equipos de personas dadas de baja siguen sin recuperarse</strong> por <strong>$40,693</strong> de valor conocido.</li>
+<li><strong>Ningún expediente está completo</strong>; el promedio activo es <strong>52.7%</strong>, con <strong>64 activos sin departamento</strong> y <strong>29 sin puesto</strong>.</li>
+</ul>
+<p>La solución para Dirección es un tablero de <strong>diez secciones</strong> —resumen, utilización, costos, vencimientos, habilidades, rotación, activos, expediente, dimensiones y modelo— que se abre sin instalación, funciona sin conexión y se regenera con tres comandos. El documento explica cómo llevarlo a la arquitectura del cliente: Firebase como origen, un ETL programado, BigQuery o Firestore como destino analítico y Firebase Hosting para la consulta.</p>
+<hr />
+<h2>1. Qué se entrega</h2>
+<table>
+<thead>
+<tr>
+<th>Archivo</th>
+<th>Contenido</th>
+<th>Para qué sirve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sql/01_esquema_dimensional.sql</code></td>
+<td>DDL de las 9 dimensiones, los 3 hechos, índices y vistas <code>vw_*</code></td>
+<td>Crear el modelo en SQLite o adaptarlo a otro motor</td>
+</tr>
+<tr>
+<td><code>sql/02_perfil_dimensiones.sql</code></td>
+<td>9 consultas, una por dimensión, que devuelven valores distintos, nulos, mínimos y máximos de cada atributo</td>
+<td>Evidencia reproducible del perfil de dimensiones</td>
+</tr>
+<tr>
+<td><code>sql/03_preguntas_analisis.sql</code></td>
+<td>24 consultas marcadas con <code>-- @consulta</code></td>
+<td>Responder las nueve preguntas del reto</td>
+</tr>
+<tr>
+<td><code>src/etapa5_dw.py</code></td>
+<td>ETL que lee <code>data/acondicionado/</code> y construye <code>data/modelo/otc_dw.db</code></td>
+<td>Reproducir el modelo desde cero</td>
+</tr>
+<tr>
+<td><code>src/etapa5_consultas.py</code></td>
+<td>Ejecuta las 24 consultas y valida integridad referencial</td>
+<td>Generar <code>resultados_analisis.json</code></td>
+</tr>
+<tr>
+<td><code>src/etapa5_exportar.py</code></td>
+<td>Exporta el modelo al tablero</td>
+<td>Generar <code>dashboard/datos.js</code></td>
+</tr>
+<tr>
+<td><code>dashboard/</code></td>
+<td>Sitio estático de consulta para Dirección</td>
+<td>Entregable visual, sin build ni dependencias</td>
+</tr>
+<tr>
+<td><code>data/modelo/otc_dw.db</code></td>
+<td>Base dimensional de la corrida</td>
+<td>Consultar sin volver a correr el ETL</td>
+</tr>
+<tr>
+<td><code>data/modelo/perfil_dimensiones.json</code></td>
+<td>Perfil completo de las 9 dimensiones</td>
+<td>Alimenta el documento y el tablero</td>
+</tr>
+<tr>
+<td><code>data/modelo/resultados_analisis.json</code></td>
+<td>Resultados de las 24 consultas + integridad</td>
+<td>Evidencia de la corrida</td>
+</tr>
+<tr>
+<td><code>docs/ETAPA_5.md</code></td>
+<td>Este documento, fuente editable</td>
+<td>Entregable para el socio formador</td>
+</tr>
+<tr>
+<td><code>docs/ETAPA_5.pdf</code></td>
+<td>Versión PDF con portada y tablas</td>
+<td>Entrega directa en Canvas</td>
+</tr>
+<tr>
+<td><code>docs/ETAPA_5.html</code></td>
+<td>Versión HTML del documento</td>
+<td>Lectura en navegador</td>
+</tr>
+</tbody>
+</table>
+<p>El repositorio de documentación y pipeline del equipo es <strong>https://github.com/Francovarelav/otconsultingdocumentacion</strong>. Ahí viven el pipeline M1–M14, el cargador a Firestore del proyecto <code>otc-rh-agentes</code> y el tablero React de las etapas anteriores. El repositorio <strong>no versiona la base ni los Excel</strong>: <code>salida/otc_rh.db</code> se genera al correr <code>src/acondicionamiento_rh.py</code>. Esta entrega usa las tablas acondicionadas de este repositorio, construidas a partir de los mismos siete módulos, y se alinea con esa arquitectura; mantiene sus propias consultas y su propio tablero para que el modelo dimensional sea auditable de punta a punta.</p>
+<hr />
+<h2>2. Preparación de los datos: de Firebase al modelo dimensional</h2>
+<h3>2.1 Origen</h3>
+<p>Los datos provienen del <strong>sandbox HR Management</strong> de OTC Consulting, una PWA construida a la medida y hospedada en Firebase. La herramienta registra la operación en siete módulos: colaboradores, asignaciones, clientes y proyectos, activos y resguardos, matriz de habilidades, catálogo de habilidades y departamentos. El módulo de <strong>Usuarios se excluye a propósito</strong> porque contiene credenciales de acceso; el catálogo publicado también omite identificadores directos y datos bancarios.</p>
+<table>
+<thead>
+<tr>
+<th>Fuente</th>
+<th>Contenido</th>
+<th style="text-align: right;">Registros</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Catalogo_Colaboradores.xlsx</code></td>
+<td>Expediente operativo, puesto, área, estatus, fechas, nómina, sueldo y documentos</td>
+<td style="text-align: right;">107</td>
+</tr>
+<tr>
+<td><code>Asignaciones_Colaboradores.xlsx</code></td>
+<td>Colaborador, cliente, proyecto, rol, tipo y fechas</td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr>
+<td><code>Catalogo_Clientes.xlsx</code></td>
+<td>Clientes y, en su segunda hoja, proyectos</td>
+<td style="text-align: right;">8 clientes y 12 proyectos</td>
+</tr>
+<tr>
+<td><code>Catalogo_Activos.xlsx</code></td>
+<td>Inventario y, en su segunda hoja, resguardos</td>
+<td style="text-align: right;">123 activos y 91 resguardos</td>
+</tr>
+<tr>
+<td><code>Matriz_Habilidades.xlsx</code></td>
+<td>Nivel de cada colaborador en cada habilidad</td>
+<td style="text-align: right;">1,539 pares</td>
+</tr>
+<tr>
+<td><code>Catalogo_Habilidades.xlsx</code></td>
+<td>Habilidades por tecnología y tipo</td>
+<td style="text-align: right;">71</td>
+</tr>
+<tr>
+<td><code>Catalogo_Departamentos.xlsx</code></td>
+<td>Áreas, objetivo, responsable y centro de costos</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td><code>Catalogo_Roles.xlsx</code></td>
+<td>Puestos por nivel y departamento; fuente complementaria</td>
+<td style="text-align: right;">55</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2 Acondicionamiento (Etapa 3)</h3>
+<p>El pipeline de la Etapa 3 aplica los métodos <strong>M1 a M14</strong> y no borra ni inventa registros: corrige formato, homologa catálogos, convierte centinelas en nulos, reconstruye llaves y deja trazabilidad. La corrida de este repositorio registra:</p>
+<ul>
+<li><strong>265 correcciones</strong> en <code>log_correcciones</code>: M11 95, M2 77, M3 54, M6 26, M5 10, M7 2 y M8 1.</li>
+<li><strong>18 tablas</strong> en <code>data/acondicionado/otc_rh.db</code>.</li>
+<li><strong>5 validaciones de reglas en cero</strong>: sin activos con fecha de baja, sin bajas anteriores al ingreso, sin asignaciones vigentes de personal dado de baja, sin sueldos ni costos en cero.</li>
+</ul>
+<p>Los huecos que no se pueden corregir se conservan como nulos y se reportan: 48 colaboradores sin puesto, 95 sin departamento, 18 bajas sin fecha, 21 asignaciones sin inicio real, 24 sin fin, 29 sin rol, 70 activos sin costo y 10 evaluaciones sin colaborador.</p>
+<h3>2.3 Modelo dimensional (Etapa 4)</h3>
+<p>El diseño sigue los cuatro pasos de Kimball y se documenta en <code>docs/ETAPA_4.md</code>. La constelación tiene tres procesos de negocio con granos distintos:</p>
+<table>
+<thead>
+<tr>
+<th>Hecho</th>
+<th>Grano</th>
+<th style="text-align: right;">Filas</th>
+<th>Dimensiones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hecho_asignacion</code></td>
+<td>Una asignación de un colaborador a un proyecto</td>
+<td style="text-align: right;">31</td>
+<td>Tiempo, Colaborador, Puesto, Departamento, Cliente, Proyecto, Rol</td>
+</tr>
+<tr>
+<td><code>hecho_habilidad</code></td>
+<td>Un colaborador y una habilidad evaluada</td>
+<td style="text-align: right;">1,539</td>
+<td>Tiempo, Colaborador, Habilidad</td>
+</tr>
+<tr>
+<td><code>hecho_activo</code></td>
+<td>Un activo del inventario</td>
+<td style="text-align: right;">123</td>
+<td>Tiempo, Colaborador, Activo</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tiempo y Colaborador son dimensiones conformadas</strong>: las comparten los tres hechos, lo que permite comparar utilización, habilidades y equipo de la misma persona y en el mismo calendario.</p>
+<h3>2.4 Implementación de la Etapa 5</h3>
+<p>El ETL <code>src/etapa5_dw.py</code> lee las tablas acondicionadas, aplica el modelo lógico y escribe <code>data/modelo/otc_dw.db</code>. Cada dimensión tiene una fila <strong>0</strong> para el miembro desconocido; las llaves sustitutas son enteras y deterministas. El hecho de asignación agrega <code>sk_tiempo_corte</code> (20261120) para que la tercera función de <code>dim_tiempo</code> —inicio, fin y corte— quede explícita.</p>
+<table>
+<thead>
+<tr>
+<th>Tabla</th>
+<th style="text-align: right;">Filas</th>
+<th style="text-align: right;">Miembro desconocido</th>
+<th>Llave natural</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dim_tiempo</code></td>
+<td style="text-align: right;">9,498</td>
+<td style="text-align: right;">1 (fila 0)</td>
+<td><code>sk_tiempo</code> (AAAAMMDD)</td>
+</tr>
+<tr>
+<td><code>dim_colaborador</code></td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">1</td>
+<td><code>id_colaborador</code></td>
+</tr>
+<tr>
+<td><code>dim_puesto</code></td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">1</td>
+<td><code>id_puesto</code></td>
+</tr>
+<tr>
+<td><code>dim_departamento</code></td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">1</td>
+<td><code>codigo</code></td>
+</tr>
+<tr>
+<td><code>dim_cliente</code></td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1</td>
+<td><code>id_cliente</code></td>
+</tr>
+<tr>
+<td><code>dim_proyecto</code></td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">1</td>
+<td><code>id_proyecto</code></td>
+</tr>
+<tr>
+<td><code>dim_rol</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td><code>rol_asignado</code></td>
+</tr>
+<tr>
+<td><code>dim_habilidad</code></td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">1</td>
+<td><code>cod_habilidad</code></td>
+</tr>
+<tr>
+<td><code>dim_activo</code></td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">1</td>
+<td><code>codigo</code></td>
+</tr>
+<tr>
+<td><code>hecho_asignacion</code></td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">—</td>
+<td><code>id_asignacion</code></td>
+</tr>
+<tr>
+<td><code>hecho_habilidad</code></td>
+<td style="text-align: right;">1,539</td>
+<td style="text-align: right;">—</td>
+<td>colaborador × habilidad</td>
+</tr>
+<tr>
+<td><code>hecho_activo</code></td>
+<td style="text-align: right;">123</td>
+<td style="text-align: right;">—</td>
+<td><code>codigo</code></td>
+</tr>
+</tbody>
+</table>
+<p>La corrida valida:</p>
+<ul>
+<li><strong>0 asignaciones huérfanas</strong>, <strong>0 habilidades huérfanas</strong> y <strong>0 activos huérfanos</strong>.</li>
+<li>Costo asignado por fila: <strong>$2,025,644.02</strong>; costo único: <strong>$1,924,710.62</strong>.</li>
+<li>Nómina activa: <strong>$3,918,864.40</strong>.</li>
+<li>Inventario conocido: <strong>$567,915.55</strong>.</li>
+</ul>
+<h3>2.5 De Firebase a la arquitectura del cliente</h3>
+<p>La ruta replicable es la siguiente:</p>
+<ol>
+<li><strong>Exportación.</strong> Firebase no es un almacén analítico: se exportan las colecciones a JSON/CSV o se programa una Cloud Function que escriba un corte periódico en Cloud Storage.</li>
+<li><strong>Aterrizaje.</strong> Los archivos se depositan en un bucket de Cloud Storage con la fecha de corte en el nombre (<code>corte=2026-11-20/</code>).</li>
+<li><strong>Acondicionamiento.</strong> Corre el pipeline M1–M14 (Python) en Cloud Run o en una máquina de RH; produce las 18 tablas acondicionadas.</li>
+<li><strong>Modelo dimensional.</strong> Corre <code>src/etapa5_dw.py</code>; produce las 9 dimensiones y los 3 hechos.</li>
+<li><strong>Publicación.</strong> El modelo se carga a <strong>BigQuery</strong> para BI y consultas SQL de Dirección, y/o a <strong>Firestore</strong> para lectura desde la PWA. El tablero estático se publica en <strong>Firebase Hosting</strong>.</li>
+<li><strong>Seguridad.</strong> Los sueldos y costos individuales viven en una colección privada con rol <code>admin</code>; el tablero de Dirección usa agregados y no publica nombres.</li>
+<li><strong>Operación.</strong> Un programador (Cloud Scheduler) ejecuta el ETL cada mes o cada semana, valida las reglas y deja el corte anterior para comparar.</li>
+</ol>
+<p>La integración con Firebase ya existe en el repositorio de documentación: el proyecto <strong><code>otc-rh-agentes</code></strong> tiene Firestore, Auth, Storage y Functions; el cargador <code>agentes/scripts/cargar_firestore.py</code> publica colaboradores, asignaciones, proyectos, clientes, activos, habilidades, matriz, catálogos e indicadores, y separa <code>colaboradores_privado</code> para los sueldos. La Etapa 5 agrega la capa dimensional y el tablero de consulta; no requiere cambiar la PWA del socio.</p>
+<hr />
+<h2>3. Modelo de consultas</h2>
+<h3>3.1 Consultas por dimensión</h3>
+<p><code>sql/02_perfil_dimensiones.sql</code> contiene <strong>una consulta por dimensión</strong> y <strong>94 atributos perfilados</strong>. Cada fila devuelve:</p>
+<ul>
+<li><code>valores_distintos</code>: cuántos valores diferentes tiene el atributo, sin contar nulos.</li>
+<li><code>nulos</code>: cuántos registros no tienen el dato.</li>
+<li><code>minimo</code> y <code>maximo</code>: rango de fechas o de números.</li>
+<li><code>detalle</code>: valores cuando son 10 o menos; si son más de 10, remite a la descripción del documento.</li>
+</ul>
+<p>La fila 0 de cada dimensión se excluye del perfil: no es un valor real, es el miembro desconocido.</p>
+<h3>3.2 Consultas por pregunta</h3>
+<p><code>sql/03_preguntas_analisis.sql</code> contiene <strong>24 consultas</strong> agrupadas en las nueve preguntas del reto. El runner <code>src/etapa5_consultas.py</code> las ejecuta y guarda el SQL y el resultado en <code>data/modelo/resultados_analisis.json</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Pregunta</th>
+<th>Consultas</th>
+<th>Dimensión principal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1 · Asignados y banca</td>
+<td><code>q1_resumen</code>, <code>q1_banca_por_puesto</code>, <code>q1_banca_detalle</code>, <code>q1_concentracion_cliente</code></td>
+<td>Colaborador, Tiempo</td>
+</tr>
+<tr>
+<td>P2 · Terminan pronto</td>
+<td><code>q2_vencimientos</code>, <code>q2_resumen</code></td>
+<td>Tiempo, Proyecto, Cliente</td>
+</tr>
+<tr>
+<td>P3 · Nómina asignada</td>
+<td><code>q3_costos</code>, <code>q3_por_cliente</code></td>
+<td>Colaborador, Cliente</td>
+</tr>
+<tr>
+<td>P4 · Costo por hora</td>
+<td><code>q4_costo_hora_puesto</code>, <code>q4_cobertura</code></td>
+<td>Puesto, Colaborador</td>
+</tr>
+<tr>
+<td>P5 · Margen</td>
+<td><code>q5_bloqueo</code>, <code>q5_costo_por_proyecto</code></td>
+<td>Cliente, Proyecto</td>
+</tr>
+<tr>
+<td>P6 · Habilidades</td>
+<td><code>q6_tecnologia</code>, <code>q6_niveles</code>, <code>q6_riesgo</code>, <code>q6_cobertura</code></td>
+<td>Habilidad, Colaborador</td>
+</tr>
+<tr>
+<td>P7 · Riesgo de salida</td>
+<td><code>q7_resumen</code>, <code>q7_cohortes</code>, <code>q7_por_nomina</code></td>
+<td>Colaborador, Tiempo</td>
+</tr>
+<tr>
+<td>P8 · Equipo e inventario</td>
+<td><code>q8_resumen</code>, <code>q8_marcas</code>, <code>q8_pendientes</code></td>
+<td>Activo, Colaborador</td>
+</tr>
+<tr>
+<td>P9 · Expediente</td>
+<td><code>q9_expediente</code>, <code>q9_rangos</code></td>
+<td>Colaborador</td>
+</tr>
+</tbody>
+</table>
+<p>Las consultas usan SQLite. Para llevarlas a PostgreSQL, BigQuery o SQL Server solo cambian detalles de sintaxis (<code>strftime</code>, <code>substr</code>, <code>GROUP_CONCAT</code>); la lógica y las vistas son las mismas.</p>
+<hr />
+<h2>4. Perfil de las nueve dimensiones</h2>
+<p>Esta sección responde el requisito de identificar, para cada tabla de dimensión, cuántos valores diferentes existen, describirlos cuando son más de diez y reportar el rango de fechas cuando la dimensión es temporal. Los conteos excluyen la fila 0 (miembro desconocido) y los nulos.</p>
+<p><strong>Resumen de miembros por dimensión:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Dimensión</th>
+<th style="text-align: right;">Miembros reales</th>
+<th style="text-align: right;">Miembro desconocido</th>
+<th style="text-align: right;">Valores distintos de la llave</th>
+<th>Rango de fechas principal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dim_tiempo</code></td>
+<td style="text-align: right;">9,497</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9,497</td>
+<td>2003-01-01 → 2028-12-31</td>
+</tr>
+<tr>
+<td><code>dim_colaborador</code></td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">107</td>
+<td>Incorporación 2003-04-01 → 2026-10-06; bajas 2026-08-28 → 2026-11-09</td>
+</tr>
+<tr>
+<td><code>dim_puesto</code></td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">23</td>
+<td>Sin fechas</td>
+</tr>
+<tr>
+<td><code>dim_departamento</code></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td>Sin fechas</td>
+</tr>
+<tr>
+<td><code>dim_cliente</code></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td>Sin fechas</td>
+</tr>
+<tr>
+<td><code>dim_proyecto</code></td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td>2021-01-01 → 2028-10-30</td>
+</tr>
+<tr>
+<td><code>dim_rol</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td>Sin fechas</td>
+</tr>
+<tr>
+<td><code>dim_habilidad</code></td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">71</td>
+<td>Sin fechas</td>
+</tr>
+<tr>
+<td><code>dim_activo</code></td>
+<td style="text-align: right;">123</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">123</td>
+<td>Compra 2017-04-26 → 2025-09-04</td>
+</tr>
+</tbody>
+</table>
+<h3>4.1 <code>dim_tiempo</code></h3>
+<p><strong>9,497 días reales + 1 desconocido.</strong> Calendario completo de <strong>2003-01-01 a 2028-12-31</strong>. La llave es <code>AAAAMMDD</code>; la fila 0 representa “sin fecha”. Cubre 26 años, 312 meses y 53 semanas ISO.</p>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th style="text-align: right;">Valores distintos</th>
+<th style="text-align: right;">Nulos</th>
+<th>Valores o rango</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fecha</code></td>
+<td style="text-align: right;">9,497</td>
+<td style="text-align: right;">0</td>
+<td>2003-01-01 → 2028-12-31</td>
+</tr>
+<tr>
+<td><code>anio</code></td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">0</td>
+<td>2003 a 2028; 2004, 2008, 2012, 2016 y 2020 tienen 366 días</td>
+</tr>
+<tr>
+<td><code>trimestre</code></td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td>T1 2,347; T2 2,366; T3 2,392; T4 2,392</td>
+</tr>
+<tr>
+<td><code>mes</code></td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td>Enero a diciembre; 806 días en los meses de 31 días</td>
+</tr>
+<tr>
+<td><code>nombre_mes</code></td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td>Enero, febrero, …, diciembre</td>
+</tr>
+<tr>
+<td><code>semana_iso</code></td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">0</td>
+<td>Semanas 1 a 53</td>
+</tr>
+<tr>
+<td><code>dia_semana</code></td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td>Lunes a domingo; miércoles a domingo con 1,357 días</td>
+</tr>
+<tr>
+<td><code>es_fin_semana</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>0 = 6,783 días; 1 = 2,714 días</td>
+</tr>
+<tr>
+<td><code>anio_mes</code></td>
+<td style="text-align: right;">312</td>
+<td style="text-align: right;">0</td>
+<td>2003-01 a 2028-12</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lectura para Dirección.</strong> El calendario permite fechar incorporaciones, asignaciones, resguardos y proyectos en una sola dimensión. No hay fechas reales antes de 2003 porque la incorporación más antigua es de 2003-04-01; el extremo 2028 existe para los proyectos que terminan después del corte.</p>
+<h3>4.2 <code>dim_colaborador</code></h3>
+<p><strong>107 personas + 1 desconocido.</strong> Es la dimensión más rica y la más incompleta. Conserva identidad seudónima, género, ciudad, estatus, puesto, área, fechas, nómina, sueldo, costo, antigüedad, expediente, asignación y banderas de calidad.</p>
+<h4>Identidad, estatus y catálogos</h4>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th style="text-align: right;">Valores distintos</th>
+<th style="text-align: right;">Nulos</th>
+<th>Valores o rango</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_colaborador</code></td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">0</td>
+<td>Identificador seudónimo; no se lista</td>
+</tr>
+<tr>
+<td><code>nombre_completo</code></td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">0</td>
+<td>Dato personal; no se lista</td>
+</tr>
+<tr>
+<td><code>genero</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>Masculino 77; Femenino 30</td>
+</tr>
+<tr>
+<td><code>ciudad</code></td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0</td>
+<td>Monterrey 51; Edo. de México 12; Ciudad de México 12; Puebla 7; Tlaxcala 4; 24 en total</td>
+</tr>
+<tr>
+<td><code>estatus</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>Activo 75; Baja 32</td>
+</tr>
+<tr>
+<td><code>puesto</code></td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">48</td>
+<td>Consultor funcional Oracle EBS Senior 10; Consultor técnico Java Senior 5; Consultor funcional Oracle Cloud y EBS Senior 5; 23 en total</td>
+</tr>
+<tr>
+<td><code>departamento</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">95</td>
+<td>Operaciones y Soporte 11; Ventas 1</td>
+</tr>
+<tr>
+<td><code>fecha_incorporacion</code></td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">1</td>
+<td>2003-04-01 → 2026-10-06</td>
+</tr>
+<tr>
+<td><code>fecha_baja</code></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">93</td>
+<td>2026-08-28 → 2026-11-09</td>
+</tr>
+<tr>
+<td><code>fecha_nacimiento</code></td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">1</td>
+<td>1946-05-14 → 2002-06-02</td>
+</tr>
+<tr>
+<td><code>tipo_nomina</code></td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">6</td>
+<td>SMR 36; MAGNESON-SINDICATO 20; OTC 100% 18; XERES OT-SINDICATO 10; OTC-SINDICATO (SMR) 10; MODALIDAD 40-SMR 3; ADMINISTRATIVA 2; IRAZU/ASIMILADOS 1; EXTRANJERO 1</td>
+</tr>
+</tbody>
+</table>
+<h4>Costo, antigüedad y situación al corte</h4>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th style="text-align: right;">Valores distintos</th>
+<th style="text-align: right;">Nulos</th>
+<th>Valores o rango</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sueldo_neto_total</code></td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">0</td>
+<td>25 registros en $0; máximo $132,227.37</td>
+</tr>
+<tr>
+<td><code>sueldo_total_integrado</code></td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">25</td>
+<td>$7,450.10 a $135,460.71</td>
+</tr>
+<tr>
+<td><code>costo_mensual</code></td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">25</td>
+<td>$7,450.10 a $135,460.71</td>
+</tr>
+<tr>
+<td><code>costo_hora</code></td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">25</td>
+<td>$46.56 a $846.63</td>
+</tr>
+<tr>
+<td><code>es_plantilla</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>1 = 105; 0 = 2 familiares</td>
+</tr>
+<tr>
+<td><code>antiguedad_meses</code></td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">1</td>
+<td>1.5 a 283.6 meses</td>
+</tr>
+<tr>
+<td><code>edad</code></td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">1</td>
+<td>24 a 80 años</td>
+</tr>
+<tr>
+<td><code>baja_primer_anio</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>0 = 100; 1 = 7</td>
+</tr>
+<tr>
+<td><code>tiene_asignacion_vigente</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>0 = 77; 1 = 30</td>
+</tr>
+<tr>
+<td><code>dedicacion_total_pct</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">77</td>
+<td>100% en 29; 200% en 1</td>
+</tr>
+<tr>
+<td><code>sobreasignado</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>0 = 106; 1 = 1</td>
+</tr>
+<tr>
+<td><code>dias_en_banca</code></td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">31</td>
+<td>45 a 7,237 días</td>
+</tr>
+<tr>
+<td><code>pct_expediente</code></td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+<td>0% a 84.6%</td>
+</tr>
+<tr>
+<td><code>expediente_completo</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td>0 en las 107 personas</td>
+</tr>
+<tr>
+<td><code>tiene_contrato</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>0 = 92; 1 = 15</td>
+</tr>
+<tr>
+<td><code>inversion_equipo_col</code></td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">42</td>
+<td>$0 a $26,018</td>
+</tr>
+</tbody>
+</table>
+<h4>Banderas de calidad</h4>
+<table>
+<thead>
+<tr>
+<th>Bandera</th>
+<th style="text-align: right;">Valores distintos</th>
+<th style="text-align: right;">Nulos</th>
+<th style="text-align: right;">Valor 1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>falta_puesto</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">48</td>
+</tr>
+<tr>
+<td><code>falta_departamento</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">95</td>
+</tr>
+<tr>
+<td><code>falta_tipo_nomina</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td><code>falta_ciudad</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>falta_fecha_baja</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr>
+<td><code>falta_sueldo</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr>
+<td><code>inconsistencia_estatus_fecha</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fechas.</strong> Incorporación: <strong>2003-04-01 a 2026-10-06</strong>. Bajas: <strong>2026-08-28 a 2026-11-09</strong>. Nacimiento: <strong>1946-05-14 a 2002-06-02</strong>.</p>
+<p><strong>Lectura para Dirección.</strong> La dimensión permite analizar a las 107 personas, incluidas las 77 que no tienen asignación y que nunca aparecerían si el análisis se hiciera solo desde el hecho. Pero 48 personas no tienen puesto y 95 no tienen área: cualquier reporte por área o por puesto cubre una minoría. Los 25 sueldos nulos y los 25 sueldos netos en cero impiden costear a una parte de la plantilla. La versión SCD es 1 en las 107 filas: el modelo está preparado para historia, pero la fuente solo entrega la foto del corte.</p>
+<h3>4.3 <code>dim_puesto</code></h3>
+<p><strong>23 puestos + 1 desconocido.</strong> Tiene más de diez valores, así que se describe en lugar de listarse:</p>
+<ul>
+<li><strong>Consultoría funcional y técnica (17):</strong> Oracle EBS, Oracle Cloud, Cloud + EBS, NetSuite, Kronos, DBA, Java, .NET, RPA y Web, en niveles Senior, Analista y Gerente.</li>
+<li><strong>Administración y finanzas (2):</strong> Gerente y Senior.</li>
+<li><strong>Dirección y gestión (3):</strong> Gerente de Proyectos y Operaciones, Gerente de Recursos Humanos y Asesor Comercial Senior.</li>
+<li><strong>Familiar colaborador (1):</strong> puesto usado por los dos familiares de seguro.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th style="text-align: right;">Valores distintos</th>
+<th style="text-align: right;">Nulos</th>
+<th>Valores o rango</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_puesto</code></td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td>1 a 23</td>
+</tr>
+<tr>
+<td><code>puesto</code></td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td>17 perfiles de consultoría, 2 de administración, 3 de gestión y 1 familiar</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lectura para Dirección.</strong> El catálogo está subutilizado: 14 de las 31 asignaciones caen en el miembro desconocido porque la persona trae <code>PENDIENTE</code>, y 29 activos no tienen puesto. El costo de esas 14 asignaciones sin puesto es <strong>$1,001,034.75</strong>. Sin puesto no se puede comparar el perfil del consultor con la necesidad del proyecto ni calcular una tarifa por rol.</p>
+<h3>4.4 <code>dim_departamento</code></h3>
+<p><strong>6 áreas + 1 desconocido.</strong> Tiene seis valores, por lo que se listan todos:</p>
+<table>
+<thead>
+<tr>
+<th>Código</th>
+<th>Área</th>
+<th>Objetivo (resumen)</th>
+<th>Responsable</th>
+<th>Centro de costos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D0001</td>
+<td>Ventas</td>
+<td>Conseguir clientes, dar seguimiento y facturar proyectos y asignaciones</td>
+<td>No capturado</td>
+<td>No capturado</td>
+</tr>
+<tr>
+<td>D0002</td>
+<td>Administración y Finanzas</td>
+<td>Control de ingresos y egresos, contabilidad, transferencias e impuestos</td>
+<td>No capturado</td>
+<td>No capturado</td>
+</tr>
+<tr>
+<td>D0003</td>
+<td>Recursos Humanos</td>
+<td>Reclutamiento, selección y administración de requerimientos</td>
+<td>No capturado</td>
+<td>No capturado</td>
+</tr>
+<tr>
+<td>D0004</td>
+<td>Operaciones y Soporte</td>
+<td>Seguimiento a proyectos, soporte técnico y funcional, equipo y accesos</td>
+<td>No capturado</td>
+<td>No capturado</td>
+</tr>
+<tr>
+<td>D0005</td>
+<td>Dirección General</td>
+<td>Administración general de OTC</td>
+<td>No capturado</td>
+<td>No capturado</td>
+</tr>
+<tr>
+<td>D0006</td>
+<td>Procesos y Mejora Continua</td>
+<td>Documentación, automatización y mejora continua</td>
+<td>No capturado</td>
+<td>No capturado</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th style="text-align: right;">Valores distintos</th>
+<th style="text-align: right;">Nulos</th>
+<th>Valores</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>codigo</code></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td>D0001 a D0006</td>
+</tr>
+<tr>
+<td><code>nombre</code></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td>Las seis áreas de la tabla</td>
+</tr>
+<tr>
+<td><code>objetivo</code></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td>Un objetivo por área</td>
+</tr>
+<tr>
+<td><code>responsable</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td>Ninguno capturado</td>
+</tr>
+<tr>
+<td><code>centro_costos</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+<td>Ninguno capturado</td>
+</tr>
+<tr>
+<td><code>estatus</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td>Activo en las seis</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lectura para Dirección.</strong> El catálogo existe, pero no sirve para imputar costo: <strong>0 de 6</strong> áreas tienen responsable y centro de costos. Además, solo se usan dos áreas en el expediente (Operaciones y Soporte, 11 personas; Ventas, 1) y <strong>95 personas no tienen área</strong>. No se puede responder “cuánto cuesta cada área” con los datos actuales.</p>
+<h3>4.5 <code>dim_cliente</code></h3>
+<p><strong>8 clientes + 1 desconocido.</strong> Tiene ocho valores, por lo que se listan todos:</p>
+<table>
+<thead>
+<tr>
+<th>Cliente</th>
+<th>Industria</th>
+<th>Ciudad</th>
+<th style="text-align: right;">Proyectos</th>
+<th>Estatus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Metalsa</td>
+<td>Automotriz</td>
+<td>Apodaca, Nuevo León</td>
+<td style="text-align: right;">3</td>
+<td>Activo</td>
+</tr>
+<tr>
+<td>Grupo Daltile</td>
+<td>Manufactura</td>
+<td>No capturada</td>
+<td style="text-align: right;">3</td>
+<td>Activo</td>
+</tr>
+<tr>
+<td>Allegion</td>
+<td>Manufactura</td>
+<td>No capturada</td>
+<td style="text-align: right;">1</td>
+<td>Activo</td>
+</tr>
+<tr>
+<td>Citi</td>
+<td>Consultoría</td>
+<td>No capturada</td>
+<td style="text-align: right;">1</td>
+<td>Activo</td>
+</tr>
+<tr>
+<td>Parker Servicios de México</td>
+<td>Manufactura</td>
+<td>Apodaca, Nuevo León</td>
+<td style="text-align: right;">1</td>
+<td>Activo</td>
+</tr>
+<tr>
+<td>Rent A Center (RAC México Operaciones)</td>
+<td>Rentas de equipo</td>
+<td>Apodaca, Nuevo León</td>
+<td style="text-align: right;">1</td>
+<td>Activo</td>
+</tr>
+<tr>
+<td>Fanosa</td>
+<td>Manufactura</td>
+<td>No capturada</td>
+<td style="text-align: right;">1</td>
+<td>Activo</td>
+</tr>
+<tr>
+<td>Novocast</td>
+<td>Manufactura</td>
+<td>El Carmen, Nuevo León</td>
+<td style="text-align: right;">1</td>
+<td>Activo</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th style="text-align: right;">Valores distintos</th>
+<th style="text-align: right;">Nulos</th>
+<th>Valores</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_cliente</code></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td>1 a 8</td>
+</tr>
+<tr>
+<td><code>codigo_cliente</code></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td>C0001 a C0008</td>
+</tr>
+<tr>
+<td><code>cliente</code></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td>Los ocho de la tabla</td>
+</tr>
+<tr>
+<td><code>industria</code></td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td>Manufactura 5; Automotriz 1; Consultoría 1; Rentas de Equipo 1</td>
+</tr>
+<tr>
+<td><code>ciudad</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td>Apodaca 3; El Carmen 1; cuatro sin ciudad</td>
+</tr>
+<tr>
+<td><code>estado</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td>Nuevo León 4</td>
+</tr>
+<tr>
+<td><code>pais</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td>México 4 (se normalizaron “Méxcio” y “Mèxico”)</td>
+</tr>
+<tr>
+<td><code>contacto_nom</code></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td>Dato de contacto; no se lista</td>
+</tr>
+<tr>
+<td><code>estatus</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td>Activo en los ocho</td>
+</tr>
+<tr>
+<td><code>n_proyectos</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>1 proyecto en 6 clientes; 3 proyectos en 2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lectura para Dirección.</strong> La cartera tiene ocho clientes, pero solo tres aparecen en asignaciones: Metalsa, Grupo Daltile y Allegion. Cinco clientes tienen proyectos y ninguna persona asignada, así que su operación es invisible en el hecho. Cuatro clientes no tienen ciudad, estado ni país, lo que impide un análisis geográfico completo.</p>
+<h3>4.6 <code>dim_proyecto</code></h3>
+<p><strong>12 proyectos + 1 desconocido.</strong> Tiene más de diez valores, así que se describe:</p>
+<ul>
+<li><strong>Metalsa (3):</strong> Ams Manufactura, Soporte Ams Manufacta y Asignación Indefinida.</li>
+<li><strong>Grupo Daltile (3):</strong> Marazzi, Asignación EBS Temporal (3 meses) y Asignación Funcional-Técnico (4 meses).</li>
+<li><strong>Allegion (1):</strong> Migración EBS.</li>
+<li><strong>Citi (1):</strong> Soporte Oracle Cloud.</li>
+<li><strong>Parker Servicios de México (1):</strong> Desarrollo de Indicadores.</li>
+<li><strong>Rent A Center (1):</strong> Shine - Asignación de Recursos de Apoyo.</li>
+<li><strong>Fanosa (1):</strong> Soporte DBA.</li>
+<li><strong>Novocast (1):</strong> Hosting EBS.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th style="text-align: right;">Valores distintos</th>
+<th style="text-align: right;">Nulos</th>
+<th>Valores o rango</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id_proyecto</code></td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td>1 a 12</td>
+</tr>
+<tr>
+<td><code>llave_proyecto</code></td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td>Cliente + proyecto normalizado</td>
+</tr>
+<tr>
+<td><code>proyecto</code></td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td>Los doce de la descripción</td>
+</tr>
+<tr>
+<td><code>cliente</code></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td>Metalsa 3; Grupo Daltile 3; los otros seis, 1 cada uno</td>
+</tr>
+<tr>
+<td><code>fecha_inicio</code></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">6</td>
+<td>2021-01-01 → 2026-10-13</td>
+</tr>
+<tr>
+<td><code>fecha_fin</code></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+<td>2026-09-23 → 2028-10-30</td>
+</tr>
+<tr>
+<td><code>estatus</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>En Curso 7; Por Iniciar 5</td>
+</tr>
+<tr>
+<td><code>resp_cli</code></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">6</td>
+<td>Dato de contacto; no se lista</td>
+</tr>
+<tr>
+<td><code>pm_otc</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td>Dato personal; no se lista</td>
+</tr>
+<tr>
+<td><code>version_scd</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td>1 en los 12</td>
+</tr>
+<tr>
+<td><code>es_actual</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td>1 en los 12</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fechas.</strong> Inicio: <strong>2021-01-01 a 2026-10-13</strong>. Fin: <strong>2026-09-23 a 2028-10-30</strong>.</p>
+<p><strong>Lectura para Dirección.</strong> Solo cuatro de los doce proyectos tienen asignaciones (Asignación Indefinida, Soporte AMS, Marazzi y Migración EBS); ocho están vacíos. Seis proyectos no tienen fecha de inicio y nueve no tienen fecha de fin, así que no se puede medir su duración ni su avance. Seis no tienen PM de OTC y seis no tienen responsable del cliente. La dimensión sirve para costear, pero todavía no para gestionar el ciclo de vida del proyecto.</p>
+<h3>4.7 <code>dim_rol</code></h3>
+<p><strong>1 rol real + 1 desconocido.</strong> El único valor es <strong>CONSULTOR FUNCIONAL ORACLE EBS SENIOR</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th style="text-align: right;">Valores distintos</th>
+<th style="text-align: right;">Nulos</th>
+<th>Valores</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rol_asignado</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td>CONSULTOR FUNCIONAL ORACLE EBS SENIOR</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lectura para Dirección.</strong> Es la dimensión más pobre del modelo: 29 de 31 asignaciones no tienen rol y caen en el miembro desconocido. Solo dos asignaciones usan el rol capturado. No se puede analizar la mezcla de roles por proyecto ni comparar el rol asignado con el puesto de la persona. Es una alerta de captura, no un problema del modelo.</p>
+<h3>4.8 <code>dim_habilidad</code></h3>
+<p><strong>71 habilidades + 1 desconocido.</strong> Tiene más de diez valores, así que se describe por tecnología:</p>
+<table>
+<thead>
+<tr>
+<th>Tecnología</th>
+<th style="text-align: right;">Habilidades</th>
+<th style="text-align: right;">Evaluaciones</th>
+<th style="text-align: right;">Expertos (nivel ≥ 3)</th>
+<th style="text-align: right;">% expertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Oracle EBS</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">645</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: right;">28.2%</td>
+</tr>
+<tr>
+<td>Plataformas Tecnológicas</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">469</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">33.3%</td>
+</tr>
+<tr>
+<td>Oracle Fusion Cloud</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">349</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">33.5%</td>
+</tr>
+<tr>
+<td>Idiomas</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">13.0%</td>
+</tr>
+<tr>
+<td>Certificaciones</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+<tr>
+<td>Otros</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th style="text-align: right;">Valores distintos</th>
+<th style="text-align: right;">Nulos</th>
+<th>Valores o rango</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cod_habilidad</code></td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0</td>
+<td>67 códigos H (H0002–H0068) y 4 códigos S (S0001–S0005)</td>
+</tr>
+<tr>
+<td><code>descripcion</code></td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0</td>
+<td>13 descripciones repetidas entre EBS y Cloud</td>
+</tr>
+<tr>
+<td><code>descripcion_unica</code></td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0</td>
+<td>Descripción desambiguada por tecnología</td>
+</tr>
+<tr>
+<td><code>tecnologia</code></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td>Las seis de la tabla</td>
+</tr>
+<tr>
+<td><code>tipo</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>Hard 67; Soft 4</td>
+</tr>
+<tr>
+<td><code>estatus</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td>Activo en las 71</td>
+</tr>
+<tr>
+<td><code>descripcion_repetida</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>0 = 45; 1 = 26 filas (13 pares)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lectura para Dirección.</strong> El catálogo está completo, pero la matriz no: cubre 54 de 75 activos y 28 activos no tienen ninguna evaluación. De las 71 habilidades, <strong>3 no tienen ningún experto</strong> (Opm, Fuse y Taleo), <strong>4 tienen un solo experto</strong> (Ebtax, Xtr, Landed Cost y Mfg Cloud) y <strong>2 de “Otros” no tienen evaluación</strong> (Empatía y Manejo de Conflictos). El 44.9% de las evaluaciones son Básico y solo 16.0% Experto. La matriz mide presencia, no certificación vigente: no hay fecha de evaluación ni vencimiento.</p>
+<h3>4.9 <code>dim_activo</code></h3>
+<p><strong>123 activos + 1 desconocido.</strong> Tiene más de diez valores, así que se describe:</p>
+<ul>
+<li><strong>Tipo:</strong> 122 laptops y 1 monitor.</li>
+<li><strong>Marca:</strong> Dell 62; HP 26; Lenovo 24; Acer 9; ASUS 2.</li>
+<li><strong>Modelo:</strong> 78 modelos distintos; el más frecuente es Inspiron Business 3520, con 20 equipos.</li>
+<li><strong>Proveedor:</strong> 6 proveedores; PCEL concentra 43; 70 equipos no tienen proveedor.</li>
+<li><strong>Estatus:</strong> los 123 están “Activo”, incluso los que las notas dicen que no funcionan.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Atributo</th>
+<th style="text-align: right;">Valores distintos</th>
+<th style="text-align: right;">Nulos</th>
+<th>Valores o rango</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>codigo</code></td>
+<td style="text-align: right;">123</td>
+<td style="text-align: right;">0</td>
+<td>123 códigos A0001–A0128 (con huecos)</td>
+</tr>
+<tr>
+<td><code>desc</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>Computadora 122; Monitor 1</td>
+</tr>
+<tr>
+<td><code>tipo</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td>Laptop 122; Monitor 1</td>
+</tr>
+<tr>
+<td><code>marca</code></td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td>Dell 62; HP 26; Lenovo 24; Acer 9; ASUS 2</td>
+</tr>
+<tr>
+<td><code>modelo</code></td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">1</td>
+<td>78 modelos; Inspiron Business 3520 (20)</td>
+</tr>
+<tr>
+<td><code>serie</code></td>
+<td style="text-align: right;">123</td>
+<td style="text-align: right;">0</td>
+<td>Dato identificable; no se lista</td>
+</tr>
+<tr>
+<td><code>proveedor</code></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">70</td>
+<td>PCEL 43; Delivery Experts 5; Oresa Norte 2; otros tres proveedores con 1 equipo cada uno</td>
+</tr>
+<tr>
+<td><code>fcompra</code></td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">70</td>
+<td>2017-04-26 → 2025-09-04</td>
+</tr>
+<tr>
+<td><code>estatus</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td>Activo en los 123</td>
+</tr>
+<tr>
+<td><code>notas</code></td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">115</td>
+<td>5 equipos con nota de falla: 4 “NO FUNCIONA” y 1 “Ya no sirve”</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fechas.</strong> Compra: <strong>2017-04-26 a 2025-09-04</strong>.</p>
+<p><strong>Lectura para Dirección.</strong> El inventario está identificado por código y serie, pero no está valorado: 70 de 123 equipos no tienen costo ni fecha de compra. Treinta y dos no tienen resguardo y nueve siguen en manos de personas dadas de baja. El valor conocido de <strong>$567,915.55</strong> es un piso, no el valor real. Cinco equipos con nota de falla siguen con estatus Activo y se pueden volver a asignar.</p>
+<hr />
+<h2>5. Respuestas a las nueve preguntas de análisis</h2>
+<h3>P1 · ¿Quiénes están asignados y quiénes no, y cuánto tiempo llevan así?</h3>
+<p><strong>Consulta:</strong> <code>q1_resumen</code>, <code>q1_banca_por_puesto</code>, <code>q1_banca_detalle</code>, <code>q1_concentracion_cliente</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Indicador</th>
+<th style="text-align: right;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Headcount activo</td>
+<td style="text-align: right;">75</td>
+</tr>
+<tr>
+<td>Plantilla activa (sin familiares)</td>
+<td style="text-align: right;">73</td>
+</tr>
+<tr>
+<td>Asignados</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr>
+<td>Banca de plantilla</td>
+<td style="text-align: right;">43</td>
+</tr>
+<tr>
+<td>Familiares sin asignación</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>Sin asignación total</td>
+<td style="text-align: right;">45</td>
+</tr>
+<tr>
+<td>Utilización sobre headcount</td>
+<td style="text-align: right;">40.0%</td>
+</tr>
+<tr>
+<td>Utilización sobre plantilla</td>
+<td style="text-align: right;">41.1%</td>
+</tr>
+</tbody>
+</table>
+<p>La banca de plantilla se concentra en puestos sin capturar: <strong>15 personas sin puesto</strong> cuestan <strong>$690,870.17</strong> al mes. Le siguen 4 consultores técnicos Oracle EBS Senior ($191,765.36), 3 funcionales Oracle EBS Senior ($198,040.57) y 3 funcionales Cloud + EBS Senior ($189,101.41). Los días en banca van de 45 a 7,237; el promedio más alto está en consultores técnicos Oracle EBS Senior (3,977 días) y en administración financiera Senior (3,958 días).</p>
+<p><strong>Concentración por cliente.</strong> De los 30 asignados, <strong>23 están en Metalsa (76.7%)</strong>, 5 en Allegion (16.7%) y 3 en Grupo Daltile (10.0%). Metalsa concentra <strong>$1,637,865.78</strong>, el <strong>80.9%</strong> del costo asignado. Es la dependencia comercial más alta del corte.</p>
+<p><strong>Lectura.</strong> La utilización del 40% es baja para una consultora que vende horas. La banca no es homogénea: hay perfiles técnicos y funcionales con más de diez años de antigüedad y sin proyecto. El problema no es solo comercial; también es de visibilidad: 15 de las 43 personas en banca no tienen puesto capturado, así que no se sabe qué perfil se está dejando de vender.</p>
+<h3>P2 · ¿Quiénes terminan pronto y en qué proyecto y cliente?</h3>
+<p><strong>Consulta:</strong> <code>q2_vencimientos</code>, <code>q2_resumen</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Ventana</th>
+<th style="text-align: right;">Asignaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>≤ 30 días</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>31–60 días</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>61–90 días</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Más de 90 días</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>Sin fecha de fin</td>
+<td style="text-align: right;">24</td>
+</tr>
+</tbody>
+</table>
+<p>Las 7 asignaciones con fecha de fin son:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">ID</th>
+<th>Colaborador</th>
+<th>Cliente</th>
+<th>Proyecto</th>
+<th>Fin</th>
+<th style="text-align: right;">Días</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">5</td>
+<td>OTC014</td>
+<td>Grupo Daltile</td>
+<td>Marazzi</td>
+<td>2027-01-01</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td>OTC050</td>
+<td>Grupo Daltile</td>
+<td>Marazzi</td>
+<td>2027-01-01</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr>
+<td style="text-align: right;">23</td>
+<td>OTC095</td>
+<td>Grupo Daltile</td>
+<td>Marazzi</td>
+<td>2027-01-01</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr>
+<td style="text-align: right;">28</td>
+<td>OTC104</td>
+<td>Allegion</td>
+<td>Migración EBS</td>
+<td>2027-07-01</td>
+<td style="text-align: right;">223</td>
+</tr>
+<tr>
+<td style="text-align: right;">29</td>
+<td>OTC105</td>
+<td>Allegion</td>
+<td>Migración EBS</td>
+<td>2027-07-01</td>
+<td style="text-align: right;">223</td>
+</tr>
+<tr>
+<td style="text-align: right;">30</td>
+<td>OTC106</td>
+<td>Allegion</td>
+<td>Migración EBS</td>
+<td>2027-07-01</td>
+<td style="text-align: right;">223</td>
+</tr>
+<tr>
+<td style="text-align: right;">31</td>
+<td>OTC107</td>
+<td>Allegion</td>
+<td>Migración EBS</td>
+<td>2028-07-01</td>
+<td style="text-align: right;">589</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lectura.</strong> La ventana de 30 días está vacía, no sana: las 24 asignaciones sin fecha de fin no se pueden alertar. Las tres personas de Marazzi vencen en 42 días y las tres de Migración EBS en 223; la persona OTC107 tiene la asignación más larga, hasta 2028. Sin fecha de fin no hay renovación, no hay plan de reemplazo y no hay forma de saber si el proyecto se queda sin gente.</p>
+<h3>P3 · ¿Qué porcentaje de la nómina está asignado y cuánto cuesta la gente sin proyecto?</h3>
+<p><strong>Consulta:</strong> <code>q3_costos</code>, <code>q3_por_cliente</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Concepto</th>
+<th style="text-align: right;">Personas</th>
+<th style="text-align: right;">Costo mensual</th>
+<th style="text-align: right;">% de la nómina</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nómina activa</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">$3,918,864.40</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+<tr>
+<td>Asignado (costo único)</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">$1,924,710.62</td>
+<td style="text-align: right;">49.1%</td>
+</tr>
+<tr>
+<td>Banca de plantilla</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">$1,912,228.33</td>
+<td style="text-align: right;">48.8%</td>
+</tr>
+<tr>
+<td>Familiares sin asignación</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">$81,925.45</td>
+<td style="text-align: right;">2.1%</td>
+</tr>
+<tr>
+<td>Sin asignación total</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">$1,994,153.78</td>
+<td style="text-align: right;">50.9%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>El detalle que importa.</strong> El hecho de asignación suma <strong>$2,025,644.02</strong>, no $1,924,710.62. La diferencia es <strong>$100,933.40</strong>: una persona tiene dos asignaciones al 100% y su costo se cuenta dos veces. El costo único es el que cierra contra la nómina; el costo por fila es el que explica el hecho. Las dos cifras son correctas para preguntas distintas.</p>
+<p><strong>Lectura.</strong> La mitad de la nómina ($1.99 M) está en gente sin proyecto. La banca de plantilla cuesta $1.91 M; los familiares, $81.9 k. No es un problema menor: con 40% de utilización, OTC paga la mitad de su nómina sin generar ingreso. La concentración en Metalsa agrava el riesgo: si ese cliente ajusta, no hay cartera diversificada que absorba a la gente.</p>
+<h3>P4 · ¿Cuál es el costo por experto en un proyecto por hora?</h3>
+<p><strong>Consulta:</strong> <code>q4_costo_hora_puesto</code>, <code>q4_cobertura</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Puesto</th>
+<th style="text-align: right;">Asignaciones</th>
+<th style="text-align: right;">Personas</th>
+<th style="text-align: right;">Costo hora promedio</th>
+<th style="text-align: right;">Mínimo</th>
+<th style="text-align: right;">Máximo</th>
+<th style="text-align: right;">Costo mensual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No especificado</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">$446.89</td>
+<td style="text-align: right;">$212.41</td>
+<td style="text-align: right;">$810.56</td>
+<td style="text-align: right;">$1,001,034.75</td>
+</tr>
+<tr>
+<td>Consultor funcional Oracle EBS Senior</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">$162.31</td>
+<td style="text-align: right;">$87.65</td>
+<td style="text-align: right;">$187.20</td>
+<td style="text-align: right;">$103,880.64</td>
+</tr>
+<tr>
+<td>Consultor funcional Oracle Cloud Senior</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">$412.08</td>
+<td style="text-align: right;">$322.33</td>
+<td style="text-align: right;">$542.67</td>
+<td style="text-align: right;">$197,797.47</td>
+</tr>
+<tr>
+<td>Gerente de Proyectos y Operaciones</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$630.83</td>
+<td style="text-align: right;">$630.83</td>
+<td style="text-align: right;">$630.83</td>
+<td style="text-align: right;">$201,866.80</td>
+</tr>
+<tr>
+<td>Consultor técnico Java Senior</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">$418.85</td>
+<td style="text-align: right;">$418.51</td>
+<td style="text-align: right;">$419.18</td>
+<td style="text-align: right;">$134,030.48</td>
+</tr>
+<tr>
+<td>Consultor DBA Oracle Senior</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$662.81</td>
+<td style="text-align: right;">$662.81</td>
+<td style="text-align: right;">$662.81</td>
+<td style="text-align: right;">$106,049.90</td>
+</tr>
+<tr>
+<td>Consultor técnico Web Senior</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$461.01</td>
+<td style="text-align: right;">$461.01</td>
+<td style="text-align: right;">$461.01</td>
+<td style="text-align: right;">$73,761.12</td>
+</tr>
+<tr>
+<td>Consultor funcional Oracle Cloud y EBS Senior</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$448.06</td>
+<td style="text-align: right;">$448.06</td>
+<td style="text-align: right;">$448.06</td>
+<td style="text-align: right;">$71,689.12</td>
+</tr>
+<tr>
+<td>Consultor técnico Oracle EBS Senior</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$381.55</td>
+<td style="text-align: right;">$381.55</td>
+<td style="text-align: right;">$381.55</td>
+<td style="text-align: right;">$61,048.62</td>
+</tr>
+<tr>
+<td>Consultor Kronos Senior</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$238.01</td>
+<td style="text-align: right;">$238.01</td>
+<td style="text-align: right;">$238.01</td>
+<td style="text-align: right;">$38,080.80</td>
+</tr>
+<tr>
+<td>Consultor funcional Oracle Cloud y EBS Analista</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$227.53</td>
+<td style="text-align: right;">$227.53</td>
+<td style="text-align: right;">$227.53</td>
+<td style="text-align: right;">$36,404.32</td>
+</tr>
+</tbody>
+</table>
+<p>El promedio global es <strong>$408.40/hora</strong>, con un mínimo de <strong>$87.65</strong> y un máximo de <strong>$810.56</strong>. Las 14 asignaciones sin puesto cuestan <strong>$1,001,034.75</strong>, el <strong>49.4%</strong> del costo asignado, y su costo hora promedio es $446.89.</p>
+<p><strong>Lectura.</strong> El costo hora se puede calcular porque hay sueldo integrado en 30 de las 31 asignaciones, pero el puesto no se puede usar como criterio: 14 asignaciones caen en “No especificado” y distorsionan cualquier promedio por rol. El rango $87.65–$810.56 muestra que el costo hora depende más del perfil que del proyecto. Para cotizar, primero hay que capturar el puesto y el rol.</p>
+<h3>P5 · ¿Cuál es el margen por cliente y por proyecto?</h3>
+<p><strong>Consulta:</strong> <code>q5_bloqueo</code>, <code>q5_costo_por_proyecto</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Indicador</th>
+<th style="text-align: right;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Asignaciones</td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr>
+<td>Con ingreso facturable</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Con margen</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Costo asignado</td>
+<td style="text-align: right;">$2,025,644.02</td>
+</tr>
+</tbody>
+</table>
+<p>El costo por proyecto está listo:</p>
+<table>
+<thead>
+<tr>
+<th>Cliente</th>
+<th>Proyecto</th>
+<th style="text-align: right;">Personas</th>
+<th style="text-align: right;">Costo mensual asignado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Metalsa</td>
+<td>Asignación Indefinida</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">$1,319,330.43</td>
+</tr>
+<tr>
+<td>Metalsa</td>
+<td>Soporte AMS Manufacta</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">$318,535.35</td>
+</tr>
+<tr>
+<td>Grupo Daltile</td>
+<td>Marazzi</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">$222,848.98</td>
+</tr>
+<tr>
+<td>Allegion</td>
+<td>Migración EBS</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">$164,929.26</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lectura.</strong> El margen está <strong>bloqueado, no en cero</strong>. La fuente no tiene tarifa por proyecto ni horas facturables: <code>tarifa_proyecto</code> y <code>registro_horas</code> están vacías. Cualquier margen que se publicara hoy sería inventado. La consulta deja el costo listo para el día en que el socio capture las tarifas; mientras tanto, el tablero muestra el bloqueo y la lista de datos que faltan.</p>
+<h3>P6 · ¿Qué habilidades se tienen, en qué nivel y cuáles faltan?</h3>
+<p><strong>Consulta:</strong> <code>q6_tecnologia</code>, <code>q6_niveles</code>, <code>q6_riesgo</code>, <code>q6_cobertura</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Indicador</th>
+<th style="text-align: right;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Habilidades en catálogo</td>
+<td style="text-align: right;">71</td>
+</tr>
+<tr>
+<td>Evaluaciones</td>
+<td style="text-align: right;">1,539</td>
+</tr>
+<tr>
+<td>Evaluaciones sin colaborador</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>Activos con matriz</td>
+<td style="text-align: right;">54 de 75</td>
+</tr>
+<tr>
+<td>Activos sin matriz</td>
+<td style="text-align: right;">28</td>
+</tr>
+</tbody>
+</table>
+<p>La distribución por nivel es <strong>Básico 686 (44.9%)</strong>, <strong>Intermedio 369 (24.1%)</strong>, <strong>Avanzado 230 (15.0%)</strong> y <strong>Experto 244 (16.0%)</strong>. La cobertura por tecnología está en la tabla 4.8.</p>
+<p><strong>Habilidades en riesgo (≤ 1 experto o sin evaluación):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Código</th>
+<th>Habilidad</th>
+<th>Tecnología</th>
+<th style="text-align: right;">Evaluados</th>
+<th style="text-align: right;">Expertos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H0023</td>
+<td>Opm</td>
+<td>Oracle EBS</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>H0062</td>
+<td>Fuse</td>
+<td>Plataformas Tecnológicas</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>H0028</td>
+<td>Taleo</td>
+<td>Oracle EBS</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>H0008</td>
+<td>Ebtax</td>
+<td>Oracle EBS</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>H0007</td>
+<td>Xtr</td>
+<td>Oracle EBS</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>H0043</td>
+<td>Landed Cost</td>
+<td>Oracle Fusion Cloud</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>H0045</td>
+<td>Mfg (Oracle Fusion Cloud)</td>
+<td>Oracle Fusion Cloud</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>S0004</td>
+<td>Empatía</td>
+<td>Otros</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>S0005</td>
+<td>Manejo de Conflictos</td>
+<td>Otros</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lectura.</strong> Hay talento, pero no está medido de forma pareja: 28 activos no tienen ninguna evaluación y 10 filas de la matriz no tienen colaborador. Tres habilidades críticas no tienen experto y cuatro dependen de una sola persona. La matriz no tiene fecha de evaluación, así que no se puede saber si un experto sigue vigente. Para staffing, la pregunta “¿quién puede cubrir este proyecto?” se puede responder con la matriz actual, pero con un margen de error alto.</p>
+<h3>P7 · ¿Qué colaboradores están en riesgo de salir?</h3>
+<p><strong>Consulta:</strong> <code>q7_resumen</code>, <code>q7_cohortes</code>, <code>q7_por_nomina</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Indicador</th>
+<th style="text-align: right;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Personas</td>
+<td style="text-align: right;">107</td>
+</tr>
+<tr>
+<td>Activos</td>
+<td style="text-align: right;">75</td>
+</tr>
+<tr>
+<td>Bajas</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr>
+<td>% de bajas</td>
+<td style="text-align: right;">29.9%</td>
+</tr>
+<tr>
+<td>Bajas sin fecha</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr>
+<td>Bajas en el primer año</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td>Permanencia promedio de las bajas</td>
+<td style="text-align: right;">25.2 meses</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cohortes recientes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Año de ingreso</th>
+<th style="text-align: right;">Ingresos</th>
+<th style="text-align: right;">Bajas</th>
+<th style="text-align: right;">% de baja</th>
+<th style="text-align: right;">Bajas en primer año</th>
+<th style="text-align: right;">Permanencia promedio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">40.0%</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4.0 meses</td>
+</tr>
+<tr>
+<td>2025</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">60.0%</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.2 meses</td>
+</tr>
+<tr>
+<td>2024</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">35.0%</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">28.2 meses</td>
+</tr>
+<tr>
+<td>2023</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">30.0%</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">38.5 meses</td>
+</tr>
+<tr>
+<td>2022</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">28.6%</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">50.7 meses</td>
+</tr>
+<tr>
+<td>2021</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20.0%</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">67.5 meses</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Por esquema de nómina:</strong> MAGNESON-SINDICATO 10 bajas de 20 personas (50.0%); SMR 7 de 36 (19.4%); sin esquema 6 de 6 (100%); OTC 100% 4 de 18 (22.2%); XERES OT-SINDICATO 4 de 10 (40.0%); extranjero 1 de 1.</p>
+<p><strong>Lectura.</strong> <strong>25 de las 55 personas que entraron desde 2024 ya salieron (45.5%).</strong> La cohorte 2025 es la más crítica: 12 bajas de 20 ingresos. La cohorte 2026 ya tiene 6 bajas en el primer año. Pero la rotación por periodo no se puede calcular completa: 18 de 32 bajas no tienen fecha. Lo que sí se puede afirmar es que la permanencia promedio de quienes salen es de 25.2 meses y que el esquema MAGNESON-SINDICATO concentra 10 de las 32 salidas. La causa de la baja no existe en la fuente, así que no se puede responder “por qué se va la gente”; solo “quiénes y cuándo”.</p>
+<h3>P8 · ¿Qué equipo sigue con personas que ya salieron y cuánto vale el inventario?</h3>
+<p><strong>Consulta:</strong> <code>q8_resumen</code>, <code>q8_marcas</code>, <code>q8_pendientes</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Indicador</th>
+<th style="text-align: right;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Activos</td>
+<td style="text-align: right;">123</td>
+</tr>
+<tr>
+<td>Sin costo</td>
+<td style="text-align: right;">70</td>
+</tr>
+<tr>
+<td>Sin resguardo</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr>
+<td>Pendientes de recuperar</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr>
+<td>Valor conocido del inventario</td>
+<td style="text-align: right;">$567,915.55</td>
+</tr>
+<tr>
+<td>Valor pendiente de recuperar</td>
+<td style="text-align: right;">$40,693.00</td>
+</tr>
+<tr>
+<td>Pendientes con costo</td>
+<td style="text-align: right;">4 de 9</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Por marca:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Marca</th>
+<th style="text-align: right;">Equipos</th>
+<th style="text-align: right;">Sin costo</th>
+<th style="text-align: right;">Valor conocido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dell</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">$256,441.78</td>
+</tr>
+<tr>
+<td>HP</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">$102,109.00</td>
+</tr>
+<tr>
+<td>Lenovo</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">$180,101.01</td>
+</tr>
+<tr>
+<td>Acer</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">$13,464.76</td>
+</tr>
+<tr>
+<td>ASUS</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">$15,799.00</td>
+</tr>
+</tbody>
+</table>
+<p>Los nueve equipos pendientes son laptops (ocho) y un monitor; el de mayor costo es A0010 (Lenovo, $12,189) en OTC018, seguido de A0026 (Dell, $12,006) en OTC048. Cuatro no tienen costo.</p>
+<p><strong>Lectura.</strong> El inventario está identificado, pero no valorado: 70 de 123 equipos no tienen costo ni fecha de compra. Treinta y dos no tienen resguardo y nueve siguen con personas de baja. El valor en riesgo de $40,693 es un mínimo. Además, cinco equipos con nota de falla siguen con estatus Activo; se pueden volver a asignar.</p>
+<h3>P9 · ¿Qué tan completo y confiable está el expediente?</h3>
+<p><strong>Consulta:</strong> <code>q9_expediente</code>, <code>q9_rangos</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Indicador</th>
+<th style="text-align: right;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Activos</td>
+<td style="text-align: right;">75</td>
+</tr>
+<tr>
+<td>Expediente promedio</td>
+<td style="text-align: right;">52.7%</td>
+</tr>
+<tr>
+<td>Expedientes completos</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Sin puesto</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr>
+<td>Sin departamento</td>
+<td style="text-align: right;">64</td>
+</tr>
+<tr>
+<td>Sin sueldo</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>Con contrato</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr>
+<td>Expediente en 0%</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Distribución:</strong> 25 activos entre 1% y 49%; 50 activos entre 50% y 99%; ninguno en 100%. El 0% no aparece entre activos, pero sí en el total de 107 (17 personas, en su mayoría bajas).</p>
+<p><strong>Lectura.</strong> El expediente no está completo en ninguna persona. El promedio activo de 52.7% es bajo para un área que depende de documentos para nómina, contratos y cumplimiento. Los huecos más graves son departamento (64 activos), puesto (29) y contrato (61 sin contrato registrado). Sin expediente completo, los demás indicadores se calculan sobre una base parcial: la utilización y el costo son confiables, pero el análisis por área, puesto y cumplimiento no.</p>
+<hr />
+<h2>6. Solución para Dirección</h2>
+<h3>6.1 El tablero</h3>
+<p>El entregable visual es <code>dashboard/index.html</code>, un sitio estático de <strong>diez secciones</strong>:</p>
+<ol>
+<li><strong>Resumen.</strong> Utilización, costo de nómina, banca, alertas y las nueve dimensiones.</li>
+<li><strong>Utilización.</strong> Banca por puesto, concentración por cliente y detalle de las personas sin asignación.</li>
+<li><strong>Costos.</strong> Reparto de la nómina, costo por cliente, costo por proyecto y costo hora por puesto.</li>
+<li><strong>Por terminar.</strong> Las siete asignaciones con fecha de fin y las ventanas de 30/60/90 días.</li>
+<li><strong>Habilidades.</strong> Cobertura por tecnología, niveles, habilidades en riesgo y activos sin matriz.</li>
+<li><strong>Rotación.</strong> Bajas, cohortes, permanencia y esquema de nómina.</li>
+<li><strong>Activos.</strong> Inventario, costo conocido, equipos por recuperar y marcas.</li>
+<li><strong>Expediente.</strong> Promedio, rangos y huecos que bloquean el análisis.</li>
+<li><strong>Dimensiones.</strong> Selector de las nueve dimensiones con valores distintos, nulos, rangos y detalle.</li>
+<li><strong>Modelo y SQL.</strong> Flujo de datos, hechos, dimensiones, controles de integridad, comandos y archivos.</li>
+</ol>
+<p>El tablero no usa frameworks, CDN ni build. Se abre con doble clic, funciona sin conexión y se puede publicar copiando la carpeta <code>dashboard/</code> a Firebase Hosting, Netlify, un bucket de Cloud Storage o el servidor del cliente. No publica nombres, sueldos individuales, correos, teléfonos, series ni contactos: solo agregados y IDs seudónimos.</p>
+<h3>6.2 Arquitectura replicable</h3>
+<pre><code>Firebase HR Management
+        │  exportación / Cloud Function
+        ▼
+Cloud Storage  ──►  Acondicionamiento M1–M14  ──►  Modelo dimensional
+   (corte)              (Python)                    (9 dims + 3 hechos)
+                                                        │
+                              ┌─────────────────────────┴─────────────────────┐
+                              ▼                                               ▼
+                       BigQuery / SQLite                              Firestore
+                     (consultas de Dirección)                    (lectura de la PWA)
+                              │                                               │
+                              └─────────────────────────┬─────────────────────┘
+                                                        ▼
+                                              Tablero estático / Firebase Hosting
+</code></pre>
+<p><strong>Pasos de instalación en el cliente:</strong></p>
+<ol>
+<li><strong>Crear el proyecto de Firebase</strong> (o reutilizar <code>otc-rh-agentes</code>) y habilitar Firestore, Auth, Storage, Functions y Hosting.</li>
+<li><strong>Definir roles</strong> <code>admin</code>, <code>rh</code>, <code>lector</code> y <code>colaborador</code>; los sueldos y costos individuales van a <code>colaboradores_privado</code>, solo <code>admin</code>.</li>
+<li><strong>Exportar</strong> las siete colecciones del sandbox a un corte con fecha; excluir Usuarios, credenciales y datos bancarios.</li>
+<li><strong>Correr el acondicionamiento</strong> <code>python src/acondicionamiento_rh.py --corte AAAA-MM-DD</code> (repositorio de documentación) para generar las 18 tablas.</li>
+<li><strong>Correr el modelo</strong> <code>python src/etapa5_dw.py</code> para generar <code>otc_dw.db</code>.</li>
+<li><strong>Ejecutar las consultas</strong> <code>python src/etapa5_consultas.py</code>; el runner falla si hay llaves huérfanas.</li>
+<li><strong>Exportar el tablero</strong> <code>python src/etapa5_exportar.py</code>.</li>
+<li><strong>Publicar</strong> <code>dashboard/</code> en Firebase Hosting o en el servidor del cliente.</li>
+<li><strong>Programar</strong> el ETL con Cloud Scheduler y dejar el corte anterior para comparar.</li>
+<li><strong>Monitorear</strong> las reglas de calidad: 0 huérfanos, 0 sueldos en cero, 0 asignaciones sin fecha, 0 activos sin resguardo.</li>
+</ol>
+<h3>6.3 Integración con Firebase</h3>
+<p>El repositorio de documentación ya tiene la arquitectura:</p>
+<ul>
+<li>Proyecto <strong><code>otc-rh-agentes</code></strong> en Firebase (plan Blaze).</li>
+<li><strong>Firestore</strong> con colecciones <code>colaboradores</code>, <code>colaboradores_privado</code>, <code>asignaciones</code>, <code>proyectos</code>, <code>clientes</code>, <code>activos</code>, <code>departamentos</code>, <code>habilidades</code>, <code>matriz</code>, <code>calidad_datos</code>, <code>log_correcciones</code>, <code>indicadores</code>, <code>catalogos</code>, <code>config</code> y <code>sops</code>.</li>
+<li><strong>Auth</strong> con roles <code>admin</code>, <code>rh</code>, <code>lector</code> y <code>colaborador</code>.</li>
+<li><strong>Storage</strong> para CVs y documentos.</li>
+<li><strong>Functions</strong> para los agentes y la rutina diaria.</li>
+<li><strong>Cargador</strong> <code>agentes/scripts/cargar_firestore.py</code>, que lee <code>salida/otc_rh.db</code> y publica los documentos; separa los sueldos en <code>colaboradores_privado</code>.</li>
+</ul>
+<p>La Etapa 5 se puede integrar de dos formas:</p>
+<ol>
+<li><strong>BI:</strong> cargar las 9 dimensiones y los 3 hechos a <strong>BigQuery</strong> y conectar el tablero o Looker Studio. Es la ruta recomendada para consultas de Dirección y para crecer a millones de filas.</li>
+<li><strong>PWA:</strong> publicar en Firestore una colección <code>analitica</code> con los agregados del tablero (resumen, utilización, costos, habilidades, activos y perfil de dimensiones) y leerla desde la PWA con las reglas actuales. Los datos individuales siguen en <code>colaboradores_privado</code>.</li>
+</ol>
+<p>La regla de oro es la misma de la Etapa 3: <strong>no se publica un dato individual sin rol</strong>. El tablero de Dirección usa agregados; el detalle por persona se queda en la PWA con <code>admin</code> o <code>rh</code>.</p>
+<h3>6.4 Seguridad y privacidad</h3>
+<ul>
+<li><strong>Usuarios fuera.</strong> El módulo de Usuarios no se exporta; no hay credenciales en el repositorio ni en el tablero.</li>
+<li><strong>Datos personales fuera.</strong> El tablero no incluye nombres, correos, teléfonos, CURP, RFC, NSS, domicilio ni datos bancarios. Solo IDs seudónimos y agregados.</li>
+<li><strong>Sueldos y costos.</strong> En Firestore viven en <code>colaboradores_privado</code>, solo <code>admin</code>. En el tablero se muestran agregados; el detalle individual no se publica.</li>
+<li><strong>Reglas de Firestore.</strong> Lectura por rol; escritura solo por Cloud Functions con Admin SDK. El navegador no escribe.</li>
+<li><strong>App Check.</strong> reCAPTCHA Enterprise para las funciones y la PWA.</li>
+<li><strong>Trazabilidad.</strong> Cada corrección del acondicionamiento queda en <code>log_correcciones</code>; cada cambio de dato en la PWA queda en la bandeja de aprobaciones.</li>
+</ul>
+<h3>6.5 Recomendaciones técnicas</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">#</th>
+<th>Recomendación</th>
+<th>Por qué</th>
+<th>Prioridad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td>Capturar <strong>fecha de inicio y fin</strong> en toda asignación</td>
+<td>Hoy 21 no tienen inicio y 24 no tienen fin; sin fechas no hay duración, vencimiento ni plan de reemplazo</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td>Capturar <strong>rol</strong> en toda asignación</td>
+<td>29 de 31 no tienen rol; no se puede comparar perfil con necesidad ni tarifar por rol</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td>Capturar <strong>puesto y departamento</strong> de los 107 colaboradores</td>
+<td>48 sin puesto y 95 sin área; el análisis por área y puesto es inviable</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td>Capturar <strong>tarifa por proyecto y horas facturables</strong></td>
+<td>Sin ellas el margen está bloqueado; es la pregunta de negocio más importante</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td>Capturar <strong>costo y fecha de compra</strong> de los 123 activos</td>
+<td>70 sin costo; el inventario de $567,915.55 es un piso</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td>Capturar <strong>fecha y causa de baja</strong></td>
+<td>18 de 32 bajas sin fecha y 0 con causa; no se puede medir rotación ni costo de reemplazo</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td>Capturar <strong>fecha de evaluación y vencimiento de certificaciones</strong></td>
+<td>La matriz no tiene fecha; no se sabe si un experto sigue vigente</td>
+<td>Media</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td>Usar <strong>catálogos por ID</strong> en la PWA, no texto libre</td>
+<td>Evita “PENDIENTE”, variantes de marca y descripciones duplicadas</td>
+<td>Media</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td>Cerrar <strong>asignaciones y resguardos</strong> al registrar una baja</td>
+<td>9 equipos siguen con personas de baja; riesgo de pérdida</td>
+<td>Media</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td>Validar <strong>dedicación total ≤ 100%</strong></td>
+<td>Hay una persona sobreasignada al 200%; el costo se duplica en el hecho</td>
+<td>Media</td>
+</tr>
+<tr>
+<td style="text-align: right;">11</td>
+<td>Programar el <strong>ETL mensual</strong> y comparar cortes</td>
+<td>Sin historia no hay tendencia; el modelo SCD2 ya está preparado</td>
+<td>Media</td>
+</tr>
+<tr>
+<td style="text-align: right;">12</td>
+<td>Mover el análisis a <strong>BigQuery</strong> y dejar Firestore para la PWA</td>
+<td>BigQuery es más barato y rápido para agregados; Firestore para lectura por documento</td>
+<td>Baja</td>
+</tr>
+</tbody>
+</table>
+<h3>6.6 Ruta de 30/60/90 días</h3>
+<ul>
+<li><strong>30 días.</strong> Limpiar los campos que bloquean las preguntas de negocio: fechas de asignación, rol, puesto, departamento y causa de baja. Publicar el tablero en Firebase Hosting con el corte actual.</li>
+<li><strong>60 días.</strong> Capturar tarifas y horas; activar el margen por proyecto. Cargar el modelo a BigQuery y programar el ETL mensual.</li>
+<li><strong>90 días.</strong> Incorporar historia SCD2 (cortes mensuales), certificaciones con vencimiento y un tablero de alertas para Dirección. Medir la utilización contra la meta del 80% y la banca contra la meta del 10%.</li>
+</ul>
+<h3>6.7 Criterios de aceptación</h3>
+<ul>
+<li>El ETL corre de punta a punta y deja <strong>0 llaves huérfanas</strong>.</li>
+<li>Las 24 consultas devuelven resultados y el tablero abre sin errores.</li>
+<li>La suma del costo único más la banca de plantilla más los familiares cierra contra la nómina activa.</li>
+<li>El tablero no publica nombres, sueldos individuales ni datos personales.</li>
+<li>El margen se muestra como bloqueado mientras no existan tarifas y horas.</li>
+<li>Cualquier persona puede reproducir la corrida con los comandos de la sección 7.</li>
+</ul>
+<hr />
+<h2>7. Cómo reproducir la corrida</h2>
+<pre><code class="language-bash"># 1. Dependencias
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# 2. Modelo dimensional (lee data/acondicionado/)
+python src/etapa5_dw.py
+
+# 3. Consultas y validación de integridad
+python src/etapa5_consultas.py
+
+# 4. Tablero
+python src/etapa5_exportar.py
+python -m http.server 8000
+# abrir http://localhost:8000/dashboard/
+</code></pre>
+<p>El ETL no requiere conexión a internet ni credenciales. La base de salida es <code>data/modelo/otc_dw.db</code>; los resultados quedan en <code>data/modelo/resultados_analisis.json</code> y el tablero en <code>dashboard/datos.js</code>.</p>
+<p>Para revisar el perfil de dimensiones directamente en SQLite:</p>
+<pre><code class="language-bash">sqlite3 data/modelo/otc_dw.db &lt; sql/02_perfil_dimensiones.sql
+</code></pre>
+<p>Para revisar una pregunta:</p>
+<pre><code class="language-bash">sqlite3 -header -column data/modelo/otc_dw.db \
+  &quot;SELECT * FROM vw_asignacion WHERE fecha_fin IS NOT NULL ORDER BY dias_para_fin;&quot;
+</code></pre>
+<hr />
+<h2>8. Límites y siguientes pasos</h2>
+<h3>8.1 Lo que no se puede responder todavía</h3>
+<ul>
+<li><strong>Margen por proyecto y por cliente.</strong> Faltan tarifas y horas; <code>tarifa_proyecto</code> y <code>registro_horas</code> están vacías.</li>
+<li><strong>Rotación mensual o anual completa.</strong> 18 de 32 bajas no tienen fecha; la cohorte sí se puede calcular, el periodo no.</li>
+<li><strong>Duración real de las asignaciones.</strong> 21 de 31 no tienen fecha de inicio; 24 no tienen fin.</li>
+<li><strong>Antigüedad real en banca.</strong> <code>dias_en_banca</code> usa la última asignación o, si no hay historial, la incorporación; es una cota superior.</li>
+<li><strong>Análisis por área y por puesto.</strong> 95 sin área y 48 sin puesto.</li>
+<li><strong>Certificaciones vigentes.</strong> No hay fecha de evaluación ni vencimiento.</li>
+<li><strong>Costo real del inventario.</strong> 70 de 123 activos no tienen costo.</li>
+<li><strong>Historia y tendencia.</strong> La fuente solo entrega la foto del corte; el modelo SCD2 está preparado, pero no hay versiones.</li>
+</ul>
+<h3>8.2 Lo que cambia si se captura</h3>
+<table>
+<thead>
+<tr>
+<th>Dato que falta</th>
+<th>Pregunta que se desbloquea</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fecha de inicio y fin de asignación</td>
+<td>Duración, vencimiento, plan de reemplazo, utilización por periodo</td>
+</tr>
+<tr>
+<td>Rol</td>
+<td>Mezcla de roles, comparación puesto-rol, tarifa por rol</td>
+</tr>
+<tr>
+<td>Puesto y departamento</td>
+<td>Costo por área, análisis por puesto, plan de carrera</td>
+</tr>
+<tr>
+<td>Tarifa y horas</td>
+<td>Ingreso, margen, rentabilidad por cliente y proyecto</td>
+</tr>
+<tr>
+<td>Fecha y causa de baja</td>
+<td>Rotación por periodo, causas, costo de reemplazo</td>
+</tr>
+<tr>
+<td>Costo de activo</td>
+<td>Valor real del inventario, depreciación, recuperación</td>
+</tr>
+<tr>
+<td>Fecha de evaluación y certificación</td>
+<td>Vigencia de habilidades, riesgo de persona clave</td>
+</tr>
+<tr>
+<td>Cortes mensuales</td>
+<td>Tendencia, estacionalidad, comparación contra metas</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Anexo A · Catálogo de consultas</h2>
+<table>
+<thead>
+<tr>
+<th>Consulta</th>
+<th>Qué devuelve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>q1_resumen</code></td>
+<td>Headcount, plantilla, asignados, banca, familiares, utilización</td>
+</tr>
+<tr>
+<td><code>q1_banca_por_puesto</code></td>
+<td>Personas, costo y días en banca por puesto</td>
+</tr>
+<tr>
+<td><code>q1_banca_detalle</code></td>
+<td>15 personas con más días en banca</td>
+</tr>
+<tr>
+<td><code>q1_concentracion_cliente</code></td>
+<td>Asignados y costo por cliente</td>
+</tr>
+<tr>
+<td><code>q2_vencimientos</code></td>
+<td>Asignaciones con fecha de fin y ventana</td>
+</tr>
+<tr>
+<td><code>q2_resumen</code></td>
+<td>Conteo por ventana de 30/60/90 días</td>
+</tr>
+<tr>
+<td><code>q3_costos</code></td>
+<td>Nómina, asignado único, asignado por fila, banca, familiares y porcentajes</td>
+</tr>
+<tr>
+<td><code>q3_por_cliente</code></td>
+<td>Asignaciones, personas y costo por cliente</td>
+</tr>
+<tr>
+<td><code>q4_costo_hora_puesto</code></td>
+<td>Costo hora por puesto, mínimo, máximo y costo mensual</td>
+</tr>
+<tr>
+<td><code>q4_cobertura</code></td>
+<td>Asignaciones, sin puesto, sin rol y costo hora global</td>
+</tr>
+<tr>
+<td><code>q5_bloqueo</code></td>
+<td>Asignaciones con ingreso y margen (hoy 0)</td>
+</tr>
+<tr>
+<td><code>q5_costo_por_proyecto</code></td>
+<td>Costo y personas por proyecto</td>
+</tr>
+<tr>
+<td><code>q6_tecnologia</code></td>
+<td>Habilidades, evaluaciones y expertos por tecnología</td>
+</tr>
+<tr>
+<td><code>q6_niveles</code></td>
+<td>Distribución por nivel</td>
+</tr>
+<tr>
+<td><code>q6_riesgo</code></td>
+<td>Habilidades con ≤ 1 experto o sin evaluación</td>
+</tr>
+<tr>
+<td><code>q6_cobertura</code></td>
+<td>Activos con matriz, sin matriz y evaluaciones sin persona</td>
+</tr>
+<tr>
+<td><code>q7_resumen</code></td>
+<td>Bajas, porcentaje, sin fecha, primer año y permanencia</td>
+</tr>
+<tr>
+<td><code>q7_cohortes</code></td>
+<td>Ingresos, bajas y permanencia por año de ingreso</td>
+</tr>
+<tr>
+<td><code>q7_por_nomina</code></td>
+<td>Bajas por esquema de nómina</td>
+</tr>
+<tr>
+<td><code>q8_resumen</code></td>
+<td>Activos, sin costo, sin resguardo, pendientes y valor</td>
+</tr>
+<tr>
+<td><code>q8_marcas</code></td>
+<td>Equipos, sin costo y valor por marca</td>
+</tr>
+<tr>
+<td><code>q8_pendientes</code></td>
+<td>Equipos de personas dadas de baja</td>
+</tr>
+<tr>
+<td><code>q9_expediente</code></td>
+<td>Promedio, completos, sin puesto, sin área, sin sueldo y contrato</td>
+</tr>
+<tr>
+<td><code>q9_rangos</code></td>
+<td>Distribución del expediente por rango</td>
+</tr>
+</tbody>
+</table>
+<h2>Anexo B · Evidencia de la corrida</h2>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th style="text-align: right;">Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Filas <code>hecho_asignacion</code></td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr>
+<td>Filas <code>hecho_habilidad</code></td>
+<td style="text-align: right;">1,539</td>
+</tr>
+<tr>
+<td>Filas <code>hecho_activo</code></td>
+<td style="text-align: right;">123</td>
+</tr>
+<tr>
+<td>Asignaciones huérfanas</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Habilidades huérfanas</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Activos huérfanos</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>Costo asignado por fila</td>
+<td style="text-align: right;">$2,025,644.02</td>
+</tr>
+<tr>
+<td>Costo asignado único</td>
+<td style="text-align: right;">$1,924,710.62</td>
+</tr>
+<tr>
+<td>Nómina activa</td>
+<td style="text-align: right;">$3,918,864.40</td>
+</tr>
+<tr>
+<td>Inventario conocido</td>
+<td style="text-align: right;">$567,915.55</td>
+</tr>
+<tr>
+<td>Evaluaciones</td>
+<td style="text-align: right;">1,539</td>
+</tr>
+<tr>
+<td>Consultas ejecutadas</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr>
+<td>Atributos perfilados</td>
+<td style="text-align: right;">94</td>
+</tr>
+</tbody>
+</table>
+<h2>Anexo C · Referencias</h2>
+<ul>
+<li>Kimball, R. y Ross, M. (2013). <em>The Data Warehouse Toolkit: The Definitive Guide to Dimensional Modeling</em> (3a ed.). Wiley.</li>
+<li>Documento y cuaderno de la Etapa 3 de este repositorio: <code>notebooks/ETAPA_3_ACONDICIONAMIENTO_OTC.ipynb</code> y <code>data/acondicionado/</code>.</li>
+<li>Documento y cuaderno de la Etapa 4 de este repositorio: <code>docs/ETAPA_4.md</code> y <code>notebooks/ETAPA_4_MODELO_DIMENSIONAL_OTC.ipynb</code>.</li>
+<li>Repositorio de documentación y pipeline del equipo: https://github.com/Francovarelav/otconsultingdocumentacion.</li>
+<li>Firebase. <em>Cloud Firestore security rules</em> y <em>Firebase Hosting</em>. Documentación oficial.</li>
+</ul>
+<hr />
+<p><strong>Nota final.</strong> Este documento y el tablero son un prototipo académico construido con datos anonimizados del socio formador. No incluyen credenciales, nombres, sueldos individuales, datos bancarios ni información de contacto. Las cifras son las de la corrida del <strong>2026-11-20</strong> y se regeneran con los comandos de la sección 7.</p>
+</body></html>
